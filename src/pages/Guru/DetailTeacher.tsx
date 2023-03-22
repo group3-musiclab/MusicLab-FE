@@ -15,7 +15,7 @@ const DetailTeacher = () => {
     <Layout>
       <div className="container mx-auto p-10">
         <div className="flex flex-row p-4">
-          <div className="text-black">
+          <div className="text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">Ana De Arnas</p>
             <p className="font-semibold">
@@ -33,9 +33,9 @@ const DetailTeacher = () => {
                 experienced
               </p>
             </div>
-            <div className="w-8/12 mt-7">
+            <div className="mt-7">
               <p className="font-semibold text-xl">my Course</p>
-              <div className="m-2 mt-7 grid grid-cols-2 gap-5 space-x-5">
+              <div className="m-2 mt-7 grid grid-cols-2 gap-12">
                 <Card />
                 <Card />
                 <Card />
