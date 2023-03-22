@@ -33,13 +33,14 @@ function App() {
       path: "/searching",
       element: <SearchingMentor />,
     },
+    {
       path: "/instrument",
-      element: <Instrument />,
+      element: <Instrument />
     },
     {
       path: "/genre",
-      element: <Genre />,
-    },
+      element: <Genre />
+    }
   ]);
 
   return <RouterProvider router={router} />;

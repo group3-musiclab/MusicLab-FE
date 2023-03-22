@@ -15,7 +15,7 @@ const DetailTeacher = () => {
     <Layout>
       <div className="container mx-auto p-10">
         <div className="flex flex-row p-4">
-          <div className="text-black">
+          <div className="text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">Ana De Arnas</p>
             <p className="font-semibold">
