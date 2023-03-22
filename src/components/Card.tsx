@@ -121,8 +121,8 @@ const CardTestimonial = ({ desc, image, name }: CardTestimonialProps) => {
 const CardSide = () => {
   return (
     <div className="card card-side bg-white shadow-xl p-4">
-      <figure className="-mt-10">
-        <img src={ana} alt="Movie" />
+      <figure>
+        <img src={ana} className="w-full rounded-xl lg:w-[27rem] h-[15rem] max-w-xl object-fit object-fill" />
       </figure>
       <div className="card-body text-black font-poppins">
         <h2 className="card-title font-bold text-3xl">Ana De Arnas</h2>
@@ -131,11 +131,11 @@ const CardSide = () => {
           Ana de arnas is a internationally certified teacher for guitar, has
           experienced
         </p>
-        <div className="flex space-x-3 justify-center">
-          <img src={facebook} alt="facebook" width={25} />
-          <img src={instagram} alt="instagram" width={25} />
-          <img src={twitter} alt="twitter" width={25} />
-          <img src={youtube} alt="youtube" width={25} />
+        <div className="flex space-x-3 justify-center mt-6">
+          <img src={facebook} alt="facebook" width={35} />
+          <img src={instagram} alt="instagram" width={35} />
+          <img src={twitter} alt="twitter" width={35} />
+          <img src={youtube} alt="youtube" width={35} />
         </div>
       </div>
     </div>

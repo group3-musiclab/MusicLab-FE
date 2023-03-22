@@ -40,16 +40,12 @@ function App() {
     },
     {
       path: "/genre",
-
       element: <Genre />,
     },
     {
       path: "/homepage",
       element: <MainHomePage />,
     },
-      element: <Genre />
-    }
-
   ]);
 
   return <RouterProvider router={router} />;

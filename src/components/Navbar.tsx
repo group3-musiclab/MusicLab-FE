@@ -56,10 +56,10 @@ const ReusableNav = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+          <a className="btn btn-ghost normal-case text-2xl text-black font-poppins font-bold">MusicLab</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 text-black">
             <li>
               <a>Item 1</a>
             </li>
@@ -91,7 +91,7 @@ const ReusableNav = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Get started</a>
+          <a className="btn">Profile</a>
         </div>
       </div>
     </>
