@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { RouterProvider } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
+
 import Login from "../pages/Auth/Login";
-
 import Register from "../pages/Auth/Register";
-
 import Home from "../pages/Guru/Home";
 import DetailTeacher from "../pages/Guru/DetailTeacher";
+import SearchingMentor from "../pages/User/SearchingMentor";
 import Instrument from "../pages/Guru/Instrument";
 import Genre from "../pages/Guru/Genre";
 
@@ -30,6 +30,9 @@ function App() {
       element: <Home />,
     },
     {
+      path: "/searching",
+      element: <SearchingMentor />,
+    },
       path: "/instrument",
       element: <Instrument />,
     },
