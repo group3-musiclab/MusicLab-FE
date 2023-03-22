@@ -18,35 +18,35 @@ const SearchingMentor = () => {
               <MdKeyboardArrowRight size={25} className="mt-1" />
             </div>
             <div className="flex flex-col space-y-7 mt-7">
-              <select className="select select-bordered w-80 bg-white shadow-black shadow-sm">
+              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
                 <option disabled selected>
                   FIlter Genre
                 </option>
                 <option>Han Solo</option>
                 <option>Greedo</option>
               </select>
-              <select className="select select-bordered w-80 bg-white shadow-black shadow-sm">
+              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
                 <option disabled selected>
                   FIlter Instrument
                 </option>
                 <option>Han Solo</option>
                 <option>Greedo</option>
               </select>
-              <select className="select select-bordered w-80 bg-white shadow-black shadow-sm">
+              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
                 <option disabled selected>
                   FIlter Price
                 </option>
                 <option>Han Solo</option>
                 <option>Greedo</option>
               </select>
-              <select className="select select-bordered w-80 bg-white shadow-black shadow-sm">
+              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
                 <option disabled selected>
                   FIlter Rating
                 </option>
                 <option>Han Solo</option>
                 <option>Greedo</option>
               </select>
-              <select className="select select-bordered w-80 bg-white shadow-black shadow-sm">
+              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
                 <option disabled selected>
                   FIlter Kualifikasi
                 </option>
@@ -58,9 +58,10 @@ const SearchingMentor = () => {
           <div className="flex-1">
             <div className="form-control w-full -mt-10">
               <Input
+                id="search"
                 type="text"
                 placeholder="Search"
-                className="input input-bordered shadow-black shadow-sm bg-white text-black"
+                className="input input-bordered shadow-black shadow-sm bg-white text-black font-poppins"
               />
             </div>
             <div className="flex justify-end -mt-8 mr-5 text-black">

@@ -59,10 +59,10 @@ const CardSide = () => {
       <figure className="-mt-10">
         <img src={ana} alt="Movie" />
       </figure>
-      <div className="card-body text-black">
+      <div className="card-body text-black font-poppins">
         <h2 className="card-title font-bold text-3xl">Ana De Arnas</h2>
         <p className="opacity-75 font-semibold -mt-2">Guitar Teacher</p>
-        <p className="font-semibold">
+        <p className="font-semibold ">
           Ana de arnas is a internationally certified teacher for guitar, has
           experienced
         </p>
