@@ -1,23 +1,20 @@
-import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import { InputHTMLAttributes, TextareaHTMLAttributes, FC } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  id?: string;
-  placeholder?: string;
+interface Props extends InputHTMLAttributes<HTMLElement> {
+  id: string;
 }
 
-const Input = ({ id, placeholder, ...props }: InputProps) => {
+const Input: FC<Props> = ({ id, ...props }) => {
   return (
-    <>
-      <input
-        id={id}
-        placeholder={placeholder}
-        type="text"
-        className="bg-white rounded-lg text-black p-2 border focus:outline-none focus:ring-1 focus:ring-black"
-        {...props}
-      />
-    </>
+    <input
+      id={id}
+      className="bg-white rounded-lg text-black focus:outline-none focus:ring-1 focus:ring-black"
+      {...props}
+    />
   );
 };
+
+export default Input;
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   id?: string;
