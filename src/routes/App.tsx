@@ -7,7 +7,8 @@ import Register from "../pages/Auth/Register";
 
 import Home from "../pages/Guru/Home";
 import DetailTeacher from "../pages/Guru/DetailTeacher";
-
+import Instrument from "../pages/Guru/Instrument";
+import Genre from "../pages/Guru/Genre";
 
 function App() {
   const router = createBrowserRouter([
@@ -16,19 +17,26 @@ function App() {
       element: <Login />,
     },
     {
-
       path: "/register",
       element: <Register />,
     },
-
+    {
       path: "/teacher/id_teacher",
       element: <DetailTeacher />,
     },
+
     {
       path: "/beranda/courses",
       element: <Home />,
-    }
-
+    },
+    {
+      path: "/instrument",
+      element: <Instrument />,
+    },
+    {
+      path: "/genre",
+      element: <Genre />,
+    },
   ]);
 
   return <RouterProvider router={router} />;

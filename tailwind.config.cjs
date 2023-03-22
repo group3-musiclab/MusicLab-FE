@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         button: "#3A2BE8",
+        select: "#F1EEEE",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
