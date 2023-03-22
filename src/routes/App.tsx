@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Auth/Login";
 import Home from "../pages/Guru/Home";
 import DetailTeacher from "../pages/Guru/DetailTeacher";
+import SearchingMentor from "../pages/User/SearchingMentor";
 
 function App() {
   const router = createBrowserRouter([
@@ -18,6 +19,10 @@ function App() {
     {
       path: "/beranda/courses",
       element: <Home />,
+    },
+    {
+      path: "/searching",
+      element: <SearchingMentor />,
     }
   ]);
 

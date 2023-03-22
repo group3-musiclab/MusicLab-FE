@@ -33,9 +33,9 @@ const DetailTeacher = () => {
                 experienced
               </p>
             </div>
-            <div className="w-8/12 mt-7">
+            <div className="mt-7">
               <p className="font-semibold text-xl">my Course</p>
-              <div className="m-2 mt-7 grid grid-cols-2 gap-5 space-x-5">
+              <div className="m-2 mt-7 grid grid-cols-2 gap-12">
                 <Card />
                 <Card />
                 <Card />
