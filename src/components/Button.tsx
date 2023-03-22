@@ -8,7 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ id, label, loading, ...props }: ButtonProps) => {
   return (
-    <>
+    <div>
       <button
         id={id}
         className={`${
@@ -20,7 +20,7 @@ const Button = ({ id, label, loading, ...props }: ButtonProps) => {
       >
         {label}
       </button>
-    </>
+    </div>
   );
 };
 
