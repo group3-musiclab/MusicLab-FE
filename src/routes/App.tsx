@@ -9,6 +9,7 @@ import Home from "../pages/Guru/Home";
 import DetailTeacher from "../pages/Guru/DetailTeacher";
 import Instrument from "../pages/Guru/Instrument";
 import Genre from "../pages/Guru/Genre";
+import MainHomePage from "../pages/MainHomePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,6 +37,10 @@ function App() {
     {
       path: "/genre",
       element: <Genre />,
+    },
+    {
+      path: "/homepage",
+      element: <MainHomePage />,
     },
   ]);
 

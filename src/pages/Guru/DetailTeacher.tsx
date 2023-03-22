@@ -1,7 +1,7 @@
 import React from "react";
 
 import Layout from "../../components/Layout";
-import Card from "../../components/Card";
+import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
 import images from "../../assets/Ana.svg";
@@ -42,13 +42,15 @@ const DetailTeacher = () => {
                 <Card />
               </div>
               <div className="grid grid-cols-3 mt-8 p-7 ml-8">
-              <Button 
-                label="Prev"
-                className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"/>
+                <Button
+                  label="Prev"
+                  className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+                />
                 <p className="mx-auto text-xl text-[#3A2BE8] mt-2">1</p>
-                <Button 
-                label="Next"
-                className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"/>
+                <Button
+                  label="Next"
+                  className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+                />
               </div>
             </div>
           </div>
