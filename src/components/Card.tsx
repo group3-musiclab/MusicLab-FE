@@ -4,7 +4,7 @@ import image from "../assets/Drum.jpg";
 
 const Card = () => {
   return (
-    <div className="card-compact card bg-white shadow-xl">
+    <div className="card-compact w-full lg:w-full md:w-52 card bg-white shadow-xl">
       <figure>
         <img src={image} alt="Album" />
       </figure>
@@ -20,7 +20,6 @@ const Card = () => {
             type="radio"
             name="rating-2"
             className="mask mask-star-2 bg-orange-400"
-            checked
           />
           <input
             type="radio"
