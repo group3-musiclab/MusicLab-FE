@@ -12,7 +12,7 @@ const Home = () => {
             <button className="btn bg-[#3A2BE8] text-white rounded-xl w-2/12 font-poppins">Create Your Course</button>
           </div>
           <div className="card-body w-10/12">
-            <div className="m-2 grid grid-flow-row auto-rows-max grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-4 space-x-3">
+            <div className="grid grid-flow-row auto-rows-max grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-4">
               <Card />
               <Card />
               <Card />
