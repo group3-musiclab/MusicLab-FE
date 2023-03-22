@@ -2,6 +2,7 @@ import React from "react";
 
 import Layout from "../../components/Layout";
 import Card from "../../components/Card";
+import Button from "../../components/Button";
 
 import images from "../../assets/Ana.svg";
 import facebook from "../../assets/Facebook.svg";
@@ -32,22 +33,22 @@ const DetailTeacher = () => {
                 experienced
               </p>
             </div>
-            <div className="w-10/12 mt-7">
+            <div className="w-8/12 mt-7">
               <p className="font-semibold text-xl">my Course</p>
-              <div className="m-2 p-2 grid grid-flow-row auto-rows-max grid-cols-2 gap-3 space-x-5">
+              <div className="m-2 mt-7 grid grid-cols-2 gap-5 space-x-5">
                 <Card />
                 <Card />
                 <Card />
                 <Card />
               </div>
               <div className="grid grid-cols-3 mt-8 p-7 ml-8">
-                <button className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]">
-                  Prev
-                </button>
+              <Button 
+                label="Prev"
+                className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"/>
                 <p className="mx-auto text-xl text-[#3A2BE8] mt-2">1</p>
-                <button className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]">
-                  Next
-                </button>
+                <Button 
+                label="Next"
+                className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"/>
               </div>
             </div>
           </div>
