@@ -4,7 +4,7 @@ import image from "../assets/Drum.jpg";
 
 const Card = () => {
   return (
-    <div className="card-compact card bg-white shadow-xl">
+    <div className="card-compact w-full lg:w-full md:w-52 card bg-white shadow-xl">
       <figure>
         <img src={image} alt="Album" />
       </figure>
