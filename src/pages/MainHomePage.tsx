@@ -14,6 +14,15 @@ import icon6 from "../assets/icon/icon-6.webp";
 import calendar from "../assets/icon/calendar (1).webp";
 import choose from "../assets/icon/choose.webp";
 import search from "../assets/icon/loupe (2).webp";
+
+import pic1 from "../assets/pic-1 (1).webp";
+import pic2 from "../assets/pic-1 (2).webp";
+import pic3 from "../assets/pic-1 (3).webp";
+import pic4 from "../assets/pic-1 (4).webp";
+import fb from "../assets/icon/Facebook 2.webp";
+import ig from "../assets/icon/Instragram 2.webp";
+import yt from "../assets/icon/Youtube 1.webp";
+import twt from "../assets/icon/Twitter 2.webp";
 import { CardMentor, CardTestimonial } from "../components/Card";
 import Footer from "../components/Footer";
 
@@ -23,7 +32,7 @@ export default function MainHomePage() {
       <div className="w-full min-h-screen overflow-auto bg-white">
         <Header />
         <Information />
-        {/* <TopPicks /> */}
+        <TopPicks />
         <AboutUs />
         <Ulasan />
         <BookNow />
@@ -65,11 +74,11 @@ const Information = () => {
     <>
       <div className="w-full min-h-screen">
         {/*Section Why Choosing Us */}
-        <h1 className="text-button text-4xl font-bold font-poppins text-center mt-16">
+        <h1 className="text-button text-2xl lg:text-4xl font-bold font-poppins text-center mt-16">
           Why Choosing Us?
         </h1>
-        <div className="w-[80%] h-full mx-auto mt-16">
-          <div className="lg:grid lg:grid-cols-3 grid-cols-1 gap-20 overflow-hidden h-[40rem]">
+        <div className="w-[80%] lg:h-full mx-auto mt-16">
+          <div className="grid lg:grid-cols-3 grid-cols-1 gap-10 lg:overflow-hidden h-[96rem] lg:h-[40rem]">
             <div>
               <div className="flex justify-center card rounded-lg w-full h-full shadow-lg p-5 bg-choosingUs">
                 <img src={icon1} className="w-3/12 mx-auto" />
@@ -145,12 +154,12 @@ const Information = () => {
           </div>
         </div>
         {/*Section Cara Memesan */}
-        <div className="mt-20">
+        <div className="mt-44 lg:mt-20">
           <h1 className="text-button text-4xl font-bold font-poppins text-center mt-16">
             Cara Memesan
           </h1>
-          <div className="w-[80%]  mx-auto mt-16">
-            <div className="lg:grid lg:grid-cols-3 grid-cols-1 gap-20 overflow-hidden h-[20rem]">
+          <div className="w-[80%] mx-auto mt-16">
+            <div className="lg:grid lg:grid-cols-3 grid-cols-1 gap-20 lg:overflow-hidden h-[55rem] lg:h-[20rem]">
               <div>
                 <div className="flex justify-center card rounded-lg w-full  shadow-lg p-12 bg-choosingUs">
                   <img src={search} className="w-3/12 mx-auto" />
@@ -197,15 +206,75 @@ const Information = () => {
 const TopPicks = () => {
   return (
     <>
-      <h1 className="text-button text-4xl font-bold font-poppins text-center mt-5">
-        Top Picks Teacher
-      </h1>
-      <div className="lg:grid lg:grid-cols-2 grid-cols-1 overflow-hidden h-[20rem]">
-        <div>
-          <CardMentor />
-        </div>
-        <div>
-          <CardMentor />
+      <div className="w-[80%] mx-auto min-h-screen mt-10">
+        <h1 className="text-button text-center font-bold font-poppins text-4xl">
+          Top Pick's Teacher
+        </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-10">
+          <div>
+            <CardMentor
+              name="Ana De Arnas"
+              desc="Ana de arnas is a internationally certified teacher for guitar, has experienced"
+              skills="Guitar Teacher"
+              image={pic1}
+              groupImg={
+                <>
+                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
+                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
+                </>
+              }
+            />
+          </div>
+          <div>
+            <CardMentor
+              name="Guilermo"
+              desc="Guilermo is a internationally certified teacher for guitar, has experienced"
+              skills="Drum Teacher"
+              image={pic2}
+              groupImg={
+                <>
+                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
+                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
+                </>
+              }
+            />
+          </div>
+          <div>
+            <CardMentor
+              name="Michael Don"
+              desc="Michael Don is a internationally certified teacher for guitar, has experienced"
+              skills="Bass Teacher"
+              image={pic4}
+              groupImg={
+                <>
+                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
+                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
+                </>
+              }
+            />
+          </div>
+          <div>
+            <CardMentor
+              name="Aubrey"
+              desc="Aubrey is a internationally certified teacher for guitar, has experienced"
+              skills="Vocal Teacher"
+              image={pic3}
+              groupImg={
+                <>
+                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
+                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
+                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
+                </>
+              }
+            />
+          </div>
         </div>
       </div>
     </>
@@ -215,13 +284,13 @@ const TopPicks = () => {
 const AboutUs = () => {
   return (
     <>
-      <div className="flex flex-row w-[80%] mx-auto h-[30rem] ">
-        <div className="flex-1 flex-col flex justify-center ml-20">
-          <h1 className="text-button font-bold  text-4xl font-poppins">
+      <div className="flex flex-col-reverse lg:flex-row w-[80%] mx-auto h-[40rem] lg:h-[30rem] mt-10">
+        <div className="flex-1 flex-col flex justify-center text-center lg:ml-20">
+          <h1 className="text-button font-bold lg:flex text-4xl font-poppins lg:mt-0 -mt-22">
             About Us
           </h1>
-          <hr className="border-2 border-slate-300 w-6/12 mt-3" />
-          <p className="font-poppins font-normal text-black w-11/12 mt-5">
+          <hr className="border-2 border-slate-300 w-full lg:w-6/12 mt-3" />
+          <p className="font-poppins font-normal text-black w-full lg:w-11/12 mt-5">
             MusicLab adalah sebuah platform untuk mempertemukan orang yang ingin
             belajar musik dan guru les musik. Di platform ini pengguna aplikasi
             dapat membooking guru les musik minimal jangka waktu 1 bulan (untuk
@@ -230,9 +299,9 @@ const AboutUs = () => {
             kebutuhan dan jadwal yang disediakan oleh guru les.
           </p>
         </div>
-        <div className="flex-1 flex-col flex justify-center items-center">
-          <img src={Logo} className="w-4/12 " />
-          <h1 className="text-button font-bold text-4xl font-poppins mt-5">
+        <div className="flex-1 flex-col flex justify-end lg:justify-center items-center lg:mb-0 mb-10">
+          <img src={Logo} className="w-4/12" />
+          <h1 className="text-button font-bold text-2xl lg:text-4xl font-poppins mt-5">
             MusicLab
           </h1>
         </div>
@@ -243,14 +312,14 @@ const AboutUs = () => {
 
 const Ulasan = () => {
   return (
-    <div className="w-[80%] mx-auto min-h-screen">
+    <div className="w-[80%] mx-auto min-h-screen mt-10">
       <h2 className="text-button text-center font-semibold font-poppins text-2xl">
         Testimonial
       </h2>
       <h1 className="text-button text-center font-bold font-poppins text-4xl mt-5">
         What Our Client Say
       </h1>
-      <div className="grid grid-cols-3 gap-10 mt-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-10">
         <div>
           <CardTestimonial
             desc="I love how the instructor is really commited and bring happiness to studenr,
@@ -307,15 +376,15 @@ const Ulasan = () => {
 const BookNow = () => {
   return (
     <>
-      <div className="flex flex-row w-[80%]  bg-button lg:h-[10rem] h-[7rem] mt-32 mx-auto rounded-2xl items-center justify-center shadow-xl">
-        <h1 className="w-[30%] font-bold lg:text-4xl text-2xl text-white items text-center font-poppins">
+      <div className="flex flex-col lg:flex-row w-[80%]  bg-button lg:h-[10rem] h-[15rem] mt-24 lg:mt-32 mx-auto rounded-2xl items-center justify-center shadow-xl">
+        <h1 className="w-[30%] font-bold lg:text-4xl text-2xl text-white items flex justify-center font-poppins">
           MusicLab
         </h1>
-        <p className="w-[40%] font-semibold text-sm lg:text-xl text-white items text-center font-poppins">
+        <p className=" w-[60%] lg:w-[40%] font-semibold text-sm lg:text-xl text-white items text-center font-poppins mt-3">
           Turn your passionate with music better with us
         </p>
-        <h1 className="w-[30%] font-semibold lg:text-2xl text-lg text-white items text-center">
-          <button className="px-7 py-1 border-white border-2 rounded-xl font-poppins hover:bg-white hover:text-button">
+        <h1 className="w-[30%] font-semibold lg:text-2xl text-lg text-white items flex justify-center lg:mt-0 mt-5">
+          <button className=" px-16 lg:px-7 py-1 border-white border-2 rounded-xl font-poppins hover:bg-white hover:text-button text-sm lg:text-xl">
             Book Now
           </button>
         </h1>

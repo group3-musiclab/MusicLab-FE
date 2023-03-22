@@ -7,7 +7,7 @@ import twt from "../assets/icon/Twitter 2.webp";
 export default function Footer() {
   return (
     <>
-      <div className="flex flex-row w-full h-[15rem] justify-center items-center overflow-hidden">
+      <div className="flex flex-col lg:flex-row w-full lg:mt-0 mt-24 h-[15rem] justify-center items-center overflow-hidden">
         <div className="flex-1">
           <h1 className="text-button font-bold text-4xl font-poppins text-center">
             MusicLab
@@ -20,10 +20,10 @@ export default function Footer() {
         </div>
         <div className="flex-1 flex justify-center">
           <div className="flex flex-row">
-            <img src={fb} className="w-[3rem] h-[3rem]" />
-            <img src={ig} className="w-[3rem] h-[3rem] ml-2" />
-            <img src={yt} className="w-[3rem] h-[3rem] ml-2" />
-            <img src={twt} className="w-[3rem] h-[3rem] ml-2" />
+            <img src={fb} className="w-[3.5rem] h-[3rem]" />
+            <img src={ig} className="w-[3.5rem] h-[3rem] ml-2" />
+            <img src={yt} className="w-[3.5rem] h-[3rem] ml-2" />
+            <img src={twt} className="w-[3.5rem] h-[3rem] ml-2" />
           </div>
         </div>
       </div>

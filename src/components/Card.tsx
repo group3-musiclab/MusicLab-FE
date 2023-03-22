@@ -1,10 +1,6 @@
 import React from "react";
 
 import image from "../assets/Drum.jpg";
-import pic1 from "../assets/pic-1 (1).webp";
-import pic2 from "../assets/pic-1 (2).webp";
-import pic3 from "../assets/pic-1 (3).webp";
-import pic4 from "../assets/pic-1 (4).webp";
 
 const Card = () => {
   return (
@@ -50,33 +46,43 @@ const Card = () => {
   );
 };
 
-const CardMentor = () => {
-  const topPicImg = {
-    backgroundImage: `url(${pic1})`,
-    width: "100%",
-    height: "auto",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  };
+interface CardMentorProps {
+  image?: any;
+  name?: string;
+  skills?: string;
+  desc?: string;
+  groupImg?: any;
+}
+
+const CardMentor = ({
+  image,
+  name,
+  skills,
+  desc,
+  groupImg,
+}: CardMentorProps) => {
   return (
     <>
-      <div className="w-full min-h-screen">
-        <div className="w-[75%]  mx-auto mt-16">
-          <div className="border-2 border-black">
-            <div className="w-full h-full border-2 border-black flex flex-row">
-              <div className="w-[60%] flex">
-                <img
-                  src={pic4}
-                  alt="logo.svg"
-                  className="rounded-2xl shadow-lg w-[30rem] h-[35rem] object-fill"
-                />
-              </div>
-              <div className="flex-1 flex w-full border-black">a</div>
-            </div>
+      <div className="flex flex-col lg:flex-row w-full  shadow-xl rounded-xl bg-slate-200 mt-10">
+        <div className="flex-1">
+          <img
+            src={image}
+            className="rounded-xl w-full lg:w-[17rem] h-[20rem] max-w-xl object-fit object-fill "
+          />
+        </div>
+        <div className="flex-1 flex flex-col pl-7 lg:pl-5">
+          <h1 className="text-black font-bold font-poppins text-2xl mt-10">
+            {name}
+          </h1>
+          <h2 className="text-slate-500 font-semibold font-poppins text-md mt-1">
+            {skills}
+          </h2>
+          <p className="text-black font-poppins font-normal text-md mt-3 w-10/12">
+            {desc}
+          </p>
+          <div className="flex-1 flex flex-row mt-8 lg:pb-0 pb-10">
+            {groupImg}
           </div>
-          <div className="border-2 border-black"></div>
-          <div className="border-2 border-black"></div>
-          <div className="border-2 border-black"></div>
         </div>
       </div>
     </>
