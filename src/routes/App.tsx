@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { RouterProvider } from "react-router";
+import { createBrowserRouter } from "react-router-dom";
+import Login from "../pages/Auth/Login";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Login />,
+    },
+  ]);
 
-  return (
-    <>
-      <h1>Music Lab</h1>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
