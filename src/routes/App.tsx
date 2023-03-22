@@ -9,6 +9,7 @@ import DetailTeacher from "../pages/Guru/DetailTeacher";
 import SearchingMentor from "../pages/User/SearchingMentor";
 import Instrument from "../pages/Guru/Instrument";
 import Genre from "../pages/Guru/Genre";
+import MainHomePage from "../pages/MainHomePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -39,8 +40,16 @@ function App() {
     },
     {
       path: "/genre",
+
+      element: <Genre />,
+    },
+    {
+      path: "/homepage",
+      element: <MainHomePage />,
+    },
       element: <Genre />
     }
+
   ]);
 
   return <RouterProvider router={router} />;

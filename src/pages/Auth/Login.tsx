@@ -3,8 +3,10 @@ import LogoMusicLab from "../../assets/logo-musiclab.webp";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-full h-full flex overflow-auto flex-col-reverse lg:flex-row bg-white">
@@ -62,6 +64,7 @@ const Login = () => {
                   id="btn-login"
                   label="Login"
                   className="bg-button w-10/12 lg:w-6/12 rounded-lg py-2 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
+                  onClick={() => navigate("/homepage")}
                 />
               </div>
             </form>
