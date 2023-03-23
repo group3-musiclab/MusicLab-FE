@@ -13,6 +13,7 @@ import MainHomePage from "../pages/MainHomePage";
 import EditTeacher from "../pages/Guru/EditTeacher";
 
 import Profile from "../pages/User/Profile";
+import DetailCourse from "../pages/Guru/DetailCourse";
 
 function App() {
   const router = createBrowserRouter([
@@ -50,7 +51,6 @@ function App() {
       element: <MainHomePage />,
     },
     {
-
       path: "/genre",
       element: <Genre />,
     },
@@ -58,10 +58,14 @@ function App() {
       path: "editTeacher",
       element: <EditTeacher />,
     },
+    {
       path: "/profile",
       element: <Profile />,
-    }
-
+    },
+    {
+      path: "/detailCourse",
+      element: <DetailCourse />,
+    },
   ]);
 
   return <RouterProvider router={router} />;

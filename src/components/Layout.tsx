@@ -13,6 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
       <div className="w-full min-h-screen">
         {children} <Footer />
       </div>
+    </div>
   );
 };
 
