@@ -10,6 +10,8 @@ import SearchingMentor from "../pages/User/SearchingMentor";
 import Instrument from "../pages/Guru/Instrument";
 import Genre from "../pages/Guru/Genre";
 import MainHomePage from "../pages/MainHomePage";
+import EditTeacher from "../pages/Guru/EditTeacher";
+
 import Profile from "../pages/User/Profile";
 
 function App() {
@@ -37,7 +39,7 @@ function App() {
     },
     {
       path: "/instrument",
-      element: <Instrument />
+      element: <Instrument />,
     },
     {
       path: "/genre",
@@ -48,9 +50,18 @@ function App() {
       element: <MainHomePage />,
     },
     {
+
+      path: "/genre",
+      element: <Genre />,
+    },
+    {
+      path: "editTeacher",
+      element: <EditTeacher />,
+    },
       path: "/profile",
       element: <Profile />,
     }
+
   ]);
 
   return <RouterProvider router={router} />;
