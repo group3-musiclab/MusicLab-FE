@@ -46,7 +46,7 @@ const Profile = () => {
                   <p className="font-poppins text-black">
                     No Hp : <span>081122334455</span>
                   </p>
-                  <p className="font-poppins text-black">
+                  <p className="font-poppins  text-black">
                     Address : <span>Indonesia, Centar Jakarta</span>
                   </p>
                 </div>

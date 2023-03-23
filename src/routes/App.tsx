@@ -11,7 +11,7 @@ import Instrument from "../pages/Guru/Instrument";
 import Genre from "../pages/Guru/Genre";
 import MainHomePage from "../pages/MainHomePage";
 import EditTeacher from "../pages/Guru/EditTeacher";
-
+import Chat from "../pages/User/Chat";
 import Profile from "../pages/User/Profile";
 import DetailCourse from "../pages/Guru/DetailCourse";
 
@@ -55,7 +55,7 @@ function App() {
       element: <Genre />,
     },
     {
-      path: "editTeacher",
+      path: "/editTeacher",
       element: <EditTeacher />,
     },
     {
@@ -66,6 +66,10 @@ function App() {
       path: "/detailCourse",
       element: <DetailCourse />,
     },
+    {
+      path: "/chat",
+      element: <Chat />,
+    }
   ]);
 
   return <RouterProvider router={router} />;
