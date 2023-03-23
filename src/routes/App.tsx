@@ -13,7 +13,7 @@ import MainHomePage from "../pages/MainHomePage";
 import EditTeacher from "../pages/Guru/EditTeacher";
 import Chat from "../pages/User/Chat";
 import Profile from "../pages/User/Profile";
-import DetailCourse from "../pages/Guru/DetailCourse";
+import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
 
 function App() {
   const router = createBrowserRouter([
@@ -69,7 +69,15 @@ function App() {
     {
       path: "/chat",
       element: <Chat />,
-    }
+    },
+    {
+      path: "/uploadCourse",
+      element: <UploadCourse />,
+    },
+    {
+      path: "/editCourse",
+      element: <EditCourse />,
+    },
   ]);
 
   return <RouterProvider router={router} />;
