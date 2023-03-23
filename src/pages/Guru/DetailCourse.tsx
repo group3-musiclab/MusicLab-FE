@@ -24,7 +24,7 @@ export default function DetailCourse() {
     <>
       <Layout>
         <div className="w-full min-h-screen flex flex-col bg-white items-center mt-10">
-          <h1 className="text-black font-bold w-9/12 flex justify-start text-2xl font-poppins">
+          <h1 className="text-black font-bold w-9/12 flex justify-start text-2xl font-poppins lg:mt-0 -mt-8">
             Complete Electronic Music Production for EDM Music Producers
           </h1>
           <h2 className="text-slate-500 font-semibold w-9/12 flex justify-start text-xl font-poppins mt-5">
@@ -34,8 +34,8 @@ export default function DetailCourse() {
             className=" rounded-2xl bg-no-repeat bg-auto bg-center mt-10"
             style={header}
           ></div>
-          <div className="flex flex-row w-[80%] min-h-screen mt-20">
-            <div className="w-[65%] text-black">
+          <div className="flex flex-col-reverse lg:flex-row w-[80%] min-h-screen mt-20">
+            <div className="w-full lg:mt-0 -mt-16 lg:w-[65%] text-black">
               <div className="flex flex-col w-11/12">
                 <h1 className="text-black text-2xl font-bold font-poppins">
                   Deskripsi Khusus:
@@ -91,22 +91,22 @@ export default function DetailCourse() {
                 </div>
               </div>
             </div>
-            <div className="w-[35%] text-black flex justify-center sticky">
+            <div className="lg:w-[35%] w-full text-black flex justify-center sticky">
               <div className="card bg-bg-card w-full h-[35rem] items-center">
-                <div className="flex flex-col w-[85%] mt-7">
+                <div className="flex flex-col w-full lg:w-[85%] lg:mt-7">
                   <div className="w-full  h-[10rem] rounded-xl">
-                    <div className="flex flex-row bg-slate-100 rounded-xl shadow-lg">
+                    <div className="flex lg:flex-row bg-slate-100 rounded-xl shadow-lg">
                       <div className="flex-1">
                         <img src={pic1} className="w-full rounded-xl" />
                       </div>
                       <div className="flex-1 mt-5 ml-4">
-                        <h1 className="font-bold font-poppins text-lg">
+                        <h1 className="font-bold font-poppins text-[19px] lg:text-lg">
                           Ana de Arnas
                         </h1>
-                        <h2 className="font-semibold font-poppins text-sm text-slate-400">
+                        <h2 className="font-semibold font-poppins text-[14px] lg:text-sm text-slate-400">
                           Guitar Teacher
                         </h2>
-                        <p className="text-sm mt-2">
+                        <p className=" text-[12px] text-black lg:text-sm mt-2 ">
                           Ana de arnas is a internationally certified teacher
                           for guitar, has experienced
                         </p>
