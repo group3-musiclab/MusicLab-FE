@@ -40,6 +40,7 @@ const ReusableNav = () => {
               </li>
             </ul>
           </div>
+
           <a className="btn btn-ghost normal-case text-2xl text-black font-poppins font-bold">
             MusicLab
           </a>
@@ -60,9 +61,11 @@ const ReusableNav = () => {
               <a className="text-black font-bold font-poppins">Testimonial</a>
             </li>
           </ul>
+
           <a className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white">
             Profile
           </a>
+
         </div>
       </div>
     </>
