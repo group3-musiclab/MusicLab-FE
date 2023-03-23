@@ -14,6 +14,8 @@ import EditTeacher from "../pages/Guru/EditTeacher";
 import Chat from "../pages/User/Chat";
 import Profile from "../pages/User/Profile";
 import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
+import HIstory from "../pages/User/HIstory";
+import History from "../pages/Guru/History";
 
 function App() {
   const router = createBrowserRouter([
@@ -77,6 +79,14 @@ function App() {
     {
       path: "/editCourse",
       element: <EditCourse />,
+    },
+    {
+      path: "/historyStudent",
+      element: <HIstory />,
+    },
+    {
+      path: "/historyTeacher",
+      element: <History />,
     },
   ]);
 
