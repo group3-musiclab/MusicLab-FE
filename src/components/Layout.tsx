@@ -10,9 +10,8 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="layout-container w-full min-h-screen flex flex-col bg-white overflow-auto">
       <ReusableNav />
-      <div className="w-full min-h-screen">{children}</div>
       <div className="w-full min-h-screen">
-        <Footer />
+        {children} <Footer />
       </div>
     </div>
   );
