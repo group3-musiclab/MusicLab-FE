@@ -10,6 +10,7 @@ import SearchingMentor from "../pages/User/SearchingMentor";
 import Instrument from "../pages/Guru/Instrument";
 import Genre from "../pages/Guru/Genre";
 import MainHomePage from "../pages/MainHomePage";
+import Profile from "../pages/User/Profile";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,6 +47,10 @@ function App() {
       path: "/homepage",
       element: <MainHomePage />,
     },
+    {
+      path: "/profile",
+      element: <Profile />,
+    }
   ]);
 
   return <RouterProvider router={router} />;
