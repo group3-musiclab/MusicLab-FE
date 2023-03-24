@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../utils/Swal";
+import { Link } from "react-router-dom";
 const ReusableNav = () => {
   return (
     <>
@@ -85,6 +86,10 @@ const NavMain = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
+
+  const checkRole = localStorage.getItem("role");
+  console.log(checkRole);
 
   // const handleLogout = () => {
   //   removeCookie("token", { path: "/homepage" });
@@ -162,9 +167,37 @@ const NavMain = () => {
               <a className="text-white font-bold font-poppins">Testimonial</a>
             </li>
           </ul>
-          <a className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white">
-            Profile
-          </a>
+          {checkToken && checkRole === "Student" ? (
+            <>
+              {" "}
+              <Link
+                to="/profile"
+                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
+              >
+                Profile
+              </Link>
+            </>
+          ) : checkToken && checkRole === "Mentor" ? (
+            <>
+              {" "}
+              <Link
+                to="/profileTeacher"
+                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
+              >
+                Profile
+              </Link>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Link
+                to="/login"
+                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </>
