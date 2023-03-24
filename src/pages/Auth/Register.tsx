@@ -1,8 +1,11 @@
-import React from "react";
+import React, { ReactHTMLElement, useState } from "react";
 import Poster from "../../assets/poster.webp";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "../../utils/Swal";
+import withReactContent from "sweetalert2-react-content";
 
 const background = {
   backgroundImage: `url(${Poster})`,
@@ -13,6 +16,53 @@ const background = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [name, setNama] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(false);
+    e.preventDefault();
+
+    const body = {
+      name,
+      role,
+      email,
+      password,
+    };
+
+    axios
+      .post("/register", body)
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          title: "Registered Success",
+          text: message,
+          showCancelButton: false,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+        MySwal.fire({
+          title: "Registered Failed",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleRole = (event: any) => {
+    setRole(event.target.value);
+  };
+
   return (
     <div className="w-full h-full bg-white flex flex-row">
       <div className="flex-1 lg:flex hidden h-auto" style={background}></div>
@@ -20,7 +70,7 @@ const Register = () => {
         <h1 className=" text-2xl lg:text-4xl font-bold text-center  font-poppins text-black mt-16 lg:mt-24">
           Register
         </h1>
-        <form>
+        <form onSubmit={handleRegister}>
           <div className="form-control w-full mt-10">
             <label className="label">
               <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12">
@@ -32,6 +82,7 @@ const Register = () => {
               type="text"
               placeholder="Type here"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
+              onChange={(e: any) => setNama(e.target.value)}
             />
             <label className="label">
               <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
@@ -42,6 +93,7 @@ const Register = () => {
               id="select-role"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
               defaultValue={"DEFAULT"}
+              onChange={handleRole}
             >
               <option disabled selected>
                 Pilih Salah Satu
@@ -59,6 +111,7 @@ const Register = () => {
               type="email"
               placeholder="Type here"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
+              onChange={(e: any) => setEmail(e.target.value)}
             />
             <label className="label">
               <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
@@ -70,6 +123,7 @@ const Register = () => {
               type="password"
               placeholder="Type here"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
+              onChange={(e: any) => setPassword(e.target.value)}
             />
             <div className="text-center w-full  mt-10">
               <Button

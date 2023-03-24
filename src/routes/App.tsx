@@ -16,8 +16,16 @@ import Profile from "../pages/User/Profile";
 import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
 import HIstory from "../pages/User/HIstory";
 import History from "../pages/Guru/History";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function App() {
+  const [cookie, setCookie] = useCookies(["token"]);
+
+  axios.interceptors.request.use(function (config) {
+    config.headers.Authorization = `Bearer ${cookie.token}`;
+    return config;
+  });
   const router = createBrowserRouter([
     {
       path: "/",
