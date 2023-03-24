@@ -2,10 +2,10 @@ import React, { FC } from "react";
 
 import image from "../assets/Drum.jpg";
 import ana from "../assets/Ana.svg";
-// import facebook from "../assets/facebook.svg";
-// import instagram from "../assets/insta.svg";
-// import twitter from "../assets/Twitter.svg";
-// import youtube from "../assets/Youtube.svg";
+import facebook from "../assets/icon/Facebook 2.webp";
+import instagram from "../assets/insta.webp";
+import twitter from "../assets/Twitter.webp";
+import youtube from "../assets/Youtube.webp";
 
 const Card = () => {
   return (
@@ -134,10 +134,10 @@ const CardSide = () => {
           experienced
         </p>
         <div className="flex space-x-3 justify-center mt-6">
-          {/* <img src={facebook} alt="facebook" width={35} />
+          <img src={facebook} alt="facebook" width={35} />
           <img src={instagram} alt="instagram" width={35} />
           <img src={twitter} alt="twitter" width={35} />
-          <img src={youtube} alt="youtube" width={35} /> */}
+          <img src={youtube} alt="youtube" width={35} />
         </div>
       </div>
     </div>
