@@ -1,12 +1,73 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LogoMusicLab from "../../assets/logo-musiclab.webp";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [, setCookie] = useCookies(["token"]);
+  const MySwal = withReactContent(Swal);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoggedIn, setisLoggedIn] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+
+  useEffect(() => {
+    if (email && password && role) {
+      setDisabled(disabled);
+    } else {
+      setDisabled(true);
+    }
+
+    // return () => {
+    //   setDisabled(disabled);
+    // };
+  }, [email, password, role]);
+
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+
+    const body = {
+      email,
+      password,
+      role,
+    };
+
+    axios
+      .post("/login", body)
+      .then((res) => {
+        const { data, message } = res.data;
+        console.log(data.token);
+        setCookie("token", data.token, { path: "/" });
+        localStorage.setItem("token", data.token);
+
+        MySwal.fire({
+          title: "Welcome to MusicLab",
+          text: message,
+          showCancelButton: false,
+        });
+
+        navigate("/homepage");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleRole = (e: any) => {
+    setRole(e.target.value);
+  };
 
   return (
     <>
@@ -19,7 +80,7 @@ const Login = () => {
             <p className="text-md lg:text-xl w-9/12 lg:w-6/12 mx-auto font-semibold  text-center mt-5 font-poppins text-black">
               Turn your passionate with music better with us
             </p>
-            <form>
+            <form onSubmit={handleLogin}>
               <div className="form-control w-full mx-auto">
                 <label className="label mt-3">
                   <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12">
@@ -31,6 +92,7 @@ const Login = () => {
                   type="email"
                   placeholder="marlina1998"
                   className="input input-bordered w-10/12 lg:w-6/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
+                  onChange={(e: any) => setEmail(e.target.value)}
                 />
                 <label className="label mt-5">
                   <span className="label-text text-black  font-semibold text-lg font-poppins  mx-auto w-10/12 lg:w-6/12">
@@ -42,6 +104,7 @@ const Login = () => {
                   type="password"
                   placeholder="********"
                   className="input input-bordered  bg-bg-input border-slate-300  mx-auto w-10/12 lg:w-6/12 text-black font-semibold font-poppins bg-white"
+                  onChange={(e: any) => setPassword(e.target.value)}
                 />
                 <label className="label">
                   <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12 mt-5">
@@ -51,9 +114,9 @@ const Login = () => {
                 <select
                   id="select-role"
                   className="input input-bordered w-10/12 lg:w-6/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
-                  defaultValue={"DEFAULT"}
+                  onChange={handleRole}
                 >
-                  <option disabled selected>
+                  <option disabled defaultValue={"DEFAULT"}>
                     Pilih Salah Satu
                   </option>
                   <option value="Student">Student</option>
@@ -65,7 +128,6 @@ const Login = () => {
                   id="btn-login"
                   label="Login"
                   className="bg-button w-10/12 lg:w-6/12 rounded-lg py-2 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
-                  onClick={() => navigate("/homepage")}
                 />
               </div>
             </form>
