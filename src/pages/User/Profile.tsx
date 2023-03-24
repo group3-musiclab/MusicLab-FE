@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 
-import images from "../../assets/Ana.svg";
+import images from "../../assets/Ana.webp";
 
 const Profile = () => {
   return (
@@ -23,7 +23,9 @@ const Profile = () => {
               </div>
               <hr />
               <div className="card card-actions flex flex-row justify-between space-x-3 mt-10">
-                <p className="text-md text-black font-poppins cursor-pointer">Edit Profile</p>
+                <p className="text-md text-black font-poppins cursor-pointer">
+                  Edit Profile
+                </p>
                 <p className="text-md text-red-500 font-poppins cursor-pointer">
                   Delete Account
                 </p>
@@ -50,10 +52,10 @@ const Profile = () => {
                     Address : <span>Indonesia, Centar Jakarta</span>
                   </p>
                 </div>
-                    <Button 
-                     label="Jadwal"
-                     className="btn border-none rounded-xl w-3/6 bg-[#3A2BE8] text-white font-semibold mt-5"
-                    />
+                <Button
+                  label="Jadwal"
+                  className="btn border-none rounded-xl w-3/6 bg-[#3A2BE8] text-white font-semibold mt-5"
+                />
               </div>
             </div>
           </div>

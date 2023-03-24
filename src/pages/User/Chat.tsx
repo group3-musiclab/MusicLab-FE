@@ -4,7 +4,7 @@ import { LayoutSec } from "../../components/Layout";
 import ModalChat from "./ModalChat";
 
 import { IoIosArrowBack } from "react-icons/io";
-import images from "../../assets/Ana.svg";
+import images from "../../assets/Ana.webp";
 
 const Chat = () => {
   const [modal, setModal] = useState<string>("");

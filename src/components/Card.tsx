@@ -1,7 +1,9 @@
 import React, { FC } from "react";
 
-// import image from "../assets/Drum.jpg";
-import ana from "../assets/Ana.svg";
+
+import image from "../assets/Drum.jpg";
+import ana from "../assets/Ana.webp";
+
 import facebook from "../assets/icon/Facebook 2.webp";
 import instagram from "../assets/insta.webp";
 import twitter from "../assets/Twitter.webp";

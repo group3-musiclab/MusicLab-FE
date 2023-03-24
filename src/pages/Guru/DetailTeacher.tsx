@@ -6,8 +6,14 @@ import Layout from "../../components/Layout";
 import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
+
+import images from "../../assets/Ana.webp";
+import facebook from "../../assets/Facebook.svg";
+import instagram from "../../assets/insta.svg";
+import twitter from "../../assets/Twitter.svg";
+import youtube from "../../assets/Youtube.svg";
 import { ProfileType } from "../../utils/types/Profile";
-import images from "../../assets/Ana.svg";
+
 
 const DetailTeacher = () => {
 
