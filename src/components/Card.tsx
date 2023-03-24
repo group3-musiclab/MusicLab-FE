@@ -2,10 +2,10 @@ import React, { FC } from "react";
 
 import image from "../assets/Drum.jpg";
 import ana from "../assets/Ana.svg";
-import facebook from "../assets/facebook.svg";
-import instagram from "../assets/insta.svg";
-import twitter from "../assets/Twitter.svg";
-import youtube from "../assets/Youtube.svg";
+// import facebook from "../assets/facebook.svg";
+// import instagram from "../assets/insta.svg";
+// import twitter from "../assets/Twitter.svg";
+// import youtube from "../assets/Youtube.svg";
 
 const Card = () => {
   return (
@@ -117,12 +117,14 @@ const CardTestimonial = ({ desc, image, name }: CardTestimonialProps) => {
   );
 };
 
-
 const CardSide = () => {
   return (
     <div className="card card-side bg-white shadow-xl p-4">
       <figure>
-        <img src={ana} className="w-full rounded-xl lg:w-[27rem] h-[15rem] max-w-xl object-fit object-fill" />
+        <img
+          src={ana}
+          className="w-full rounded-xl lg:w-[27rem] h-[15rem] max-w-xl object-fit object-fill"
+        />
       </figure>
       <div className="card-body text-black font-poppins">
         <h2 className="card-title font-bold text-3xl">Ana De Arnas</h2>
@@ -132,15 +134,14 @@ const CardSide = () => {
           experienced
         </p>
         <div className="flex space-x-3 justify-center mt-6">
-          <img src={facebook} alt="facebook" width={35} />
+          {/* <img src={facebook} alt="facebook" width={35} />
           <img src={instagram} alt="instagram" width={35} />
           <img src={twitter} alt="twitter" width={35} />
-          <img src={youtube} alt="youtube" width={35} />
+          <img src={youtube} alt="youtube" width={35} /> */}
         </div>
       </div>
     </div>
   );
 };
 
-export { Card, CardSide, CardMentor, CardTestimonial  };
-
+export { Card, CardSide, CardMentor, CardTestimonial };
