@@ -64,10 +64,10 @@ const DetailTeacher = () => {
                 Gmail : <span>ana@gmail.com</span>
               </p>
               <div className="flex space-x-3 ml-4">
-                <img src={facebook} alt="facebook" width={25} />
+                {/* <img src={facebook} alt="facebook" width={25} />
                 <img src={instagram} alt="instagram" width={25} />
                 <img src={twitter} alt="twitter" width={25} />
-                <img src={youtube} alt="youtube" width={25} />
+                <img src={youtube} alt="youtube" width={25} /> */}
               </div>
               <button className="btn bg-[#3A2BE8] text-white mt-2 w-44">
                 kirim pesan

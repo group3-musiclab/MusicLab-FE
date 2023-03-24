@@ -11,7 +11,7 @@ import Swal from "../../utils/Swal";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies(["token", "role"]);
   const MySwal = withReactContent(Swal);
   const [loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(false);
@@ -48,8 +48,10 @@ const Login = () => {
       .then((res) => {
         const { data, message } = res.data;
         console.log(data.token);
+
         setCookie("token", data.token, { path: "/" });
-        localStorage.setItem("token", data.token);
+        setCookie("role", res.data.role, { path: "/" });
+        localStorage.setItem("role", data.role);
 
         MySwal.fire({
           title: "Welcome to MusicLab",
@@ -57,7 +59,7 @@ const Login = () => {
           showCancelButton: false,
         });
 
-        navigate("/homepage");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);

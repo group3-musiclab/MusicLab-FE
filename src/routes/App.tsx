@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RouterProvider } from "react-router";
+import { Navigate, RouterProvider } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 
 import Login from "../pages/Auth/Login";
@@ -21,6 +21,7 @@ import { useCookies } from "react-cookie";
 
 function App() {
   const [cookie, setCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
 
   axios.interceptors.request.use(function (config) {
     config.headers = config.headers ?? {};
@@ -29,7 +30,7 @@ function App() {
   });
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/login",
       element: <Login />,
     },
     {
@@ -37,65 +38,66 @@ function App() {
       element: <Register />,
     },
     {
-      path: "/teacher/id_teacher",
+      path: "/profileTeacher",
       element: <DetailTeacher />,
-    },
-
-    {
-      path: "/beranda/courses",
-      element: <Home />,
     },
     {
       path: "/searching",
       element: <SearchingMentor />,
     },
+
+    {
+      path: "/beranda/courses",
+      element: checkToken ? <Home /> : <Navigate to="/" />,
+    },
+
     {
       path: "/instrument",
-      element: <Instrument />,
+      element: checkToken ? <Instrument /> : <Navigate to="/" />,
     },
     {
       path: "/genre",
-      element: <Genre />,
+      element: checkToken ? <Genre /> : <Navigate to="/" />,
     },
     {
-      path: "/homepage",
-      element: <MainHomePage />,
+      path: "/",
+      element: checkToken ? <MainHomePage /> : <Navigate to="/" />,
     },
     {
       path: "/genre",
-      element: <Genre />,
+      element: checkToken ? <Genre /> : <Navigate to="/" />,
     },
     {
       path: "/editTeacher",
-      element: <EditTeacher />,
+      element: checkToken ? <EditTeacher /> : <Navigate to="/" />,
     },
     {
       path: "/profile",
-      element: <Profile />,
+      element: checkToken ? <Profile /> : <Navigate to="/" />,
     },
     {
       path: "/detailCourse",
-      element: <DetailCourse />,
+      element: checkToken ? <DetailCourse /> : <Navigate to="/" />,
     },
     {
       path: "/chat",
-      element: <Chat />,
+      element: checkToken ? <Chat /> : <Navigate to="/" />,
     },
     {
       path: "/uploadCourse",
-      element: <UploadCourse />,
+      element: checkToken ? <UploadCourse /> : <Navigate to="/" />,
     },
     {
       path: "/editCourse",
-      element: <EditCourse />,
+      element: checkToken ? <EditCourse /> : <Navigate to="/" />,
     },
     {
       path: "/historyStudent",
-      element: <HIstory />,
+      element: checkToken ? <HIstory /> : <Navigate to="/" />,
     },
     {
       path: "/historyTeacher",
-      element: <History />,
+      element: checkToken ? <History /> : <Navigate to="/" />,
     },
   ]);
 
