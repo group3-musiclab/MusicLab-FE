@@ -1,20 +1,27 @@
 import React, { FC } from "react";
 
-import image from "../assets/Drum.jpg";
+// import image from "../assets/Drum.jpg";
 import ana from "../assets/Ana.svg";
 // import facebook from "../assets/facebook.svg";
 // import instagram from "../assets/insta.svg";
 // import twitter from "../assets/Twitter.svg";
 // import youtube from "../assets/Youtube.svg";
 
-const Card = () => {
+interface CardCourseProps {
+  id: string;
+  image: string;
+  name: string;
+  price: any;
+}
+
+const Card = ({id, image, name, price}: CardCourseProps) => {
   return (
-    <div className="card-compact w-72 card bg-white shadow-xl">
+    <div id={id} className="card-compact w-full card bg-white shadow-xl">
       <figure>
         <img src={image} alt="Album" />
       </figure>
       <div className="card-body text-black">
-        <h2 className="card-title">Class Drum untuk Pemula</h2>
+        <h2 className="card-title">{name}</h2>
         <div className="rating w-24 -mt-2">
           <input
             type="radio"
@@ -44,7 +51,7 @@ const Card = () => {
           <p className="opacity-70">(0)</p>
         </div>
         <div className="card-actions justify-start text-xl font-semibold">
-          <p>Rp. 100.000</p>
+          <p>Rp. {price}</p>
         </div>
       </div>
     </div>
