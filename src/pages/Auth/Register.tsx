@@ -25,7 +25,7 @@ const Register = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(false);
     e.preventDefault();
 
@@ -92,10 +92,9 @@ const Register = () => {
             <select
               id="select-role"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
-              defaultValue={"DEFAULT"}
               onChange={handleRole}
             >
-              <option disabled selected>
+              <option disabled defaultValue={"DEFAULT"}>
                 Pilih Salah Satu
               </option>
               <option value="Student">Student</option>

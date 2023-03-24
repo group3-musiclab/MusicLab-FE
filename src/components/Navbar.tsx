@@ -1,5 +1,8 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../utils/Swal";
 const ReusableNav = () => {
   return (
     <>
@@ -38,6 +41,9 @@ const ReusableNav = () => {
               <li>
                 <a className="text-white font-bold font-poppins">Testimonial</a>
               </li>
+              <li>
+                <a className="text-white font-bold font-poppins">Logout</a>
+              </li>
             </ul>
           </div>
 
@@ -60,12 +66,14 @@ const ReusableNav = () => {
             <li>
               <a className="text-black font-bold font-poppins">Testimonial</a>
             </li>
+            <li>
+              <a className="text-black font-bold font-poppins">Logout</a>
+            </li>
           </ul>
 
           <a className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white">
             Profile
           </a>
-
         </div>
       </div>
     </>
@@ -73,6 +81,20 @@ const ReusableNav = () => {
 };
 
 const NavMain = () => {
+  const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [cookie, removeCookie] = useCookies(["token"]);
+
+  // const handleLogout = () => {
+  //   removeCookie("token", { path: "/homepage" });
+  //   navigate("/");
+  //   MySwal.fire({
+  //     title: "See Ya",
+  //     text: "You have been Logged out",
+  //     showCancelButton: false,
+  //   });
+  // };
   return (
     <>
       <div className="navbar mx-auto p-8">
@@ -109,6 +131,14 @@ const NavMain = () => {
               </li>
               <li>
                 <a className="text-white font-bold font-poppins">Testimonial</a>
+              </li>
+              <li>
+                <a
+                  className="text-white font-bold font-poppins"
+                  // onClick={handleLogout}
+                >
+                  Logout
+                </a>
               </li>
             </ul>
           </div>
