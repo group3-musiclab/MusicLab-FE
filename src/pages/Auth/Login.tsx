@@ -23,14 +23,14 @@ const Login = () => {
 
   useEffect(() => {
     if (email && password && role) {
-      setDisabled(disabled);
+      setDisabled(false);
     } else {
       setDisabled(true);
     }
 
-    // return () => {
-    //   setDisabled(disabled);
-    // };
+    return () => {
+      setDisabled(disabled);
+    };
   }, [email, password, role]);
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,6 +61,13 @@ const Login = () => {
       })
       .catch((err) => {
         console.log(err);
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Incorrect Email And Password",
+          text: message,
+          showCancelButton: false,
+        });
       })
       .finally(() => setLoading(false));
   };
@@ -128,6 +135,7 @@ const Login = () => {
                   id="btn-login"
                   label="Login"
                   className="bg-button w-10/12 lg:w-6/12 rounded-lg py-2 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
+                  loading={loading || disabled}
                 />
               </div>
             </form>

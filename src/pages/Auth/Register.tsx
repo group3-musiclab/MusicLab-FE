@@ -1,4 +1,4 @@
-import React, { ReactHTMLElement, useState } from "react";
+import React, { ReactHTMLElement, useState, useEffect } from "react";
 import Poster from "../../assets/poster.webp";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
@@ -24,6 +24,18 @@ const Register = () => {
   const [role, setRole] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  useEffect(() => {
+    if (name && email && role && password) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+
+    return () => {
+      setDisabled(false);
+    };
+  }, [name, email, password, role]);
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(false);
@@ -129,6 +141,7 @@ const Register = () => {
                 id="btn-register"
                 label="Register"
                 className="bg-button w-10/12 lg:w-7/12 rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-600"
+                loading={loading || disabled}
               />
             </div>
           </div>
