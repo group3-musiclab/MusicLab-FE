@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
-import images from "../../assets/Ana.svg";
+import images from "../../assets/Ana.webp";
 import facebook from "../../assets/Facebook.svg";
 import instagram from "../../assets/insta.svg";
 import twitter from "../../assets/Twitter.svg";

@@ -61,7 +61,7 @@ function App() {
     },
     {
       path: "/",
-      element: checkToken ? <MainHomePage /> : <Navigate to="/" />,
+      element: <MainHomePage />,
     },
     {
       path: "/genre",
