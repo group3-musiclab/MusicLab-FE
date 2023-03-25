@@ -99,7 +99,11 @@ const DetailTeacher = () => {
           <div className="text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
-            <p className="font-semibold">{instrument}</p>
+            <div className="font-semibold space-x-2">
+              {instrument.map((item, index) => (
+                <a key={index} className="text-black">{item.name}</a>
+              ))}
+            </div>
             <div className="mt-2">
               <p className="font-semibold opacity-75">Ulasan</p>
               <p className="text-sm font-bold">47.889</p>
