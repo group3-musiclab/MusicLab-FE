@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -7,24 +8,23 @@ import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
 import { ProfileType } from "../../utils/types/Profile";
+import { InstrumenType } from "../../utils/types/Instrument";
 import images from "../../assets/Ana.svg";
 
 const DetailTeacher = () => {
-
+  const { id: mentor_id } = useParams();
   const [user, SetUser] = useState<ProfileType>();
-  const [instrument, SetInstrument] = useState<string>("");
-  const [loading, SetLoading] = useState<boolean>(false);
+  const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const [cookie, SetCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
-  let checkRole = cookie.role;
 
   useEffect(() => {
     Profile();
-    Instrument();
+    TypeInstrument();
   }, []);
 
   function Profile() {
-    axios.get(`https://app.swaggerhub.com/apis-docs/KHARISMAJANUAR/MusicLab-API/1.0.0/mentors/profile`, {
+    axios.get(`/mentors/profile`, {
       headers: {
         Authorization: `Bearer ${checkToken}`,
       },
@@ -32,24 +32,27 @@ const DetailTeacher = () => {
     .then((response) => {
       const data = response.data.data;
       SetUser(data);
-      console.log("datas", response.data.data);
     })
     .catch((error) => {
       console.log(error);
     })
   };
 
-  function Instrument() {
-    axios.get(`https://app.swaggerhub.com/apis-docs/KHARISMAJANUAR/MusicLab-API/1.0.0/mentors/instrument`)
-    .then((response) => {
-      const datas = response.data.data;
-      SetInstrument(datas);
-      console.log("instrument", response.data.data);
+  function TypeInstrument() {
+    axios.get(`/instruments`, {
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
     })
-    .catch((error) => {
-      console.log(error);
-    })
-  };
+   .then((response) => {
+    const datas = response.data.data;
+    SetInstrument(datas);
+    console.log("datas", response.data.data);
+   })
+   .catch((error) => {
+    console.log(error);
+   })
+  }
 
   return (
     <Layout>
@@ -58,9 +61,11 @@ const DetailTeacher = () => {
           <div className="text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
-            <p className="font-semibold">
-              {instrument}
-            </p>
+            <div className="font-semibold space-x-2">
+              {instrument.map((item, index) => (
+                <a key={index} className="text-black">{item.name}</a>
+              ))}
+            </div>
             <div className="mt-2">
               <p className="font-semibold opacity-75">Ulasan</p>
               <p className="text-sm font-bold">47.889</p>
@@ -90,7 +95,7 @@ const DetailTeacher = () => {
             </div>
           </div>
           <div className="w-full md:w-10/12 ml-40">
-            <img src={images} alt="photo" width={250} />
+            <img src={user?.avatar} alt="photo" width={250} />
             <div className="text-black text-md font-semibold ml-16 sm:ml-10 mt-2">
               <p>
                 Address : <span>{user?.address}</span>
