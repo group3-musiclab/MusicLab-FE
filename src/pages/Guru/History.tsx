@@ -7,7 +7,7 @@ export default function History() {
     <>
       <Layout>
         <div className="w-full min-h-screen">
-          <div className="w-[85%] mx-auto mt-10 mb-5 pl-5">
+         <div className="w-[85%] mx-auto mt-10 mb-5 pl-5">
             <h1 className="text-button font-bold text-2xl">Histori Mengajar</h1>
           </div>
           <div className="overflow-x-auto ">
