@@ -61,14 +61,14 @@ function App() {
     },
     {
       path: "/",
-      element: checkToken ? <MainHomePage /> : <Navigate to="/" />,
+      element: <MainHomePage />,
     },
     {
       path: "/genre",
       element: checkToken ? <Genre /> : <Navigate to="/" />,
     },
     {
-      path: "/editTeacher",
+      path: "/editTeacher/:id",
       element: checkToken ? <EditTeacher /> : <Navigate to="/" />,
     },
     {

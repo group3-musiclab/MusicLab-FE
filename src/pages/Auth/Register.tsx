@@ -79,7 +79,7 @@ const Register = () => {
     <div className="w-full h-full bg-white flex flex-row">
       <div className="flex-1 lg:flex hidden h-auto" style={background}></div>
       <div className="flex-1 h-auto">
-        <h1 className=" text-2xl lg:text-4xl font-bold text-center  font-poppins text-black mt-16 lg:mt-24">
+        <h1 className=" text-2xl lg:text-4xl font-bold text-center  font-poppins text-black mt-16 ">
           Register
         </h1>
         <form onSubmit={handleRegister}>
@@ -149,10 +149,10 @@ const Register = () => {
         <p className="text-center text-black  font-semibold mt-5 font-poppins">
           Don't Have an Account?{" "}
           <span className="font-bold font-poppins">
-            <Link to="/">Login</Link>
+            <Link to="/login">Login</Link>
           </span>
         </p>
-        <div className="pb-16 lg:pb-24"></div>
+        <div className="pb-16 "></div>
       </div>
     </div>
   );
