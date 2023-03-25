@@ -9,11 +9,9 @@ import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
 import { ProfileType } from "../../utils/types/Profile";
-import { useNavigate } from "react-router";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
-
 
 const DetailTeacher = () => {
   const MySwal = withReactContent(Swal);
@@ -35,19 +33,20 @@ const DetailTeacher = () => {
   }, []);
 
   function Profile() {
-    axios.get(`/mentors/profile`, {
-      headers: {
-        Authorization: `Bearer ${checkToken}`,
-      },
-    })
-    .then((response) => {
-      const data = response.data.data;
-      SetUser(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  };
+    axios
+      .get(`/mentors/profile`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const data = response.data.data;
+        SetUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function Instrument() {
     axios
@@ -99,7 +98,7 @@ const DetailTeacher = () => {
           <div className="text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
-            <p className="font-semibold">{instrument}</p>
+            {/* <p className="font-semibold">{instrument}</p> */}
             <div className="mt-2">
               <p className="font-semibold opacity-75">Ulasan</p>
               <p className="text-sm font-bold">47.889</p>
