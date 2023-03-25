@@ -16,6 +16,7 @@ import Profile from "../pages/User/Profile";
 import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
 import HIstory from "../pages/User/HIstory";
 import History from "../pages/Guru/History";
+import Payment from "../pages/User/Payment";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
@@ -99,6 +100,10 @@ function App() {
       path: "/historyTeacher",
       element: checkToken ? <History /> : <Navigate to="/" />,
     },
+    {
+      path: "/payment",
+      element: checkToken? <Payment /> : <Navigate to="/" />,
+    }
   ]);
 
   return <RouterProvider router={router} />;
