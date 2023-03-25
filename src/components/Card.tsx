@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-
+import React, { FC, useContext } from "react";
+import { ApiContext } from "../utils/context/contextApi";
+import { useNavigate } from "react-router";
 
 import image from "../assets/Drum.jpg";
 import ana from "../assets/Ana.webp";
@@ -16,7 +17,7 @@ interface CardCourseProps {
   price: any;
 }
 
-const Card = ({id, image, name, price}: CardCourseProps) => {
+const Card = ({ id, image, name, price }: CardCourseProps) => {
   return (
     <div id={id} className="card-compact w-full card bg-white shadow-xl">
       <figure>
@@ -65,38 +66,31 @@ interface CardMentorProps {
   name?: string;
   skills?: string;
   desc?: string;
-  groupImg?: any;
 }
 
-const CardMentor = ({
-  image,
-  name,
-  skills,
-  desc,
-  groupImg,
-}: CardMentorProps) => {
+const CardMentor = ({ image, name, desc }: CardMentorProps) => {
+  const navigate = useNavigate();
+  const user = useContext(ApiContext);
   return (
     <>
       <div className="flex flex-col lg:flex-row w-full  shadow-xl rounded-xl bg-slate-200 mt-10">
         <div className="flex-1">
           <img
             src={image}
-            className="rounded-xl w-full lg:w-[17rem] h-[20rem] max-w-xl object-fit object-fill "
+            className="rounded-xl w-full lg:w-[14rem] h-[16em] max-w-xl object-fit object-fill "
+            onClick={() => navigate(`/profileTeacher/${user.id}`)}
           />
         </div>
         <div className="flex-1 flex flex-col pl-7 lg:pl-5">
           <h1 className="text-black font-bold font-poppins text-2xl mt-10">
             {name}
           </h1>
-          <h2 className="text-slate-500 font-semibold font-poppins text-md mt-1">
-            {skills}
-          </h2>
+          {/* <h2 className="text-slate-500 font-semibold font-poppins text-md mt-1">
+            {user.}
+          </h2> */}
           <p className="text-black font-poppins font-normal text-md mt-3 w-10/12">
             {desc}
           </p>
-          <div className="flex-1 flex flex-row mt-8 lg:pb-0 pb-10">
-            {groupImg}
-          </div>
         </div>
       </div>
     </>

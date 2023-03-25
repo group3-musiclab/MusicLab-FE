@@ -38,7 +38,7 @@ function App() {
       element: <Register />,
     },
     {
-      path: "/profileTeacher",
+      path: "/profileTeacher/:id",
       element: <DetailTeacher />,
     },
     {

@@ -17,7 +17,11 @@ export default function EditTeacher() {
   const [editUser, setEditUser] = useState<EditProfilType>({});
   const [editPassword, setEditPassword] = useState<EditPassword>({});
   const [user, SetUser] = useState<ProfileType>();
-  const [pictures, setPictures] = useState<string>("");
+  const [certificate_file, setSertificateFile] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [type, setType] = useState<string>("");
+
+  const [pictures, setPictures] = useState<any>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -73,7 +77,7 @@ export default function EditTeacher() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profileTeacher");
+        navigate("/profileTeacher/:id");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -87,7 +91,7 @@ export default function EditTeacher() {
       .finally(() => setLoading(false));
   };
 
-  const handleUpdateProfile = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -97,7 +101,7 @@ export default function EditTeacher() {
     }
 
     axios
-      .put("/mentors", formData, {
+      .put("mentors", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -111,7 +115,7 @@ export default function EditTeacher() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profileTeacher");
+        navigate("/profileTeacher/:id");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -131,6 +135,39 @@ export default function EditTeacher() {
     let temp = { ...editUser };
     temp[key] = value;
     setEditUser(temp);
+  };
+
+  const handlePostCredentials = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("certificate_file", certificate_file);
+    formData.append("name", name);
+    formData.append("type", type);
+
+    axios
+      .post("/mentors/credentials", formData)
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          title: "Succesfully Upload Certificate",
+          text: message,
+          showCancelButton: false,
+        });
+        navigate("/profileTeacher/:id");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Please Fill The Form with Correct Format",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -158,14 +195,65 @@ export default function EditTeacher() {
                       if (!e.currentTarget.files) {
                         return;
                       }
-
                       setPictures(
                         URL.createObjectURL(e.currentTarget.files[0])
                       );
-                      handleChange(e.currentTarget.files[0], "avatar");
+                      handleChange(e.currentTarget.files[0], "avatar_file");
                     }}
                   />
-                  <h1 className="text-center text-xl font-poppins text-black font-bold mt-10">
+                  <h1 className="text-center text-xl font-poppins text-black font-bold mt-12">
+                    Upload Sertifikat
+                  </h1>
+                  <label className="label">
+                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
+                      Tipe Sertifikat
+                    </span>
+                  </label>
+                  <select
+                    id="select-role"
+                    className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
+                    onChange={(e: any) => setType(e.target.value)}
+                  >
+                    <option disabled defaultValue={"DEFAULT"}>
+                      Pilih Salah Satu
+                    </option>
+                    <option value="International">Internasional</option>
+                    <option value="National">Nasional</option>
+                  </select>
+                  <label className="label">
+                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
+                      Nama Sertifikat
+                    </span>
+                  </label>
+                  <Input
+                    id="input-namalengkap"
+                    type="input-sertifikat"
+                    placeholder="Sertifkat Internasional"
+                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
+                    onChange={(e: any) => setName(e.target.value)}
+                  />
+                  <Input
+                    id="input-file"
+                    type="file"
+                    className="file-input h-10 w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto mt-10 border-none"
+                    onChange={(e: any) => {
+                      if (!e.currentTarget.files) {
+                        return;
+                      }
+
+                      setSertificateFile(e.currentTarget.files[0]);
+                    }}
+                  />
+                  <div className="w-full flex justify-center mt-10">
+                    <Button
+                      id="btn-uploadsertifikat"
+                      label="Upload Sertifikat"
+                      className="bg-button w-[20rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
+                      onClick={(e: any) => handlePostCredentials(e)}
+                    />
+                  </div>
+
+                  <h1 className="text-center text-xl font-poppins text-black font-bold mt-12">
                     Update Password
                   </h1>
 
@@ -221,47 +309,8 @@ export default function EditTeacher() {
                       onClick={(e: any) => handleUpdatePassword(e)}
                     />
                   </div>
-
-                  {/* <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
-                      Tipe Sertifikat
-                    </span>
-                  </label>
-                  <select
-                    id="select-role"
-                    className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                    defaultValue={"DEFAULT"}
-                  >
-                    <option disabled selected>
-                      Pilih Salah Satu
-                    </option>
-                    <option value="Student">Student</option>
-                    <option value="Mentor">Mentor</option>
-                  </select>
-                  <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
-                      Nama Sertifikat
-                    </span>
-                  </label>
-                  <Input
-                    id="input-namalengkap"
-                    type="input-sertifikat"
-                    placeholder="Sertifkat Internasional"
-                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                  />
-                  <Input
-                    id="input-file"
-                    type="file"
-                    className="file-input h-10 w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto mt-10 border-none"
-                  />
-                  <div className="w-full flex justify-center mt-10">
-                    <Button
-                      id="btn-lihatdaftar-kursus"
-                      label="Lihat Daftar Kursus"
-                      className="bg-button w-[20rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
-                    />
-                  </div> */}
                 </div>
+
                 <div className="flex-1 lg:ml-0 ml-10">
                   <form>
                     <div className="form-control w-full mx-auto">
@@ -354,7 +403,7 @@ export default function EditTeacher() {
                         id="input-socialmedia-instagram"
                         type="text"
                         defaultValue={user?.instagram}
-                        placeholder="@test@gmail.com"
+                        placeholder=""
                         className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "instagram")
@@ -451,7 +500,7 @@ export default function EditTeacher() {
                         label="Kembali"
                         defaultValue={user?.address}
                         className="bg-button w-[8rem] lg:w-[15rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
-                        onClick={() => navigate("/profileTeacher")}
+                        onClick={() => navigate("/profileTeacher/:id")}
                       />
                       <Button
                         id="btn-Update"

@@ -8,20 +8,21 @@ import Layout from "../../components/Layout";
 import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
-import images from "../../assets/Ana.webp";
-import facebook from "../../assets/Facebook.svg";
-import instagram from "../../assets/insta.svg";
-import twitter from "../../assets/Twitter.svg";
-import youtube from "../../assets/Youtube.svg";
 import { ProfileType } from "../../utils/types/Profile";
+import { useNavigate } from "react-router";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
 
+
 const DetailTeacher = () => {
+  const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
+  const [user, SetUser] = useState<ProfileType>({});
+  const [loading, SetLoading] = useState<boolean>(false);
+  const [cookie, removeCookie] = useCookies(["token", "role"]);
   const { id: mentor_id } = useParams();
-  const [user, SetUser] = useState<ProfileType>();
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
-  const [cookie, SetCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
 
   useEffect(() => {
@@ -59,6 +60,37 @@ const DetailTeacher = () => {
         console.log(error);
       });
   }
+
+  const handleDeleteAccount = () => {
+    MySwal.fire({
+      title: "Are You Sure?",
+      text: "You Can't Retrieve your Data After Delete your Account",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Ya, hapus akun!",
+      cancelButtonText: "Batal",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.delete("mentors");
+        }
+      })
+      .then(() => {
+        removeCookie("token", { path: "/" });
+        navigate("/");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Error",
+          text: message,
+          showCancelButton: false,
+        });
+      });
+  };
 
   return (
     <Layout>
@@ -117,6 +149,12 @@ const DetailTeacher = () => {
                 label="Edit Profile"
                 className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
                 onClick={() => navigate(`/editTeacher/${user?.id}`)}
+              />
+              <Button
+                id="btn-deactivateAccount"
+                label="Deactivate Account"
+                className="btn bg-black text-white mt-2 w-44 border-none"
+                onClick={handleDeleteAccount}
               />
             </div>
           </div>

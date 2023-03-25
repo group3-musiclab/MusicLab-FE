@@ -1,11 +1,11 @@
 export interface EditProfilType {
-  id?: number;
+  id?: any;
   name?: string;
   phone?: string;
   sex?: string;
   about?: string;
   address?: string;
-  avatar?: any;
+  avatar_file?: any;
   email?: string;
   instagram?: string;
 }
