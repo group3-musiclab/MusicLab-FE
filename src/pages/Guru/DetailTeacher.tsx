@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router";
 import axios from "axios";
 
 import Layout from "../../components/Layout";
@@ -10,16 +12,18 @@ import { ProfileType } from "../../utils/types/Profile";
 import { useNavigate } from "react-router";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
+import { InstrumenType } from "../../utils/types/Instrument";
+
 
 const DetailTeacher = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [user, SetUser] = useState<ProfileType>({});
-  const [instrument, SetInstrument] = useState<string>("");
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
+  const { id: mentor_id } = useParams();
+  const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
-  let checkRole = cookie.role;
 
   useEffect(() => {
     Profile();
@@ -31,17 +35,19 @@ const DetailTeacher = () => {
   }, []);
 
   function Profile() {
-    axios
-      .get(`mentors/profile`)
-      .then((response) => {
-        const data = response.data.data;
-        SetUser(data);
-        console.log("datas", response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+    axios.get(`/mentors/profile`, {
+      headers: {
+        Authorization: `Bearer ${checkToken}`,
+      },
+    })
+    .then((response) => {
+      const data = response.data.data;
+      SetUser(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  };
 
   function Instrument() {
     axios
@@ -49,7 +55,6 @@ const DetailTeacher = () => {
       .then((response) => {
         const datas = response.data.data;
         SetInstrument(datas);
-        console.log("instrument", response.data.data);
       })
       .catch((error) => {
         console.log(error);

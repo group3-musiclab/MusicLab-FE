@@ -4,8 +4,10 @@ import App from "./routes/App";
 import "./styles/index.css";
 import axios from "axios";
 
+
 import MainHomePage from "./pages/MainHomePage";
 import Store from "./utils/context/store";
+
 
 axios.defaults.baseURL = "http://34.125.243.136/";
 
