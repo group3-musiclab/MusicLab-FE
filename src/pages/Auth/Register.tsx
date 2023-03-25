@@ -106,9 +106,7 @@ const Register = () => {
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
               onChange={handleRole}
             >
-              <option disabled defaultValue={"DEFAULT"}>
-                Pilih Salah Satu
-              </option>
+              <option defaultValue={"DEFAULT"}>Pilih Role</option>
               <option value="Student">Student</option>
               <option value="Mentor">Mentor</option>
             </select>
