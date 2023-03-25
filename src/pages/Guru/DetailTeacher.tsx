@@ -9,7 +9,6 @@ import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
 import { ProfileType } from "../../utils/types/Profile";
-import { useNavigate } from "react-router";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
