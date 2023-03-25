@@ -48,9 +48,12 @@ const ReusableNav = () => {
             </ul>
           </div>
 
-          <a className="btn btn-ghost normal-case text-2xl text-black font-poppins font-bold">
+          <Link
+            to="/"
+            className="btn btn-ghost normal-case text-2xl text-black font-poppins font-bold"
+          >
             MusicLab
-          </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
@@ -147,9 +150,12 @@ const NavMain = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-2xl text-white font-poppins font-bold">
+          <Link
+            to="/"
+            className="btn btn-ghost normal-case text-2xl text-white font-poppins font-bold"
+          >
             MusicLab
-          </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">

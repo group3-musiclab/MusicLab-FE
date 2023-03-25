@@ -6,17 +6,16 @@ import Layout from "../../components/Layout";
 import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
-
 import images from "../../assets/Ana.webp";
 import facebook from "../../assets/Facebook.svg";
 import instagram from "../../assets/insta.svg";
 import twitter from "../../assets/Twitter.svg";
 import youtube from "../../assets/Youtube.svg";
 import { ProfileType } from "../../utils/types/Profile";
-
+import { useNavigate } from "react-router";
 
 const DetailTeacher = () => {
-
+  const navigate = useNavigate();
   const [user, SetUser] = useState<ProfileType>();
   const [instrument, SetInstrument] = useState<string>("");
   const [loading, SetLoading] = useState<boolean>(false);
@@ -27,35 +26,37 @@ const DetailTeacher = () => {
   useEffect(() => {
     Profile();
     Instrument();
+
+    return () => {
+      Profile();
+    };
   }, []);
 
   function Profile() {
-    axios.get(`https://app.swaggerhub.com/apis-docs/KHARISMAJANUAR/MusicLab-API/1.0.0/mentors/profile`, {
-      headers: {
-        Authorization: `Bearer ${checkToken}`,
-      },
-    })
-    .then((response) => {
-      const data = response.data.data;
-      SetUser(data);
-      console.log("datas", response.data.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  };
+    axios
+      .get(`mentors/profile`)
+      .then((response) => {
+        const data = response.data.data;
+        SetUser(data);
+        console.log("datas", response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function Instrument() {
-    axios.get(`https://app.swaggerhub.com/apis-docs/KHARISMAJANUAR/MusicLab-API/1.0.0/mentors/instrument`)
-    .then((response) => {
-      const datas = response.data.data;
-      SetInstrument(datas);
-      console.log("instrument", response.data.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  };
+    axios
+      .get(`mentors/instrument`)
+      .then((response) => {
+        const datas = response.data.data;
+        SetInstrument(datas);
+        console.log("instrument", response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <Layout>
@@ -64,18 +65,14 @@ const DetailTeacher = () => {
           <div className="text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
-            <p className="font-semibold">
-              {instrument}
-            </p>
+            <p className="font-semibold">{instrument}</p>
             <div className="mt-2">
               <p className="font-semibold opacity-75">Ulasan</p>
               <p className="text-sm font-bold">47.889</p>
             </div>
             <div className="mt-7">
               <p className="text-xl font-semibold">About Me</p>
-              <p className="text-lg">
-                {user?.about}
-              </p>
+              <p className="text-lg">{user?.about}</p>
             </div>
             <div className="mt-7">
               <p className="font-semibold text-xl">my Course</p>
@@ -113,6 +110,12 @@ const DetailTeacher = () => {
               <button className="btn bg-[#3A2BE8] text-white mt-2 w-44">
                 kirim pesan
               </button>
+              <Button
+                id="btn-editTeacher"
+                label="Edit Profile"
+                className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
+                onClick={() => navigate(`/editTeacher/${user?.id}`)}
+              />
             </div>
           </div>
         </div>
