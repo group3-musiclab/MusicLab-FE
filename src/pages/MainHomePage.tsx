@@ -25,6 +25,7 @@ import yt from "../assets/icon/Youtube 1.webp";
 import twt from "../assets/icon/Twitter 2.webp";
 import { CardMentor, CardTestimonial } from "../components/Card";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router";
 
 export default function MainHomePage() {
   return (
@@ -43,6 +44,7 @@ export default function MainHomePage() {
 }
 
 const Header = () => {
+  const navigate = useNavigate();
   const background = {
     backgroundImage: `url(${BgBanner})`,
     width: "100%",
@@ -62,6 +64,7 @@ const Header = () => {
             id="btn-findmentor"
             label="Find Mentor"
             className="input input-bordered font-bold font-popins px-20 py-3 bg-white mt-10 text-black hover:bg-black hover:text-white border-none"
+            onClick={() => navigate("/searching")}
           />
         </div>
       </div>
@@ -374,6 +377,7 @@ const Ulasan = () => {
 };
 
 const BookNow = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col lg:flex-row w-[80%]  bg-button lg:h-[10rem] h-[15rem] mt-24 lg:mt-32 mx-auto rounded-2xl items-center justify-center shadow-xl">
@@ -384,9 +388,12 @@ const BookNow = () => {
           Turn your passionate with music better with us
         </p>
         <h1 className="w-[30%] font-semibold lg:text-2xl text-lg text-white items flex justify-center lg:mt-0 mt-5">
-          <button className=" px-16 lg:px-7 py-1 border-white border-2 rounded-xl font-poppins hover:bg-white hover:text-button text-sm lg:text-xl">
-            Book Now
-          </button>
+          <Button
+            id="btn-booking"
+            label="Book Now"
+            className=" px-16 lg:px-7 py-1 border-white border-2 rounded-xl font-poppins hover:bg-white hover:text-button text-sm lg:text-xl"
+            onClick={() => navigate("/searching")}
+          />
         </h1>
       </div>
     </>
