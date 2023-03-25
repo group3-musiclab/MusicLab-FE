@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import Layout from "../../components/Layout";
-import { CardSide } from "../../components/Card";
+import { Card, CardMentor, CardSide } from "../../components/Card";
 import { Input } from "../../components/Input";
+import Pic1 from "../../assets/Anade.webp";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { EditProfilType } from "../../utils/Datatypes";
+import axios from "axios";
 
 const SearchingMentor = () => {
+  const [mentor, setMentor] = useState<EditProfilType>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchDataMentors = () => {
+    setLoading(true);
+    axios
+      .get("mentors")
+      .then((res) => {
+        const { data } = res.data.data;
+        setMentor(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchDataMentors();
+  }, []);
+
   return (
     <Layout>
       <div className="container mx-auto p-9">
@@ -69,12 +94,12 @@ const SearchingMentor = () => {
             </div>
             <div className="card mt-6">
               <div className="m-5 grid grid-cols-2 gap-3">
-                <CardSide />
-                <CardSide />
-                <CardSide />
-                <CardSide />
-                <CardSide />
-                <CardSide />
+                <CardMentor />
+                <CardMentor />
+                <CardMentor />
+                <CardMentor />
+                <CardMentor />
+                <CardMentor />
               </div>
             </div>
           </div>

@@ -6,20 +6,18 @@ import Layout from "../../components/Layout";
 import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 
-import images from "../../assets/Ana.webp";
-import facebook from "../../assets/Facebook.svg";
-import instagram from "../../assets/insta.svg";
-import twitter from "../../assets/Twitter.svg";
-import youtube from "../../assets/Youtube.svg";
 import { ProfileType } from "../../utils/types/Profile";
 import { useNavigate } from "react-router";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
 
 const DetailTeacher = () => {
+  const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [user, SetUser] = useState<ProfileType>();
+  const [user, SetUser] = useState<ProfileType>({});
   const [instrument, SetInstrument] = useState<string>("");
   const [loading, SetLoading] = useState<boolean>(false);
-  const [cookie, SetCookie] = useCookies(["token", "role"]);
+  const [cookie, removeCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
   let checkRole = cookie.role;
 
@@ -58,6 +56,37 @@ const DetailTeacher = () => {
       });
   }
 
+  const handleDeleteAccount = () => {
+    MySwal.fire({
+      title: "Are You Sure?",
+      text: "You Can't Retrieve your Data After Delete your Account",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Ya, hapus akun!",
+      cancelButtonText: "Batal",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.delete("mentors");
+        }
+      })
+      .then(() => {
+        removeCookie("token", { path: "/" });
+        navigate("/");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Error",
+          text: message,
+          showCancelButton: false,
+        });
+      });
+  };
+
   return (
     <Layout>
       <div className="container mx-auto p-10">
@@ -93,7 +122,7 @@ const DetailTeacher = () => {
             </div>
           </div>
           <div className="w-full md:w-10/12 ml-40">
-            <img src={images} alt="photo" width={250} />
+            <img src={user?.avatar} alt="photo" width={250} />
             <div className="text-black text-md font-semibold ml-16 sm:ml-10 mt-2">
               <p>
                 Address : <span>{user?.address}</span>
@@ -115,6 +144,12 @@ const DetailTeacher = () => {
                 label="Edit Profile"
                 className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
                 onClick={() => navigate(`/editTeacher/${user?.id}`)}
+              />
+              <Button
+                id="btn-deactivateAccount"
+                label="Deactivate Account"
+                className="btn bg-black text-white mt-2 w-44 border-none"
+                onClick={handleDeleteAccount}
               />
             </div>
           </div>

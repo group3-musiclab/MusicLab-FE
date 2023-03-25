@@ -213,7 +213,7 @@ const TopPicks = () => {
         <h1 className="text-button text-center font-bold font-poppins text-4xl">
           Top Pick's Teacher
         </h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-10">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-10">
           <div>
             <CardMentor
               name="Ana De Arnas"
@@ -278,7 +278,7 @@ const TopPicks = () => {
               }
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

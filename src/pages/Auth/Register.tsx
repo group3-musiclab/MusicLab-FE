@@ -58,7 +58,7 @@ const Register = () => {
           text: message,
           showCancelButton: false,
         });
-        navigate("/");
+        navigate("/login");
       })
       .catch((err) => {
         const { message } = err.response.data;
