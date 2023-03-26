@@ -4,13 +4,13 @@ import Input from "../../components/Input";
 import Layout from "../../components/Layout";
 
 import { useNavigate } from "react-router";
-import { ProfileStudent } from "../../utils/Datatypes";
+import { ProfileStudent } from "../../utils/types/Datatypes";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 
-import { EditProfileStudent } from "../../utils/Datatypes";
-import { EditPassword } from "../../utils/Datatypes";
+import { EditProfileStudent } from "../../utils/types/Datatypes";
+import { EditPassword } from "../../utils/types/Datatypes";
 
 export default function EditStudent() {
   const MySwal = withReactContent(Swal);

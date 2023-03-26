@@ -18,7 +18,7 @@ import search from "../assets/icon/loupe (2).webp";
 import { CardMentor, CardTestimonial } from "../components/Card";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router";
-import { AllMentor } from "../utils/Datatypes";
+import { AllMentor } from "../utils/types/Datatypes";
 import axios from "axios";
 import Layout from "../components/Layout";
 

@@ -8,8 +8,8 @@ import { ProfileType } from "../../utils/types/Profile";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
-import { EditProfilType } from "../../utils/Datatypes";
-import { EditPassword } from "../../utils/Datatypes";
+import { EditProfilType } from "../../utils/types/Datatypes";
+import { EditPassword } from "../../utils/types/Datatypes";
 
 export default function EditTeacher() {
   const MySwal = withReactContent(Swal);

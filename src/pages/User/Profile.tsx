@@ -4,7 +4,7 @@ import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 
 import images from "../../assets/Ana.webp";
-import { ProfileStudent } from "../../utils/Datatypes";
+import { ProfileStudent } from "../../utils/types/Datatypes";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
