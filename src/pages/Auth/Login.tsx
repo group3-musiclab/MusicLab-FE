@@ -50,8 +50,9 @@ const Login = () => {
         console.log(data.token);
 
         setCookie("token", data.token, { path: "/" });
-        setCookie("role", res.data.role, { path: "/" });
+
         localStorage.setItem("role", data.role);
+        localStorage.setItem("id", data.id);
 
         MySwal.fire({
           title: "Welcome to MusicLab",

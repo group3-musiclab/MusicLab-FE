@@ -6,6 +6,7 @@ import Swal from "../utils/Swal";
 import { Link } from "react-router-dom";
 import { ApiContext } from "../utils/context/contextApi";
 const ReusableNav = () => {
+  const id = localStorage.getItem("id");
   const user = useContext(ApiContext);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
@@ -14,7 +15,6 @@ const ReusableNav = () => {
   const checkToken = cookies.token;
 
   const checkRole = localStorage.getItem("role");
-  console.log(checkRole);
 
   const handleLogout = () => {
     removeCookie("token", { path: "/" });
@@ -97,17 +97,44 @@ const ReusableNav = () => {
             </li>
             <li>
               <a
-                className="text-white font-bold font-poppins"
+                className="text-black font-bold font-poppins"
                 onClick={handleLogout}
               >
                 Logout
               </a>
             </li>
           </ul>
-
-          <a className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white">
-            Profile
-          </a>
+          {checkToken && checkRole === "Student" ? (
+            <>
+              {" "}
+              <Link
+                to="/profile"
+                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
+              >
+                Profile
+              </Link>
+            </>
+          ) : checkToken && checkRole === "Mentor" ? (
+            <>
+              {" "}
+              <p
+                onClick={() => navigate(`profileTeacher/${id}`)}
+                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
+              >
+                Profile
+              </p>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Link
+                to="/login"
+                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </>
@@ -121,9 +148,8 @@ const NavMain = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const checkToken = cookies.token;
-
+  const id = localStorage.getItem("id");
   const checkRole = localStorage.getItem("role");
-  console.log(checkRole);
 
   const handleLogout = () => {
     removeCookie("token");
@@ -218,7 +244,7 @@ const NavMain = () => {
             <>
               {" "}
               <p
-                onClick={() => navigate(`profileTeacher/${user.id}`)}
+                onClick={() => navigate(`profileTeacher/${id}`)}
                 className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
               >
                 Profile

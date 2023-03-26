@@ -14,12 +14,15 @@ import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
 
 const DetailTeacher = () => {
+  const idUsers = localStorage.getItem("id");
+  const { id } = useParams();
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [user, SetUser] = useState<ProfileType>({});
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
-  const { id: mentor_id } = useParams();
+  console.log(`id=${idUsers} || userId=${user.id}`);
+
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
 
@@ -34,11 +37,7 @@ const DetailTeacher = () => {
 
   function Profile() {
     axios
-      .get(`/mentors/profile`, {
-        headers: {
-          Authorization: `Bearer ${checkToken}`,
-        },
-      })
+      .get(`/mentors/${id}`)
       .then((response) => {
         const data = response.data.data;
         SetUser(data);
@@ -148,21 +147,31 @@ const DetailTeacher = () => {
                 <img src={twitter} alt="twitter" width={25} />
                 <img src={youtube} alt="youtube" width={25} /> */}
               </div>
-              <button className="btn bg-[#3A2BE8] text-white mt-2 w-44">
-                kirim pesan
-              </button>
-              <Button
-                id="btn-editTeacher"
-                label="Edit Profile"
-                className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
-                onClick={() => navigate(`/editTeacher/${user?.id}`)}
-              />
-              <Button
-                id="btn-deactivateAccount"
-                label="Deactivate Account"
-                className="btn bg-black text-white mt-2 w-44 border-none"
-                onClick={handleDeleteAccount}
-              />
+
+              {idUsers == user.id ? (
+                <>
+                  {" "}
+                  <Button
+                    id="btn-editTeacher"
+                    label="Edit Profile"
+                    className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
+                    onClick={() => navigate(`/editTeacher/${user?.id}`)}
+                  />
+                  <Button
+                    id="btn-deactivateAccount"
+                    label="Deactivate Account"
+                    className="btn bg-black text-white mt-2 w-44 border-none"
+                    onClick={handleDeleteAccount}
+                  />
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <button className="btn bg-[#3A2BE8] text-white mt-2 w-44">
+                    kirim pesan
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

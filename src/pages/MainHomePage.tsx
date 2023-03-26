@@ -1,5 +1,5 @@
-import React from "react";
-import Layout from "../components/Layout";
+import { useState, useEffect } from "react";
+
 import BgBanner from "../assets/bg-banner.webp";
 import Button from "../components/Button";
 import { NavMain } from "../components/Navbar";
@@ -15,17 +15,11 @@ import calendar from "../assets/icon/calendar (1).webp";
 import choose from "../assets/icon/choose.webp";
 import search from "../assets/icon/loupe (2).webp";
 
-import pic1 from "../assets/pic-1 (1).webp";
-import pic2 from "../assets/pic-1 (2).webp";
-import pic3 from "../assets/pic-1 (3).webp";
-import pic4 from "../assets/pic-1 (4).webp";
-import fb from "../assets/icon/Facebook 2.webp";
-import ig from "../assets/icon/Instragram 2.webp";
-import yt from "../assets/icon/Youtube 1.webp";
-import twt from "../assets/icon/Twitter 2.webp";
 import { CardMentor, CardTestimonial } from "../components/Card";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router";
+import { AllMentor } from "../utils/Datatypes";
+import axios from "axios";
 
 export default function MainHomePage() {
   return (
@@ -207,13 +201,52 @@ const Information = () => {
 };
 
 const TopPicks = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [topWeek, setTopWeek] = useState<AllMentor[]>([]);
+  const navigate = useNavigate();
+
+  const fetchDataTopWeek = () => {
+    setLoading(true);
+
+    axios
+      .get("/mentors/topweek")
+      .then((res) => {
+        const { data } = res.data;
+        setTopWeek(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchDataTopWeek();
+  }, []);
+
   return (
     <>
       <div className="w-[80%] mx-auto min-h-screen mt-10">
         <h1 className="text-button text-center font-bold font-poppins text-4xl">
           Top Pick's Teacher
         </h1>
-        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-10">
+          {topWeek?.map((item) => {
+            return (
+              <>
+                <CardMentor
+                  image={item.avatar}
+                  name={item.name}
+                  desc={item.about}
+                  instagram={item.instagram}
+                  rating={item.rating}
+                  onClick={() => navigate(`/profileTeacher/${item.id}`)}
+                />
+              </>
+            );
+          })}
+        </div>
+        {/* 
           <div>
             <CardMentor
               name="Ana De Arnas"

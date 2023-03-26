@@ -10,6 +10,19 @@ export interface EditProfilType {
   instagram?: string;
 }
 
+export interface AllMentor {
+  id?: any;
+  name?: string;
+  phone?: string;
+  sex?: string;
+  about?: string;
+  address?: string;
+  avatar?: any;
+  email?: string;
+  instagram?: string;
+  rating?: any;
+}
+
 export interface EditPassword {
   old_password?: any;
   new_password?: string;
