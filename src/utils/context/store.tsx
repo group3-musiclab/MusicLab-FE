@@ -13,11 +13,11 @@ function Store({ children }: store) {
 
   function Profile() {
     axios
-      .get(`mentors/profile`)
+      .get(`mentors`)
       .then((response) => {
-        const data = response.data.data;
+        const data = response.data;
         setUser(data);
-        console.log("datas", response.data.data);
+        console.log("id", response.data);
       })
       .catch((error) => {
         console.log(error);

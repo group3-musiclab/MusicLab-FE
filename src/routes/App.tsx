@@ -43,6 +43,7 @@ function App() {
       path: "/profileTeacher/:id",
       element: <DetailTeacher />,
     },
+
     {
       path: "/searching",
       element: <SearchingMentor />,
@@ -105,11 +106,10 @@ function App() {
       path: "/editStudent",
       element: checkToken ? <EditStudent /> : <Navigate to="/" />,
     },
-
+    {
       path: "/payment",
-      element: checkToken? <Payment /> : <Navigate to="/" />,
-    }
-
+      element: checkToken ? <Payment /> : <Navigate to="/" />,
+    },
   ]);
 
   return <RouterProvider router={router} />;

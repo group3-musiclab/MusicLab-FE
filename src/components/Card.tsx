@@ -1,6 +1,6 @@
 import React, { FC, useContext } from "react";
 import { ApiContext } from "../utils/context/contextApi";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import image from "../assets/Drum.jpg";
 import ana from "../assets/Ana.webp";
@@ -9,6 +9,7 @@ import facebook from "../assets/icon/Facebook 2.webp";
 import instagram from "../assets/insta.webp";
 import twitter from "../assets/Twitter.webp";
 import youtube from "../assets/Youtube.webp";
+import Button from "./Button";
 
 interface CardCourseProps {
   id: string;
@@ -64,13 +65,25 @@ const Card = ({ id, image, name, price }: CardCourseProps) => {
 interface CardMentorProps {
   image?: any;
   name?: string;
-  skills?: string;
+  instagram?: string;
+  instrument_name?: any;
   desc?: string;
+  rating?: any;
+  onClick?: any;
 }
 
-const CardMentor = ({ image, name, desc }: CardMentorProps) => {
+const CardMentor: FC<CardMentorProps> = ({
+  image,
+  name,
+  desc,
+  instagram,
+  instrument_name,
+  rating,
+  onClick,
+}) => {
   const navigate = useNavigate();
   const user = useContext(ApiContext);
+  const { id } = useParams();
   return (
     <>
       <div className="flex flex-col lg:flex-row w-full  shadow-xl rounded-xl bg-slate-200 mt-10">
@@ -78,19 +91,27 @@ const CardMentor = ({ image, name, desc }: CardMentorProps) => {
           <img
             src={image}
             className="rounded-xl w-full lg:w-[14rem] h-[16em] max-w-xl object-fit object-fill "
-            onClick={() => navigate(`/profileTeacher/${user.id}`)}
+            onClick={onClick}
           />
         </div>
         <div className="flex-1 flex flex-col pl-7 lg:pl-5">
-          <h1 className="text-black font-bold font-poppins text-2xl mt-10">
+          <h1 className="text-black font-bold font-poppins text-xll mt-10">
             {name}
           </h1>
-          {/* <h2 className="text-slate-500 font-semibold font-poppins text-md mt-1">
-            {user.}
-          </h2> */}
+          <h2 className="text-slate-500 font-semibold font-poppins text-md mt-1">
+            {instrument_name}
+          </h2>
           <p className="text-black font-poppins font-normal text-md mt-3 w-10/12">
             {desc}
           </p>
+          <div className="flex flex-row">
+            <div className="flex-1">
+              <a href={instagram} target="_blank" rel="noreferrer">
+                <Button label="Instagram" />
+              </a>
+            </div>
+            <div className="flex-1">{rating}</div>
+          </div>
         </div>
       </div>
     </>

@@ -7,21 +7,23 @@ import Pic1 from "../../assets/Anade.webp";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { EditProfilType } from "../../utils/Datatypes";
+import { AllMentor } from "../../utils/Datatypes";
 import axios from "axios";
+import Button from "../../components/Button";
+import { useNavigate } from "react-router";
 
 const SearchingMentor = () => {
-  const [mentor, setMentor] = useState<EditProfilType>();
+  const [mentor, setMentor] = useState<AllMentor[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const fetchDataMentors = () => {
     setLoading(true);
     axios
       .get("mentors")
       .then((res) => {
-        const { data } = res.data.data;
+        const { data } = res.data;
         setMentor(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -94,12 +96,18 @@ const SearchingMentor = () => {
             </div>
             <div className="card mt-6">
               <div className="m-5 grid grid-cols-2 gap-3">
-                <CardMentor />
-                <CardMentor />
-                <CardMentor />
-                <CardMentor />
-                <CardMentor />
-                <CardMentor />
+                {mentor?.map((item) => {
+                  return (
+                    <CardMentor
+                      image={item.avatar}
+                      name={item.name}
+                      desc={item.about}
+                      instagram={item.instagram}
+                      rating={item.rating}
+                      onClick={() => navigate(`/profileTeacher/${item.id}`)}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
