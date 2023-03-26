@@ -18,6 +18,7 @@ import HIstory from "../pages/User/HIstory";
 import History from "../pages/Guru/History";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import EditStudent from "../pages/User/EditStudent";
 
 function App() {
   const [cookie, setCookie] = useCookies(["token"]);
@@ -98,6 +99,10 @@ function App() {
     {
       path: "/historyTeacher",
       element: checkToken ? <History /> : <Navigate to="/" />,
+    },
+    {
+      path: "/editStudent",
+      element: checkToken ? <EditStudent /> : <Navigate to="/" />,
     },
   ]);
 
