@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import BgBanner from "../assets/bg-banner.webp";
 import Button from "../components/Button";
-import { NavMain } from "../components/Navbar";
+import { ReusableNav } from "../components/Navbar";
 import icon1 from "../assets/icon/Icon-1.webp";
 import Logo from "../assets/logo-musiclab.webp";
 
@@ -20,18 +20,23 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router";
 import { AllMentor } from "../utils/Datatypes";
 import axios from "axios";
+import Layout from "../components/Layout";
 
 export default function MainHomePage() {
   return (
     <>
       <div className="w-full min-h-screen overflow-auto bg-white">
-        <Header />
-        <Information />
-        <TopPicks />
-        <AboutUs />
-        <Ulasan />
-        <BookNow />
-        <Footer />
+        <Layout>
+          <Header />
+          <section id="service">
+            <Information />
+          </section>
+          <TopPicks />
+          <AboutUs />
+          <Ulasan />
+          <BookNow />
+          <Footer />
+        </Layout>
       </div>
     </>
   );
@@ -49,7 +54,6 @@ const Header = () => {
   return (
     <>
       <div className="w-full h-auto" style={background}>
-        <NavMain />
         <div className="w-full h-[45rem] flex flex-col items-center justify-center">
           <h1 className=" text-4xl lg:text-6xl font-bold w-[20rem] lg:w-[50rem] text-center text-white">
             Turn your passionate with music better with us
@@ -71,9 +75,11 @@ const Information = () => {
     <>
       <div className="w-full min-h-screen">
         {/*Section Why Choosing Us */}
+
         <h1 className="text-button text-2xl lg:text-4xl font-bold font-poppins text-center mt-16">
           Why Choosing Us?
         </h1>
+
         <div className="w-[80%] lg:h-full mx-auto mt-16">
           <div className="grid lg:grid-cols-3 grid-cols-1 gap-10 lg:overflow-hidden h-[96rem] lg:h-[40rem]">
             <div>
@@ -322,7 +328,10 @@ const AboutUs = () => {
     <>
       <div className="flex flex-col-reverse lg:flex-row w-[80%] mx-auto h-[40rem] lg:h-[30rem] mt-10">
         <div className="flex-1 flex-col flex justify-center text-center lg:ml-20">
-          <h1 className="text-button font-bold lg:flex text-4xl font-poppins lg:mt-0 -mt-22">
+          <h1
+            id="aboutus"
+            className="text-button font-bold lg:flex text-4xl font-poppins lg:mt-0 -mt-22"
+          >
             About Us
           </h1>
           <hr className="border-2 border-slate-300 w-full lg:w-6/12 mt-3" />

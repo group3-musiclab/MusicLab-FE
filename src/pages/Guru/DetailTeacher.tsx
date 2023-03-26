@@ -12,15 +12,19 @@ import { ProfileType } from "../../utils/types/Profile";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
+import { GenreType } from "../../utils/Datatypes";
 
 const DetailTeacher = () => {
   const idUsers = localStorage.getItem("id");
   const { id } = useParams();
+  const { instrument_id } = useParams();
+  const { genre_id } = useParams();
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [user, SetUser] = useState<ProfileType>({});
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
+  const [genre, setGenre] = useState<GenreType[]>([]);
   console.log(`id=${idUsers} || userId=${user.id}`);
 
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
@@ -29,9 +33,12 @@ const DetailTeacher = () => {
   useEffect(() => {
     Profile();
     Instrument();
+    Genre();
 
     return () => {
       Profile();
+      Instrument();
+      Genre();
     };
   }, []);
 
@@ -49,10 +56,23 @@ const DetailTeacher = () => {
 
   function Instrument() {
     axios
-      .get(`mentors/instrument`)
+      .get(`mentors/${id}/instruments`)
       .then((response) => {
         const datas = response.data.data;
+        console.log(datas);
         SetInstrument(datas);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function Genre() {
+    axios
+      .get(`mentors/${id}/genres`)
+      .then((response) => {
+        const datas = response.data.data;
+        setGenre(datas);
       })
       .catch((error) => {
         console.log(error);
@@ -90,6 +110,68 @@ const DetailTeacher = () => {
       });
   };
 
+  const handleDeleteIstrument = () => {
+    MySwal.fire({
+      title: "Are You Sure?",
+
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Ya, hapus Instrument!",
+      cancelButtonText: "Batal",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(`mentors/instruments/${instrument_id}`);
+        }
+      })
+      .then(() => {
+        navigate("/");
+      })
+
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Error",
+          text: message,
+          showCancelButton: false,
+        });
+      });
+  };
+
+  const handleDeleteGenre = () => {
+    MySwal.fire({
+      title: "Are You Sure?",
+
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Ya, hapus Genre!",
+      cancelButtonText: "Batal",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(`mentors/genres/${genre_id}`);
+        }
+      })
+      .then(() => {
+        navigate("/");
+      })
+
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Error",
+          text: message,
+          showCancelButton: false,
+        });
+      });
+  };
+
   return (
     <Layout>
       <div className="container mx-auto p-10">
@@ -97,15 +179,29 @@ const DetailTeacher = () => {
           <div className="text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
-
-            <div className="font-semibold space-x-2">
-              {instrument.map((item, index) => (
-                <a key={index} className="text-black">
-                  {item.name}
-                </a>
-              ))}
+            <div className="flex flex-row">
+              <div className="font-semibold space-x-2">
+                {instrument?.map((item, index) => (
+                  <>
+                    <a key={index} className="text-black">
+                      {item.name}
+                    </a>
+                    <p onClick={handleDeleteIstrument}>Delete</p>
+                  </>
+                ))}
+              </div>
+              <div className="ml-5">||</div>
+              <div className="font-semibold space-x-2 ml-5">
+                {genre?.map((item, index) => (
+                  <>
+                    <a key={index} className="text-black">
+                      {item.name}
+                    </a>
+                    <p onClick={handleDeleteGenre}>Delete</p>
+                  </>
+                ))}
+              </div>
             </div>
-
             <div className="mt-2">
               <p className="font-semibold opacity-75">Ulasan</p>
               <p className="text-sm font-bold">47.889</p>

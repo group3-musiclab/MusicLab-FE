@@ -11,26 +11,26 @@ interface store {
 function Store({ children }: store) {
   const [user, setUser] = useState<EditProfilType>({});
 
-  function Profile() {
-    axios
-      .get(`mentors`)
-      .then((response) => {
-        const data = response.data;
-        setUser(data);
-        console.log("id", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // function Profile() {
+  //   axios
+  //     .get(`mentors/profile`)
+  //     .then((response) => {
+  //       const data = response.data;
+  //       setUser(data);
+  //       console.log("id", response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
-  useEffect(() => {
-    Profile();
+  // useEffect(() => {
+  //   Profile();
 
-    return () => {
-      Profile();
-    };
-  }, []);
+  //   return () => {
+  //     Profile();
+  //   };
+  // }, []);
 
   return (
     <>

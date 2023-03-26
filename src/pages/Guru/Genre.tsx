@@ -1,10 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import Poster from "../../assets/poster_no-bg.webp";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { GenreType } from "../../utils/Datatypes";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
+import axios from "axios";
 
 export default function Genre() {
+  const MySwal = withReactContent(Swal);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [genre, setGenre] = useState<GenreType[]>([]);
+  const [genre_id, setGenreId] = useState<string>("");
   const navigate = useNavigate();
+  const id = localStorage.getItem("id");
+
+  useEffect(() => {
+    const fetchDataGenre = () => {
+      setLoading(true);
+
+      axios
+        .get("/genres")
+        .then((res) => {
+          const { data } = res.data;
+          setGenre(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setLoading(false));
+    };
+    fetchDataGenre();
+  }, []);
+
+  const handlePostGenre = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const body = {
+      genre_id: +genre_id,
+    };
+
+    axios
+      .post("mentors/genres", body)
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          title: "Succces",
+          text: message,
+          showCancelButton: false,
+        });
+        navigate(`/profileTeacher/${id}`);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Failed",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
     <>
       <div className="w-full min-h-screen bg-white">
@@ -22,29 +81,18 @@ export default function Genre() {
             <div className="flex flex-col lg:flex-row w-9/12 lg:w-[50%] mx-auto mt-8">
               <div className="flex-1 lg:mt-0 mt-5 ">
                 <div className="form-control mx-auto w-11/12 lg:w-9/12 max-w-xs">
-                  <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                    <option disabled selected>
-                      Pick one
-                    </option>
-                    <option>Star Wars</option>
-                    <option>Harry Potter</option>
-                    <option>Lord of the Rings</option>
-                    <option>Planet of the Apes</option>
-                    <option>Star Trek</option>
-                  </select>
-                </div>
-              </div>
-              <div className="flex-1 lg:mt-0 mt-5 ">
-                <div className="form-control mx-auto w-11/12 lg:w-9/12 max-w-xs">
-                  <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                    <option disabled selected>
-                      Pick one
-                    </option>
-                    <option>Star Wars</option>
-                    <option>Harry Potter</option>
-                    <option>Lord of the Rings</option>
-                    <option>Planet of the Apes</option>
-                    <option>Star Trek</option>
+                  <select
+                    className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
+                    onChange={(e: any) => setGenreId(e.target.value)}
+                  >
+                    <option>Pilih Salah Satu</option>
+                    {genre?.map((item) => {
+                      return (
+                        <>
+                          <option value={item.id}>{item.name}</option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
@@ -54,7 +102,7 @@ export default function Genre() {
                 id="btn-selesai"
                 label="Selesai"
                 className="bg-button w-9/12 lg:w-3/12  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-600"
-                onClick={() => navigate("/")}
+                onClick={(e: any) => handlePostGenre(e)}
               />
             </div>
           </div>

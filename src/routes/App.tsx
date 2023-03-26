@@ -43,7 +43,10 @@ function App() {
       path: "/profileTeacher/:id",
       element: <DetailTeacher />,
     },
-
+    {
+      path: "/profileTeacher",
+      element: <DetailTeacher />,
+    },
     {
       path: "/searching",
       element: <SearchingMentor />,
