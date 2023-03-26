@@ -15,3 +15,23 @@ export interface EditPassword {
   new_password?: string;
   confirmation_password?: string;
 }
+
+export interface ProfileStudent {
+  id?: number;
+  avatar?: any;
+  name?: string;
+  email?: string;
+  sex?: string;
+  phone?: string;
+  address?: string;
+}
+
+export interface EditProfileStudent {
+  id?: number;
+  avatar_file?: any;
+  name?: string;
+  email?: string;
+  sex?: string;
+  phone?: string;
+  address?: string;
+}

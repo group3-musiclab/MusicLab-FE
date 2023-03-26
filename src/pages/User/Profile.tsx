@@ -1,11 +1,76 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 
 import images from "../../assets/Ana.webp";
+import { ProfileStudent } from "../../utils/Datatypes";
+import { useNavigate } from "react-router";
+import axios from "axios";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
+import { useCookies } from "react-cookie";
 
 const Profile = () => {
+  const MySwal = withReactContent(Swal);
+  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [student, setStudent] = useState<ProfileStudent>({});
+
+  const fetchDataStudent = () => {
+    setLoading(true);
+
+    axios
+      .get("students/profile")
+      .then((res) => {
+        const { data } = res.data;
+        setStudent(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .catch(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchDataStudent();
+
+    return () => {
+      fetchDataStudent();
+    };
+  }, []);
+
+  const handleDeleteAccount = () => {
+    MySwal.fire({
+      title: "Are You Sure?",
+      text: "You Can't Retrieve your Data After Delete your Account ",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Ya, hapus akun!",
+      cancelButtonText: "Batal",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.delete("students");
+        }
+      })
+      .then(() => {
+        removeCookie("token", { path: "/" });
+        navigate("/login");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Error",
+          text: message,
+          showCancelButton: false,
+        });
+      });
+  };
   return (
     <Layout>
       <div className="container mx-auto p-10">
@@ -14,19 +79,27 @@ const Profile = () => {
             <div className="card-body mx-auto">
               <div className="flex mx-auto">
                 <img
-                  src={images}
+                  src={student?.avatar}
                   className="w-36 rounded-full object-contain"
                 />
               </div>
               <div className="mt-8 mx-auto">
-                <p className="text-3xl text-black font-poppins">Ana De Arnas</p>
+                <p className="text-3xl text-black font-poppins">
+                  {student.name}
+                </p>
               </div>
               <hr />
               <div className="card card-actions flex flex-row justify-between space-x-3 mt-10">
-                <p className="text-md text-black font-poppins cursor-pointer">
+                <p
+                  onClick={() => navigate("/editStudent")}
+                  className="text-md text-black font-poppins cursor-pointer"
+                >
                   Edit Profile
                 </p>
-                <p className="text-md text-red-500 font-poppins cursor-pointer">
+                <p
+                  onClick={handleDeleteAccount}
+                  className="text-md text-red-500 font-poppins cursor-pointer"
+                >
                   Delete Account
                 </p>
               </div>
@@ -35,7 +108,7 @@ const Profile = () => {
           <div className="flex p-7 m-2">
             <div className="flex flex-col">
               <p className="text-5xl font-poppins text-black">
-                Hi, Ana De Arnas
+                Hi, {student.name}
               </p>
               <div className="mt-7 p-3 space-y-3 ">
                 <p className="text-3xl font-poppins text-black font-bold">
@@ -43,13 +116,13 @@ const Profile = () => {
                 </p>
                 <div className="ml-5 text-lg">
                   <p className="font-poppins text-black">
-                    Gmail : <span>ana@gmail.com</span>
+                    Gmail : <span>{student.email}</span>
                   </p>
                   <p className="font-poppins text-black">
-                    No Hp : <span>081122334455</span>
+                    No Hp : <span>{student.phone}</span>
                   </p>
                   <p className="font-poppins  text-black">
-                    Address : <span>Indonesia, Centar Jakarta</span>
+                    Address : <span>{student.address}</span>
                   </p>
                 </div>
                 <Button

@@ -78,7 +78,7 @@ const DetailTeacher = () => {
       })
       .then(() => {
         removeCookie("token", { path: "/" });
-        navigate("/");
+        navigate("/login");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -101,7 +101,9 @@ const DetailTeacher = () => {
 
             <div className="font-semibold space-x-2">
               {instrument.map((item, index) => (
-                <a key={index} className="text-black">{item.name}</a>
+                <a key={index} className="text-black">
+                  {item.name}
+                </a>
               ))}
             </div>
 
