@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import Poster from "../../assets/poster_no-bg.webp";
 import { useNavigate, useParams } from "react-router-dom";
-import { GenreType } from "../../utils/Datatypes";
+import { GenreType } from "../../utils/types/Datatypes";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import axios from "axios";
