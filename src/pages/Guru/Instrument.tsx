@@ -1,9 +1,74 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import LogoMusicLab from "../../assets/logo-musiclab.webp";
 import { useNavigate } from "react-router-dom";
+import { InstrumenType } from "../../utils/types/Instrument";
+import axios from "axios";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
 
 export default function Instrument() {
+  const MySwal = withReactContent(Swal);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [instrumentData, setInstrumentData] = useState<InstrumenType[]>([]);
+
+  const [instrument_id, setId] = useState<string>("");
+
+  useEffect(() => {
+    const fetchInstrument = () => {
+      setLoading(true);
+
+      axios
+        .get("/instruments")
+        .then((res) => {
+          const { data } = res.data;
+          setInstrumentData(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setLoading(false));
+    };
+
+    fetchInstrument();
+  }, []);
+
+  const handlePostInstrument = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const body = {
+      instrument_id: +instrument_id,
+    };
+
+    axios
+      .post("/mentors/instruments", body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          title: "Succes",
+          text: message,
+          showCancelButton: false,
+        });
+
+        navigate("/genre");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Failed",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   const navigate = useNavigate();
   return (
     <>
@@ -22,53 +87,62 @@ export default function Instrument() {
             <div className="flex flex-col lg:flex-row w-[80%] mx-auto mt-8">
               <div className="flex-1">
                 <div className="form-control mx-auto w-11/12 lg:w-9/12 max-w-xs">
-                  <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                    <option disabled selected>
-                      Pilih Salah Satu
-                    </option>
-                    <option>Star Wars</option>
-                    <option>Harry Potter</option>
-                    <option>Lord of the Rings</option>
-                    <option>Planet of the Apes</option>
-                    <option>Star Trek</option>
+                  <select
+                    className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
+                    onChange={(e: any) => setId(e.target.value)}
+                  >
+                    <option>Pilih Salah Satu</option>
+                    {instrumentData?.map((item) => {
+                      return (
+                        <>
+                          <option value={item.id}>{item.name}</option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
-              <div className="flex-1 lg:mt-0 mt-5">
+              {/* <div className="flex-1 lg:mt-0 mt-5">
                 <div className="form-control mx-auto w-11/12 lg:w-9/12 max-w-xs">
-                  <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                    <option disabled selected>
-                      Pick one
-                    </option>
-                    <option>Star Wars</option>
-                    <option>Harry Potter</option>
-                    <option>Lord of the Rings</option>
-                    <option>Planet of the Apes</option>
-                    <option>Star Trek</option>
+                  <select
+                    className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
+                    onChange={(e: any) => setInstrument(e.target.value)}
+                  >
+                    <option>Pilih Salah Satu</option>
+                    {instrumentData?.map((item) => {
+                      return (
+                        <>
+                          <option value={item.name}>{item.name}</option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
-              </div>
-              <div className="flex-1 lg:mt-0 mt-5">
+              </div> */}
+              {/* <div className="flex-1 lg:mt-0 mt-5">
                 <div className="form-control mx-auto w-11/12 lg:w-9/12 max-w-xs">
-                  <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                    <option disabled selected>
-                      Pick one
-                    </option>
-                    <option>Star Wars</option>
-                    <option>Harry Potter</option>
-                    <option>Lord of the Rings</option>
-                    <option>Planet of the Apes</option>
-                    <option>Star Trek</option>
+                  <select
+                    className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
+                    onChange={(e: any) => setInstrument(e.target.value)}
+                  >
+                    <option>Pilih Salah Satu</option>
+                    {instrumentData?.map((item) => {
+                      return (
+                        <>
+                          <option value={item.name}>{item.name}</option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="w-full mx-auto text-center mt-10 pb-20">
               <Button
                 id="btn-instrumen"
                 label="Selanjutnya"
                 className="bg-button w-9/12 lg:w-3/12  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-600"
-                onClick={() => navigate("/genre")}
+                onClick={(e: any) => handlePostInstrument(e)}
               />
             </div>
           </div>

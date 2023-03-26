@@ -48,3 +48,13 @@ export interface EditProfileStudent {
   phone?: string;
   address?: string;
 }
+
+export interface Instrument {
+  id?: number;
+  name?: string;
+}
+
+export interface GenreType {
+  id?: number;
+  name?: string;
+}
