@@ -56,7 +56,7 @@ const Chat = () => {
                 {loading ? (
                   <p>no message</p>
                 ) : (
-                  inbox && // check if inbox exists before mapping over it
+                  inbox &&
                   inbox.map((items) => (
                     <div className="flex flex-col justify-start space-y-6">
                       <div className="flex space-x-8">
