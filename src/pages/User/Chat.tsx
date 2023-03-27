@@ -52,24 +52,32 @@ const Chat = () => {
             <p className="text-black text-4xl font-poppins">Chat</p>
             <div className="card w-96 shadow-lg border-black border mt-4 ml-20">
               <div className="card-body" onClick={() => handleOpen()}>
-                {inbox.map((items, index) => (
+                {inbox?.map((items, index) => (
                   <>
-                  <div key={index} id={items.student_id} className="flex flex-col justify-start space-y-6">
-                    <div className="flex space-x-8">
-                      <img
-                        src={items.avatar}
-                        className="w-20 rounded-full object-contain" />
-                      <div className="mt-2 text-black font-poppins">
-                        <p className="font-semibold">{items.student_name}</p>
+                    <div
+                      key={index}
+                      id={items.student_id}
+                      className="flex flex-col justify-start space-y-6"
+                    >
+                      <div className="flex space-x-8">
+                        <img
+                          src={items.avatar}
+                          className="w-20 rounded-full object-contain"
+                        />
+                        <div className="mt-2 text-black font-poppins">
+                          <p className="font-semibold">{items.student_name}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div id="modal-open" className={`modal ${modal}`}>
+                    <div id="modal-open" className={`modal ${modal}`}>
                       <div className="modal-box max-w-5xl max-h-full md:w-11/12 lg:w-8/12">
-                        <ModalChat student_id={items.student_id} mentor_id={5} />
+                        {/* <ModalChat
+                          student_id={items.student_id}
+                          mentor_id={5}
+                        /> */}
                       </div>
                     </div>
-                    </>
+                  </>
                 ))}
               </div>
             </div>

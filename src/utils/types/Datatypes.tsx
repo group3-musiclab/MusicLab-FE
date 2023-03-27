@@ -77,3 +77,10 @@ export interface EditKursus {
   price?: number;
   duration?: number;
 }
+
+export interface Shcedules {
+  id?: any;
+  day?: string;
+  start_time?: string;
+  end_time?: string;
+}
