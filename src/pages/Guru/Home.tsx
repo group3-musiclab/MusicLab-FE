@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import { Card } from "../../components/Card";
 import Ana from "../../assets/Ana.webp";
-import { MentorClass } from "../../utils/Datatypes";
+import { MentorClass } from "../../utils/types/Datatypes";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import Button from "../../components/Button";

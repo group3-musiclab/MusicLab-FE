@@ -187,6 +187,7 @@ export default function EditTeacher() {
                     src={pictures}
                     className="w-4/12 mx-auto mt-5 rounded-2xl "
                   />
+                  <h1 className="flex justify-center">*Max File Size 500kb</h1>
                   <Input
                     id="input-file"
                     type="file"

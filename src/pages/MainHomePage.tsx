@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import BgBanner from "../assets/bg-banner.webp";
 import Button from "../components/Button";
-import { ReusableNav } from "../components/Navbar";
+import { NavMain, ReusableNav } from "../components/Navbar";
 import icon1 from "../assets/icon/Icon-1.webp";
 import Logo from "../assets/logo-musiclab.webp";
 
@@ -26,17 +26,17 @@ export default function MainHomePage() {
   return (
     <>
       <div className="w-full min-h-screen overflow-auto bg-white">
-        <Layout>
-          <Header />
-          <section id="service">
-            <Information />
-          </section>
-          <TopPicks />
-          <AboutUs />
-          <Ulasan />
-          <BookNow />
-          <Footer />
-        </Layout>
+        {/* <Layout> */}
+        <Header />
+        <section id="service">
+          <Information />
+        </section>
+        <TopPicks />
+        <AboutUs />
+        <Ulasan />
+        <BookNow />
+        <Footer />
+        {/* </Layout> */}
       </div>
     </>
   );
@@ -54,6 +54,7 @@ const Header = () => {
   return (
     <>
       <div className="w-full h-auto" style={background}>
+        <NavMain />
         <div className="w-full h-[45rem] flex flex-col items-center justify-center">
           <h1 className=" text-4xl lg:text-6xl font-bold w-[20rem] lg:w-[50rem] text-center text-white">
             Turn your passionate with music better with us
