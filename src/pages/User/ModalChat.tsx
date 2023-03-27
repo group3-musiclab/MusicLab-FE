@@ -9,74 +9,82 @@ import { ChatsType } from "../../utils/types/Chat";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
-const ModalChat = () => {
-  const student_id = localStorage.getItem("id");
-  const { mentor_id } = useParams();
-  const [message, setMessage] = useState<ChatsType[]>([]);
-  const [chat, setChats] = useState<string>("");
+
+interface ChatProps {
+  student_id?: any;
+  mentor_id?: any;
+}
+
+const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
+  const [message, setMessage] = useState<string>("");
+  const [chats, setChats] = useState<ChatsType[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [cookie, setCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
 
   useEffect(() => {
     ChatsList();
-  }, []);
+  }, [mentor_id, student_id]);
 
   function ChatsList() {
     setLoading(true);
-    axios
-      .get(`/chats?mentor=${student_id}&student=${mentor_id}`, {
-        headers: {
-          Authorization: `Bearer ${checkToken}`,
-        },
-      })
-      .then((response) => {
-        const data = response.data.data;
-        setChats(data);
-        console.log("data", data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+
+    axios.get(`/chats?mentor=${mentor_id}&student=${student_id}`, {
+      headers: {
+        Authorization: `Bearer ${checkToken}`
+      }
+    })
+    .then((response) => {
+      const data = response.data.data;
+      setChats(data);
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  };
+  
 
   const handleNewChat = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChats(e.target.value);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const body = {
-      id: student_id,
-      receiverID: mentor_id,
-      chat,
-    };
-    axios
-      .post(`/chats`, body, {
+
+    try {
+      const body = {
+        student_id,
+        mentor_id,
+        chat: message
+      };
+      const response = await axios.post(`/chats`, body, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
-      })
-      .then((response) => {
-        const { data } = response.data;
-        setMessage(data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
+
       });
+      const data = response.data.data;
+      setChats((prevChats) => [...prevChats, data]);
+      setMessage("");
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
 
   return (
     <div className="rounded-lg bg-white p-10">
       <div className="flex flex-col justify-center">
         <div className="card">
           <div className="card-body over">
-            {message.map((item, index) => (
-              <>
+
+            {chats.map((item, index) => (
+
                 <div key={index} className="w-7/12">
                   <p className="text-black font-poppins font-semibold">
-                    {item.sender_name}
+                  {item.sender_name}
                   </p>
                   <div className="bg-white border border-black w-full h-14 flex justify-start items-center p-6 rounded-xl">
                     <div className="text-black font-poppins">
@@ -84,10 +92,12 @@ const ModalChat = () => {
                     </div>
                   </div>
                 </div>
-              </>
             ))}
           </div>
-          <form onSubmit={handleSubmit} className="flex flex-row space-x-3">
+          </div>
+      </div>
+      <div className="sticky">
+          <form onSubmit={handleSendMessage} className="flex flex-row space-x-3">
             <Input
               id="send"
               type="text"
@@ -103,7 +113,6 @@ const ModalChat = () => {
               // disabled={!message.trim()}
             />
           </form>
-        </div>
       </div>
     </div>
   );

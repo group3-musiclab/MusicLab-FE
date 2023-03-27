@@ -10,9 +10,9 @@ import { IoIosArrowBack } from "react-icons/io";
 
 const Chat = () => {
   const [inbox, setInbox] = useState<InboxType[]>([]);
-  const [loading, SetLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState<string>("");
-  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const [cookie, setCookie] = useCookies(["token", "id"]);
   const checkToken = cookie.token;
 
   const handleOpen = async () => {
@@ -23,7 +23,7 @@ const Chat = () => {
     Chats();
   }, []);
 
-  function Chats() {
+  const Chats = () => {
     axios
       .get(`/inbox`, {
         headers: {
@@ -33,12 +33,11 @@ const Chat = () => {
       .then((res) => {
         const data = res.data.data;
         setInbox(data);
-        console.log("datas", res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   return (
     <LayoutSec>
@@ -54,27 +53,19 @@ const Chat = () => {
               <div className="card-body" onClick={() => handleOpen()}>
                 {inbox?.map((items, index) => (
                   <>
-                    <div
-                      key={index}
-                      id={items.student_id}
-                      className="flex flex-col justify-start space-y-6"
-                    >
-                      <div className="flex space-x-8">
-                        <img
-                          src={items.avatar}
-                          className="w-20 rounded-full object-contain"
-                        />
-                        <div className="mt-2 text-black font-poppins">
-                          <p className="font-semibold">{items.student_name}</p>
-                        </div>
+                  <div key={index} className="flex flex-col justify-start space-y-6">
+                    <div id={items.student_id}  className="flex space-x-8">
+                      <img
+                        src={items.avatar}
+                        className="w-20 rounded-full object-contain" />
+                      <div className="mt-2 text-black font-poppins">
+                        <p className="font-semibold">{items.student_name}</p>
                       </div>
                     </div>
-                    <div id="modal-open" className={`modal ${modal}`}>
-                      <div className="modal-box max-w-5xl max-h-full md:w-11/12 lg:w-8/12">
-                        {/* <ModalChat
-                          student_id={items.student_id}
-                          mentor_id={5}
-                        /> */}
+                  </div>
+                  <div id="modal-open" className={`modal ${modal}`}>
+                      <div className="modal-box bg-black max-w-5xl max-h-full md:w-11/12 lg:w-8/12">
+                        <ModalChat student_id={items.student_id} mentor_id={items.mentor_id} />
                       </div>
                     </div>
                   </>
