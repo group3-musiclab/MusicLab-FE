@@ -58,3 +58,22 @@ export interface GenreType {
   id?: number;
   name?: string;
 }
+
+export interface MentorClass {
+  id?: number;
+  image?: any;
+  name?: string;
+  price?: string;
+}
+
+export interface EditKursus {
+  image?: any;
+  name?: string;
+  level?: string;
+  description?: string;
+  syllabus?: string;
+  for_whom?: string;
+  requirement?: string;
+  price?: number;
+  duration?: number;
+}

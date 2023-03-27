@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import pic1 from "../../assets/pic-1 (1).webp";
 
 import Header from "../../assets/bg-banner.webp";
-
-const header = {
-  width: "80%",
-  height: "25rem",
-  backgroundImage: `url(${Header})`,
-  backgroundSize: "cover",
-  backgroundRepeat: "no-repeat",
-};
+import axios from "axios";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
+import { useNavigate, useParams } from "react-router";
+import { EditKursus } from "../../utils/Datatypes";
 
 function DetailCourse() {
+  const header = {
+    width: "80%",
+    height: "25rem",
+    backgroundImage: `url(${Header})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  };
   return (
     <>
       <Layout>
@@ -156,6 +160,59 @@ function DetailCourse() {
 }
 
 const UploadCourse = () => {
+  const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
+  const [image, setImage] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [level, setLevel] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [syllabus, setSyllabus] = useState<string>("");
+  const [requirement, setRequirement] = useState<string>("");
+  const [for_whom, setForWhom] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [duration, setDuration] = useState<string>("");
+
+  const handlePostCourse = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const body = {
+      name,
+      level,
+      description,
+      syllabus,
+      requirement,
+      for_whom,
+      price: +price,
+      duration: +duration,
+    };
+
+    axios
+      .post("mentors/classes", body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          title: "Succesfully Upload Course",
+          text: message,
+          showCancelButton: false,
+        });
+        navigate("/daftarKursus");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Failed Upload Course",
+          text: message,
+          showCancelButton: false,
+        });
+      });
+  };
+
   return (
     <>
       <Layout>
@@ -165,12 +222,24 @@ const UploadCourse = () => {
           </h1>
           <div
             className=" rounded-2xl bg-no-repeat bg-auto bg-center mt-10"
-            style={header}
+            style={{
+              width: "80%",
+              height: "25rem",
+              backgroundImage: `url(${image})`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
           ></div>
           <Input
             id="input-header-kursus"
             type="file"
             className="file-input h-10 w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto mt-10 border-none"
+            onChange={(e: any) => {
+              if (!e.currentTarget.files) {
+                return;
+              }
+              setImage(URL.createObjectURL(e.currentTarget.files[0]));
+            }}
           />
           <div className="flex flex-col-reverse lg:flex-row w-10/12 min-h-screen mt-5 lg:mt-16">
             <div className="flex-1 lg:pl-16">
@@ -185,6 +254,7 @@ const UploadCourse = () => {
                 type="Template"
                 placeholder="Ketik Judul Kursus Anda..."
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+                onChange={(e: any) => setName(e.target.value)}
               />
               <label className="label" id="select-levelkursus">
                 <span className="label-text text-black font-semibold text-lg font-poppins w-11/12 lg:w-10/12  mt-5">
@@ -195,13 +265,12 @@ const UploadCourse = () => {
               <select
                 id="select-role"
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12  text-black font-semibold font-poppins bg-white"
-                defaultValue={"DEFAULT"}
+                onChange={(e: any) => setLevel(e.target.value)}
               >
-                <option disabled selected>
-                  Pilih Salah Satu
-                </option>
-                <option value="Student">Student</option>
-                <option value="Mentor">Mentor</option>
+                <option defaultValue={"DEFAULT"}>Pilih Salah Satu</option>
+                <option value="Basic">Basic</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advance</option>
               </select>
 
               <label className="label" id="desc-kursus">
@@ -212,6 +281,7 @@ const UploadCourse = () => {
               <textarea
                 id="input-deskripsikursus"
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
+                onChange={(e: any) => setDescription(e.target.value)}
               ></textarea>
               <label className="label">
                 <span className="label-text text-black font-semibold text-lg font-poppins w-11/12 lg:w-10/12  mt-5">
@@ -221,6 +291,7 @@ const UploadCourse = () => {
               <textarea
                 id="input-apayangdipelajari"
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12  text-black font-semibold font-popins bg-white"
+                onChange={(e: any) => setSyllabus(e.target.value)}
               ></textarea>
               <label className="label">
                 <span className="label-text text-black font-semibold text-lg font-poppins  w-11/12 lg:w-10/12 mt-5">
@@ -230,6 +301,7 @@ const UploadCourse = () => {
               <textarea
                 id="input-prasayrat-khusus"
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
+                onChange={(e: any) => setRequirement(e.target.value)}
               ></textarea>
               <label className="label">
                 <span className="label-text text-black font-semibold text-lg font-poppins  w-11/12 lg:w-10/12 mt-5">
@@ -239,12 +311,14 @@ const UploadCourse = () => {
               <textarea
                 id="input-untuk-siapa-kursus-ini"
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
+                onChange={(e: any) => setForWhom(e.target.value)}
               ></textarea>
               <div className="flex justify-start w-[85%]">
                 <Button
                   id="btn-uploadkursus"
                   label="Upload Kursus"
                   className="btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
+                  onClick={(e: any) => handlePostCourse(e)}
                 />
               </div>
             </div>
@@ -257,9 +331,23 @@ const UploadCourse = () => {
 
               <Input
                 id="input-harga-kursus"
-                type="text"
+                type="number"
                 placeholder="Harga Kursus..."
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+                onChange={(e: any) => setPrice(e.target.value)}
+              />
+              <label className="label mt-5">
+                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                  Duration
+                </span>
+              </label>
+
+              <Input
+                id="input-duratopn"
+                type="number"
+                placeholder="Durasi..."
+                className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+                onChange={(e: any) => setDuration(e.target.value)}
               />
             </div>
           </div>
@@ -270,6 +358,80 @@ const UploadCourse = () => {
 };
 
 const EditCourse = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
+  const [image, setImage] = useState<string>("");
+
+  const [course, setCourse] = useState<EditKursus>({});
+  const [editKursus, setEditKursus] = useState<EditKursus>({});
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchDataCourseDetail = () => {
+      setLoading(false);
+
+      axios
+        .get(`class/${id}`)
+        .then((res) => {
+          const { data } = res.data;
+          setCourse(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setLoading(false));
+    };
+    fetchDataCourseDetail();
+  }, []);
+
+  const handleChangeCourse = (
+    value: string | File,
+    key: keyof typeof editKursus
+  ) => {
+    let temp = { ...editKursus };
+    temp[key] = value;
+    setEditKursus(temp);
+  };
+
+  const handleUpdateCourse = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    let key: keyof typeof editKursus;
+    for (key in editKursus) {
+      formData.append(key, editKursus[key]);
+    }
+
+    axios
+      .put(`class/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          title: "Succefully Updated Course",
+          text: message,
+          showCancelButton: false,
+        });
+
+        navigate("/daftarKursus");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Please Fill Form with Correct Format",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
     <>
       <Layout>
@@ -279,12 +441,28 @@ const EditCourse = () => {
           </h1>
           <div
             className=" rounded-2xl bg-no-repeat bg-auto bg-center mt-10"
-            style={header}
+            style={{
+              width: "80%",
+              height: "25rem",
+              backgroundImage: `url(${course.image})`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
           ></div>
+          <h1>*Max File : 500 kb</h1>
           <Input
             id="input-header-kursus"
             type="file"
             className="file-input h-10 w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto mt-10 border-none"
+            onChange={(e: any) => {
+              if (!e.currentTarget.files) {
+                return;
+              }
+
+              setImage(URL.createObjectURL(e.currentTarget.files[0]));
+
+              handleChangeCourse(e.currentTarget.files[0], "image");
+            }}
           />
           <div className="flex flex-col-reverse lg:flex-row w-10/12 min-h-screen mt-5 lg:mt-16">
             <div className="flex-1 lg:pl-16">
@@ -296,9 +474,13 @@ const EditCourse = () => {
 
               <Input
                 id="input-judulkursus"
-                type="Template"
+                type="text"
+                defaultValue={course.name}
                 placeholder="Ketik Judul Kursus Anda..."
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "name")
+                }
               />
               <label className="label" id="select-levelkursus">
                 <span className="label-text text-black font-semibold text-lg font-poppins w-11/12 lg:w-10/12  mt-5">
@@ -309,13 +491,14 @@ const EditCourse = () => {
               <select
                 id="select-role"
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12  text-black font-semibold font-poppins bg-white"
-                defaultValue={"DEFAULT"}
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "level")
+                }
               >
-                <option disabled selected>
-                  Pilih Salah Satu
-                </option>
-                <option value="Student">Student</option>
-                <option value="Mentor">Mentor</option>
+                <option defaultValue={course.level}></option>
+                <option value="Basic">Basic</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
               </select>
 
               <label className="label" id="desc-kursus">
@@ -325,6 +508,10 @@ const EditCourse = () => {
               </label>
               <textarea
                 id="input-deskripsikursus"
+                defaultValue={course.description}
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "description")
+                }
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
               ></textarea>
               <label className="label">
@@ -334,7 +521,11 @@ const EditCourse = () => {
               </label>
               <textarea
                 id="input-apayangdipelajari"
+                defaultValue={course.syllabus}
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12  text-black font-semibold font-popins bg-white"
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "syllabus")
+                }
               ></textarea>
               <label className="label">
                 <span className="label-text text-black font-semibold text-lg font-poppins  w-11/12 lg:w-10/12 mt-5">
@@ -343,6 +534,10 @@ const EditCourse = () => {
               </label>
               <textarea
                 id="input-prasayrat-khusus"
+                defaultValue={course.requirement}
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "requirement")
+                }
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
               ></textarea>
               <label className="label">
@@ -352,13 +547,18 @@ const EditCourse = () => {
               </label>
               <textarea
                 id="input-untuk-siapa-kursus-ini"
+                defaultValue={course.for_whom}
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "for_whom")
+                }
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
               ></textarea>
               <div className="flex justify-start w-[85%]">
                 <Button
-                  id="btn-uploadkursus"
-                  label="Upload Kursus"
+                  id="btn-updatekursus"
+                  label="Update Kursus"
                   className="btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
+                  onClick={(e: any) => handleUpdateCourse(e)}
                 />
               </div>
             </div>
@@ -371,7 +571,27 @@ const EditCourse = () => {
 
               <Input
                 id="input-harga-kursus"
-                type="text"
+                type="number"
+                defaultValue={course.price}
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "price")
+                }
+                placeholder="Harga Kursus..."
+                className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+              />
+              <label className="label mt-5">
+                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                  Duration
+                </span>
+              </label>
+
+              <Input
+                id="input-duration"
+                type="number"
+                defaultValue={course.duration}
+                onChange={(e: any) =>
+                  handleChangeCourse(e.target.value, "duration")
+                }
                 placeholder="Harga Kursus..."
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
               />

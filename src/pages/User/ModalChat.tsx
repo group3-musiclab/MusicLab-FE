@@ -11,7 +11,7 @@ const ModalChat = () => {
         <div className="card">
           <div className="card-body">
             <div className="mx-auto -mt-7">
-              <p className="text-black text-3xl font-poppins">Nama Murid</p>
+              <p className="text-black text-3xl font-poppins">Discussion</p>
             </div>
             <div className="w-7/12 mt-11">
               <p className="text-black font-poppins font-semibold">
