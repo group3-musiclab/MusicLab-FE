@@ -7,7 +7,7 @@ import axios from "axios";
 import Layout from "../../components/Layout";
 import { Card } from "../../components/Card";
 import Button from "../../components/Button";
-
+import { Link } from "react-router-dom";
 import { ProfileType } from "../../utils/types/Profile";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
@@ -176,29 +176,29 @@ const DetailTeacher = () => {
   return (
     <Layout>
       <div className="container mx-auto p-10">
-        <div className="flex flex-row p-4">
-          <div className="text-black font-poppins">
+        <div className="flex flex-row w-[80%] mx-auto p-4">
+          <div className=" flex-1 text-black font-poppins">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
-            <div className="flex flex-row">
+            <div className="flex flex-row ">
               <div className="font-semibold space-x-2">
                 {instrument?.map((item, index) => (
                   <>
                     <a key={index} className="text-black">
-                      {item.name}
+                      {item.name} Teacher,
                     </a>
-                    <p onClick={handleDeleteIstrument}>Delete</p>
+                    {/* <p onClick={handleDeleteIstrument}>Delete</p> */}
                   </>
                 ))}
               </div>
-              <div className="ml-5">||</div>
+              {/* <div className="ml-5">||</div> */}
               <div className="font-semibold space-x-2 ml-5">
                 {genre?.map((item, index) => (
                   <>
                     <a key={index} className="text-black">
-                      {item.name}
+                      Instrument {item.name}
                     </a>
-                    <p onClick={handleDeleteGenre}>Delete</p>
+                    {/* <p onClick={handleDeleteGenre}>Delete</p> */}
                   </>
                 ))}
               </div>
@@ -229,8 +229,14 @@ const DetailTeacher = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-10/12 ml-40">
-            <img src={user?.avatar} alt="photo" width={250} />
+
+          <div className="w-full md:w-10/12  flex-1 flex items-end flex-col ">
+            <img
+              src={user?.avatar}
+              alt="photo"
+              width={250}
+              className="rounded-2xl"
+            />
             <div className="text-black text-md font-semibold ml-16 sm:ml-10 mt-2">
               <p>
                 Address : <span>{user?.address}</span>
@@ -247,14 +253,20 @@ const DetailTeacher = () => {
 
               {idUsers == user.id ? (
                 <>
-                  {/* The button to open modal */}
-                  <label
+                  <Link to={user?.instagram}>
+                    <Button
+                      id="btn-socialmedia"
+                      label="Social Media"
+                      className="border-2 font-poppins font-semibold border-[#3A2BE8] text-[#3A2BE8] py-2 px-12 rounded-xl mt-5 hover:bg-[#3A2BE8] hover:text-white"
+                    />
+                  </Link>
+                  {/* <label
                     htmlFor="my-modal-5"
-                    className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                   >
-                    Kirim Pesan
+                    Lihat Chat
                   </label>
-                  {/* Put this part before </body> tag */}
+                
                   <input
                     type="checkbox"
                     id="my-modal-5"
@@ -269,19 +281,69 @@ const DetailTeacher = () => {
                         </label>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <Button
                     id="btn-editTeacher"
                     label="Edit Profile"
-                    className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                     onClick={() => navigate(`/editTeacher/${user?.id}`)}
                   />
-                  <Button
+                  {/* <Button
                     id="btn-deactivateAccount"
                     label="Deactivate Account"
-                    className="btn bg-black text-white mt-2 w-44 border-none"
+                    className="btn bg-black text-white mt-2 px-8 border-none"
                     onClick={handleDeleteAccount}
+                  /> */}
+                  <Button
+                    id="btn-kursussaya"
+                    label="Kursus Saya"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                    onClick={() => navigate("/daftarKursus")}
                   />
+
+                  <div
+                    tabIndex={0}
+                    className="collapse collapse-plus w-[14rem]  border border-base-300 bg-white rounded-box mt-5"
+                  >
+                    <div className="collapse-title text-md font-medium">
+                      Tambah Jadwal
+                    </div>
+                    <div className="collapse-content">
+                      <div className="flex flex-col">
+                        <div className="flex-1">
+                          <label className="label">
+                            <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12 mt-5">
+                              Role
+                            </span>
+                          </label>
+                          <select
+                            id="select-role"
+                            className="input input-bordered w-10/12 lg:w-6/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
+                            // onChange={handleRole}
+                          >
+                            <option defaultValue={"DEFAULT"}>Pilih Role</option>
+                            <option value="Student">Student</option>
+                            <option value="Mentor">Mentor</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    tabIndex={0}
+                    className="collapse collapse-plus w-[14rem]  border border-base-300 bg-white rounded-box mt-5"
+                  >
+                    <div className="collapse-title text-md font-medium">
+                      Lihat Jadwal
+                    </div>
+                    <div className="collapse-content">
+                      <p>
+                        tabIndex={0} attribute is necessary to make the div
+                        focusable
+                      </p>
+                    </div>
+                  </div>
                 </>
               ) : (
                 <>
