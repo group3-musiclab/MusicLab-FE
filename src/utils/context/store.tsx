@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ApiContext } from "./contextApi";
 import { ProfileType } from "../types/Profile";
-import { EditProfilType } from "../Datatypes";
+import { EditProfilType } from "../types/Datatypes";
 
 interface store {
   children?: any;

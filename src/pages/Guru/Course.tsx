@@ -9,7 +9,7 @@ import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { useNavigate, useParams } from "react-router";
-import { EditKursus } from "../../utils/Datatypes";
+import { EditKursus } from "../../utils/types/Datatypes";
 
 function DetailCourse() {
   const header = {

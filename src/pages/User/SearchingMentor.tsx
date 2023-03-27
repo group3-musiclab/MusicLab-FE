@@ -7,7 +7,7 @@ import Pic1 from "../../assets/Anade.webp";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { AllMentor } from "../../utils/Datatypes";
+import { AllMentor } from "../../utils/types/Datatypes";
 import axios from "axios";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router";
