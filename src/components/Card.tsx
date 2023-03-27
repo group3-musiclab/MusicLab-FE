@@ -12,15 +12,14 @@ import youtube from "../assets/Youtube.webp";
 import Button from "./Button";
 
 interface CardCourseProps {
-  id: string;
   image: string;
-  name: string;
+  name: any;
   price: any;
 }
 
-const Card = ({ id, image, name, price }: CardCourseProps) => {
+const Card = ({ image, name, price }: CardCourseProps) => {
   return (
-    <div id={id} className="card-compact w-full card bg-white shadow-xl">
+    <div className="card-compact w-full card bg-white shadow-xl">
       <figure>
         <img src={image} alt="Album" />
       </figure>

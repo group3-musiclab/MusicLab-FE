@@ -53,7 +53,7 @@ function App() {
     },
 
     {
-      path: "/beranda/courses",
+      path: "/daftarKursus",
       element: checkToken ? <Home /> : <Navigate to="/" />,
     },
 
@@ -94,7 +94,7 @@ function App() {
       element: checkToken ? <UploadCourse /> : <Navigate to="/" />,
     },
     {
-      path: "/editCourse",
+      path: "/editCourse/:id",
       element: checkToken ? <EditCourse /> : <Navigate to="/" />,
     },
     {
