@@ -1,4 +1,5 @@
 export interface InboxType {
+    id: number;
     student_id?: any;
     mentor_id?: any;
     avatar?: any;
@@ -6,10 +7,9 @@ export interface InboxType {
 }
 
 export interface ChatsType {
-    id?: any;
-    sender: 'mentor | student';
-    sender_name?: string;
-    chat?: string[];
+    id?: number;
+    sender_name: any;
+    chat?: string;
 }
 
 export interface Params {

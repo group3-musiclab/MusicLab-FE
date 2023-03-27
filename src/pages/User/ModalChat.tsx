@@ -10,9 +10,10 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 interface ChatProps {
-  student_id: number;
-  mentor_id: number;
+  student_id?: any;
+  mentor_id?: any;
 }
+
 const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
   const [message, setMessage] = useState<string>("");
   const [chats, setChats] = useState<ChatsType[]>([]);
@@ -22,7 +23,7 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
 
   useEffect(() => {
     ChatsList();
-  }, []);
+  }, [mentor_id, student_id]);
 
   function ChatsList() {
     setLoading(true);
@@ -32,7 +33,7 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
       }
     })
     .then((response) => {
-      const data = response.data?.data;
+      const data = response.data.data;
       setChats(data);
       console.log(data);
     })
@@ -46,28 +47,27 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
     setMessage(e.target.value)
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const body = {
-      student_id: student_id,
-      mentor_id: mentor_id,
-      chats: message
-    };
-    axios
-      .post(`/chats`, body, {
+    try {
+      const body = {
+        student_id,
+        mentor_id,
+        chat: message
+      };
+      const response = await axios.post(`/chats`, body, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
-      })
-      .then((response) => {
-        const data = response.data.data;
-        setChats([...chats, data]);
-        setMessage("");
-      })
-      .catch((error) => {
-        console.log(error);
       });
+      const data = response.data.data;
+      setChats((prevChats) => [...prevChats, data]);
+      setMessage("");
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
 
   return (
     <div className="rounded-lg bg-white p-10">
@@ -75,10 +75,9 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
         <div className="card">
           <div className="card-body over">
             {chats.map((item, index) => (
-              <>
                 <div key={index} className="w-7/12">
                   <p className="text-black font-poppins font-semibold">
-                    {item.sender_name}
+                  {item.sender_name}
                   </p>
                   <div className="bg-white border border-black w-full h-14 flex justify-start items-center p-6 rounded-xl">
                     <div className="text-black font-poppins">
@@ -86,10 +85,12 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
                     </div>
                   </div>
                 </div>
-              </>
             ))}
           </div>
-          <form onSubmit={handleSubmit} className="flex flex-row space-x-3">
+          </div>
+      </div>
+      <div className="sticky">
+          <form onSubmit={handleSendMessage} className="flex flex-row space-x-3">
             <Input
               id="send"
               type="text"
@@ -105,7 +106,6 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
               disabled={!message.trim()}
             />
           </form>
-        </div>
       </div>
     </div>
   );
