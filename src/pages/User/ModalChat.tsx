@@ -13,7 +13,6 @@ interface ChatProps {
   student_id: number;
   mentor_id: number;
 }
-
 const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
   const [message, setMessage] = useState<string>("");
   const [chats, setChats] = useState<ChatsType[]>([]);
@@ -54,20 +53,21 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
       mentor_id: mentor_id,
       chats: message
     };
-    axios.post(`/chats`, body, {
-      headers: {
-        Authorization: `Bearer ${checkToken}`
-      },
-    })
-    .then((response) => {
-      const data = response.data.data;
-      setChats([...chats, data]);
-      setMessage("");
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
+    axios
+      .post(`/chats`, body, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const data = response.data.data;
+        setChats([...chats, data]);
+        setMessage("");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="rounded-lg bg-white p-10">

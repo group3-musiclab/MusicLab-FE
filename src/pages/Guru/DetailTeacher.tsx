@@ -12,7 +12,8 @@ import { ProfileType } from "../../utils/types/Profile";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
-import { GenreType } from "../../utils/Datatypes";
+import { GenreType } from "../../utils/types/Datatypes";
+import ModalChat from "../User/ModalChat";
 
 const DetailTeacher = () => {
   const idUsers = localStorage.getItem("id");
@@ -246,7 +247,29 @@ const DetailTeacher = () => {
 
               {idUsers == user.id ? (
                 <>
-                  {" "}
+                  {/* The button to open modal */}
+                  <label
+                    htmlFor="my-modal-5"
+                    className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
+                  >
+                    Kirim Pesan
+                  </label>
+                  {/* Put this part before </body> tag */}
+                  <input
+                    type="checkbox"
+                    id="my-modal-5"
+                    className="modal-toggle"
+                  />
+                  <div className="modal">
+                    <div className="modal-box w-11/12 max-w-5xl bg-white">
+                      <ModalChat mentor_id={user?.id} student_id={user?.id} />
+                      <div className="modal-action">
+                        <label htmlFor="my-modal-5" className="btn">
+                          Close
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                   <Button
                     id="btn-editTeacher"
                     label="Edit Profile"

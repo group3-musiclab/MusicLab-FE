@@ -63,7 +63,8 @@ const Chat = () => {
                         <p className="font-semibold">{items.student_name}</p>
                       </div>
                     </div>
-                  </div><div id="modal-open" className={`modal ${modal}`}>
+                  </div>
+                  <div id="modal-open" className={`modal ${modal}`}>
                       <div className="modal-box max-w-5xl max-h-full md:w-11/12 lg:w-8/12">
                         <ModalChat student_id={items.student_id} mentor_id={5} />
                       </div>
