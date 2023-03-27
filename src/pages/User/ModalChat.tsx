@@ -9,6 +9,7 @@ import { ChatsType } from "../../utils/types/Chat";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
+
 interface ChatProps {
   student_id?: any;
   mentor_id?: any;
@@ -17,6 +18,7 @@ interface ChatProps {
 const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
   const [message, setMessage] = useState<string>("");
   const [chats, setChats] = useState<ChatsType[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [cookie, setCookie] = useCookies(["token"]);
   const checkToken = cookie.token;
@@ -27,6 +29,7 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
 
   function ChatsList() {
     setLoading(true);
+
     axios.get(`/chats?mentor=${mentor_id}&student=${student_id}`, {
       headers: {
         Authorization: `Bearer ${checkToken}`
@@ -44,11 +47,12 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
   
 
   const handleNewChat = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(e.target.value)
-  }
+    setChats(e.target.value);
+  };
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
       const body = {
         student_id,
@@ -59,6 +63,7 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
+
       });
       const data = response.data.data;
       setChats((prevChats) => [...prevChats, data]);
@@ -74,7 +79,9 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
       <div className="flex flex-col justify-center">
         <div className="card">
           <div className="card-body over">
+
             {chats.map((item, index) => (
+
                 <div key={index} className="w-7/12">
                   <p className="text-black font-poppins font-semibold">
                   {item.sender_name}
@@ -96,14 +103,14 @@ const ModalChat: React.FC<ChatProps> = ({ student_id, mentor_id }) => {
               type="text"
               placeholder="Say something..."
               onChange={handleNewChat}
-              value={message}
+              value={chat}
               className="w-full h-14 text-black font-poppins bg-white border border-black rounded-xl p-3"
             />
             <Button
               type="submit"
               label="Send"
               className="btn w-28 rounded-xl text-white"
-              disabled={!message.trim()}
+              // disabled={!message.trim()}
             />
           </form>
       </div>

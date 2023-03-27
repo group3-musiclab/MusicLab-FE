@@ -20,6 +20,7 @@ import Payment from "../pages/User/Payment";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import EditStudent from "../pages/User/EditStudent";
+import ModalChat from "../pages/User/ModalChat";
 
 function App() {
   const [cookie, setCookie] = useCookies(["token"]);
@@ -89,6 +90,7 @@ function App() {
       path: "/chat",
       element: checkToken ? <Chat /> : <Navigate to="/" />,
     },
+
     {
       path: "/uploadCourse",
       element: checkToken ? <UploadCourse /> : <Navigate to="/" />,

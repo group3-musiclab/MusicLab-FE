@@ -51,7 +51,7 @@ const Chat = () => {
             <p className="text-black text-4xl font-poppins">Chat</p>
             <div className="card w-96 shadow-lg border-black border mt-4 ml-20">
               <div className="card-body" onClick={() => handleOpen()}>
-                {inbox.map((items, index) => (
+                {inbox?.map((items, index) => (
                   <>
                   <div key={index} className="flex flex-col justify-start space-y-6">
                     <div id={items.student_id}  className="flex space-x-8">
@@ -68,7 +68,7 @@ const Chat = () => {
                         <ModalChat student_id={items.student_id} mentor_id={items.mentor_id} />
                       </div>
                     </div>
-                    </>
+                  </>
                 ))}
               </div>
             </div>

@@ -14,6 +14,10 @@ import { ProfileType } from "../../utils/types/Profile";
 import { InboxType } from "../../utils/types/Chat";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
+import { InstrumenType } from "../../utils/types/Instrument";
+import { GenreType, Shcedules } from "../../utils/types/Datatypes";
+import ModalChat from "../User/ModalChat";
+import Input from "../../components/Input";
 
 
 const DetailTeacher = () => {
@@ -23,9 +27,17 @@ const DetailTeacher = () => {
   const [inbox, setInbox] = useState<InboxType[]>([]);
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
+
+  const [genre, setGenre] = useState<GenreType[]>([]);
+  // console.log(`id=${idUsers} || userId=${user.id}`);
+  const [day, setDay] = useState<string>("");
+  const [start_time, setStartTime] = useState<string>("");
+  const [end_time, setEndTime] = useState<string>("");
+  const [schedules, setSchedules] = useState<Shcedules[]>([]);
+
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
-
+  const [schduleId, setScheduleId] = useState<number>();
   useEffect(() => {
     Profile();
     Instrument();
@@ -93,6 +105,72 @@ const DetailTeacher = () => {
       });
   };
 
+  const handlePostJadwal = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const body = {
+      day,
+      start_time,
+      end_time,
+    };
+
+    axios
+      .post("mentors/schedules", body)
+      .then((res) => {
+        const { data, message } = res.data;
+
+        MySwal.fire({
+          title: "Succesfully Uploaded Schedule",
+          text: message,
+          showCancelButton: false,
+        });
+        setSchedules((prevState) => [...prevState, data]);
+        // window.location.reload(false);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Failed Uploaded Schedule",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => SetLoading(false));
+  };
+
+  useEffect(() => {
+    const fetchJadwalMentor = () => {
+      SetLoading(true);
+
+      axios
+        .get(`mentors/${id}/schedules`)
+        .then((res) => {
+          const { data, message } = res.data;
+          setSchedules(data);
+
+          // console.log(schduleId);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => SetLoading(false));
+    };
+    fetchJadwalMentor();
+  }, []);
+
+  const handleDeleteSchedule = (id: any) => {
+    axios
+      .delete(`schedules/${id}`)
+      .then(() => {
+        setSchedules((prevState) => prevState.filter((item) => item.id !== id));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => SetLoading(false));
+  };
+
   return (
     <Layout>
       <div className="container mx-auto p-10">
@@ -146,23 +224,171 @@ const DetailTeacher = () => {
                 <img src={twitter} alt="twitter" width={25} />
                 <img src={youtube} alt="youtube" width={25} /> */}
               </div>
-              <div>
-              <button className="btn bg-[#3A2BE8] text-white mt-2 w-44">
-                kirim pesan
-              </button>
-              </div>
-              <Button
-                id="btn-editTeacher"
-                label="Edit Profile"
-                className="btn bg-[#3A2BE8] text-white mt-2 w-44 border-none"
-                onClick={() => navigate(`/editTeacher/${user?.id}`)}
-              />
-              <Button
-                id="btn-deactivateAccount"
-                label="Deactivate Account"
-                className="btn bg-black text-white mt-2 w-44 border-none"
-                onClick={handleDeleteAccount}
-              />
+              {idUsers == user.id ? (
+                <>
+                  <Link to={user?.instagram}>
+                    <Button
+                      id="btn-socialmedia"
+                      label="Social Media"
+                      className="border-2 font-poppins font-semibold border-[#3A2BE8] text-[#3A2BE8] py-2 px-12 rounded-xl mt-5 hover:bg-[#3A2BE8] hover:text-white"
+                    />
+                  </Link>
+                  <label
+                    htmlFor="my-modal-5"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                  >
+                    Lihat Chat
+                  </label>
+
+                  <input
+                    type="checkbox"
+                    id="my-modal-5"
+                    className="modal-toggle"
+                  />
+                  <div className="modal">
+                    <div className="modal-box w-11/12 max-w-5xl bg-white">
+                      {/* <ModalChat /> */}
+                      <div className="modal-action">
+                        <label htmlFor="my-modal-5" className="btn">
+                          Close
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <Button
+                    id="btn-editTeacher"
+                    label="Edit Profile"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                    onClick={() => navigate(`/editTeacher/${user?.id}`)}
+                  />
+                  {/* <Button
+                    id="btn-deactivateAccount"
+                    label="Deactivate Account"
+                    className="btn bg-black text-white mt-2 px-8 border-none"
+                    onClick={handleDeleteAccount}
+                  /> */}
+                  <Button
+                    id="btn-kursussaya"
+                    label="Kursus Saya"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                    onClick={() => navigate("/daftarKursus")}
+                  />
+
+                  <details className="border-2 border-black p-4 rounded-2xl mt-5">
+                    <summary>Tambah Jadwal</summary>
+                    <form className="w-[11rem] p-3">
+                      <label className="label">
+                        <span className="label-text text-black font-semibold text-lg font-poppins  w-full lg:max-w-xs flex  bg-white mx-auto  "></span>
+                      </label>
+                      <select
+                        id="select-role"
+                        className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
+                        onChange={(e: any) => setDay(e.target.value)}
+                      >
+                        <option defaultValue={"DEFAULT"}>Pilih hari</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                      </select>
+                    </form>
+                    <div className="flex flex-row gap-2">
+                      <Input
+                        id="input-startTime"
+                        type="time"
+                        className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
+                        onChange={(e: any) => setStartTime(e.target.value)}
+                      />
+                      <Input
+                        id="input-endTime"
+                        type="time"
+                        className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
+                        onChange={(e: any) => setEndTime(e.target.value)}
+                      />
+                    </div>
+                    <Button
+                      id="btn-jadwal"
+                      type="submit"
+                      className="btn bg-[#3A2BE8] text-white border-none mt-2 w-full"
+                      label="Upload Jadwal"
+                      onClick={(e: any) => handlePostJadwal(e)}
+                    />
+                  </details>
+
+                  <details className="border-2 border-black p-4 rounded-2xl mt-5">
+                    <summary>Lihat Jadwal</summary>
+                    <div className="w-[13rem] p-2">
+                      {schedules?.map((item, index) => {
+                        return (
+                          <>
+                            <div key={index} className="flex flex-row">
+                              <div className="w-[50%] text-sm">{item?.day}</div>
+                              <div className="w-[50%] flex justify-end">
+                                <p className="text-sm">{item?.start_time}</p>
+                                <p> - </p>
+                                <p className="text-sm">{item?.end_time}</p>
+                                <Button
+                                  id="btn-delete"
+                                  className="ml-2 -mt-1"
+                                  label="x"
+                                  onClick={() => handleDeleteSchedule(item.id)}
+                                />
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </details>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <label
+                    htmlFor="my-modal-5"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                  >
+                    Lihat Chat
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="my-modal-5"
+                    className="modal-toggle"
+                  />
+                  <details className="border-2 border-black p-4 rounded-2xl mt-5">
+                    <summary>Lihat Jadwal</summary>
+                    <div className="w-[11rem] p-2">
+                      {schedules?.map((item) => {
+                        return (
+                          <>
+                            <div className="flex flex-row">
+                              <div className="w-[50%] text-sm">{item.day}</div>
+                              <div className="w-[50%] flex justify-end">
+                                <p className="text-sm">{item.start_time}</p>
+                                <p> - </p>
+                                <p className="text-sm">{item.end_time}</p>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </details>
+                  {/* <div className="modal">
+                    <div className="modal-box w-11/12 max-w-5xl bg-white">
+                      <ModalChat />
+                      <div className="modal-action">
+                        <label htmlFor="my-modal-5" className="btn">
+                          Close
+                        </label>
+                      </div>
+                    </div>
+                  </div> */}
+                </>
+              )}
             </div>
           </div>
         </div>
