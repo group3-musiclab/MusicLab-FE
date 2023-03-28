@@ -9,22 +9,23 @@ import { Card } from "../../components/Card";
 import Button from "../../components/Button";
 import ModalChat from "../User/ModalChat";
 
-import { InstrumenType } from "../../utils/types/Instrument";
 import { ProfileType } from "../../utils/types/Profile";
 import { InboxType } from "../../utils/types/Chat";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
 import { GenreType, Shcedules } from "../../utils/types/Datatypes";
-import ModalChat from "../User/ModalChat";
 import Input from "../../components/Input";
-
+import { Link } from "react-router-dom";
 
 const DetailTeacher = () => {
+  const { schedule_id } = useParams();
+  const { student_id } = useParams();
+  const { mentor_id } = useParams();
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
-  const [inbox, setInbox] = useState<InboxType[]>([]);
+  const [inbox, setInbox] = useState<InboxType>({});
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
 
@@ -41,26 +42,44 @@ const DetailTeacher = () => {
   useEffect(() => {
     Profile();
     Instrument();
+    Chats();
 
     return () => {
       Profile();
     };
   }, []);
 
-  function Profile() {
-    axios.get(`/mentors/profile`, {
-      headers: {
-        Authorization: `Bearer ${checkToken}`,
-      },
-    })
-    .then((response) => {
-      const data = response.data.data;
-      SetUser(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+  const Chats = () => {
+    axios
+      .get(`/chats`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((res) => {
+        const data = res.data.data;
+        setInbox(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  function Profile() {
+    axios
+      .get(`/mentors/profile`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((response) => {
+        const data = response.data.data;
+        SetUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function Instrument() {
     axios
@@ -144,7 +163,7 @@ const DetailTeacher = () => {
       SetLoading(true);
 
       axios
-        .get(`mentors/${id}/schedules`)
+        .get(`mentors/${schedule_id}/schedules`)
         .then((res) => {
           const { data, message } = res.data;
           setSchedules(data);
@@ -180,7 +199,9 @@ const DetailTeacher = () => {
             <p className="text-5xl font-bold">{user?.name}</p>
             <div className="font-semibold space-x-2">
               {instrument.map((item, index) => (
-                <a key={index} className="text-black">{item.name}</a>
+                <a key={index} className="text-black">
+                  {item.name}
+                </a>
               ))}
             </div>
             <div className="mt-2">
@@ -224,7 +245,8 @@ const DetailTeacher = () => {
                 <img src={twitter} alt="twitter" width={25} />
                 <img src={youtube} alt="youtube" width={25} /> */}
               </div>
-              {idUsers == user.id ? (
+              
+              {user.id ? (
                 <>
                   <Link to={user?.instagram}>
                     <Button
@@ -233,28 +255,6 @@ const DetailTeacher = () => {
                       className="border-2 font-poppins font-semibold border-[#3A2BE8] text-[#3A2BE8] py-2 px-12 rounded-xl mt-5 hover:bg-[#3A2BE8] hover:text-white"
                     />
                   </Link>
-                  <label
-                    htmlFor="my-modal-5"
-                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
-                  >
-                    Lihat Chat
-                  </label>
-
-                  <input
-                    type="checkbox"
-                    id="my-modal-5"
-                    className="modal-toggle"
-                  />
-                  <div className="modal">
-                    <div className="modal-box w-11/12 max-w-5xl bg-white">
-                      {/* <ModalChat /> */}
-                      <div className="modal-action">
-                        <label htmlFor="my-modal-5" className="btn">
-                          Close
-                        </label>
-                      </div>
-                    </div>
-                  </div>
                   <Button
                     id="btn-editTeacher"
                     label="Edit Profile"
@@ -273,7 +273,28 @@ const DetailTeacher = () => {
                     className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                     onClick={() => navigate("/daftarKursus")}
                   />
-
+                  <label htmlFor="my-modal-5" className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none">
+                    See Message
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="my-modal-5"
+                    className="modal-toggle"
+                  />
+                  <div className="modal">
+                    <div className="modal-box w-11/12 max-w-5xl bg-white">
+                   
+                      <ModalChat
+                        student_id={user.id}
+                        mentor_id={5}
+                      />
+                      <div className="modal-action">
+                        <label htmlFor="my-modal-5" className="btn">
+                          Close
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                   <details className="border-2 border-black p-4 rounded-2xl mt-5">
                     <summary>Tambah Jadwal</summary>
                     <form className="w-[11rem] p-3">
@@ -317,7 +338,6 @@ const DetailTeacher = () => {
                       onClick={(e: any) => handlePostJadwal(e)}
                     />
                   </details>
-
                   <details className="border-2 border-black p-4 rounded-2xl mt-5">
                     <summary>Lihat Jadwal</summary>
                     <div className="w-[13rem] p-2">
@@ -377,16 +397,6 @@ const DetailTeacher = () => {
                       })}
                     </div>
                   </details>
-                  {/* <div className="modal">
-                    <div className="modal-box w-11/12 max-w-5xl bg-white">
-                      <ModalChat />
-                      <div className="modal-action">
-                        <label htmlFor="my-modal-5" className="btn">
-                          Close
-                        </label>
-                      </div>
-                    </div>
-                  </div> */}
                 </>
               )}
             </div>
