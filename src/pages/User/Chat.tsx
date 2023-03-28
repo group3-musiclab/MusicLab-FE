@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -10,14 +11,8 @@ import { IoIosArrowBack } from "react-icons/io";
 
 const Chat = () => {
   const [inbox, setInbox] = useState<InboxType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [modal, setModal] = useState<string>("");
   const [cookie, setCookie] = useCookies(["token", "id"]);
   const checkToken = cookie.token;
-
-  const handleOpen = async () => {
-    setModal("modal-open");
-  };
 
   useEffect(() => {
     Chats();
@@ -50,22 +45,46 @@ const Chat = () => {
           <div className="mt-24">
             <p className="text-black text-4xl font-poppins">Chat</p>
             <div className="card w-96 shadow-lg border-black border mt-4 ml-20">
-              <div className="card-body" onClick={() => handleOpen()}>
+              <div className="card-body">
                 {inbox?.map((items, index) => (
                   <>
-                  <div key={index} className="flex flex-col justify-start space-y-6">
-                    <div id={items.student_id}  className="flex space-x-8">
-                      <img
-                        src={items.avatar}
-                        className="w-20 rounded-full object-contain" />
-                      <div className="mt-2 text-black font-poppins">
-                        <p className="font-semibold">{items.student_name}</p>
+                    <div
+                      key={index}
+                      className="flex flex-col justify-start space-y-6"
+                    >
+                      <div>
+                        <div id={items.student_id} className="flex space-x-8">
+                          <img
+                            src={items.avatar}
+                            className="w-20 rounded-full object-contain"
+                          />
+                          <div className="mt-2 text-black font-poppins">
+                            <p className="font-semibold">
+                              {items.student_name}
+                            </p>
+                            <label
+                              htmlFor="my-modal-5"
+                              className="font-semibold"
+                            >
+                              See Message
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div id="modal-open" className={`modal ${modal}`}>
-                      <div className="modal-box bg-black max-w-5xl max-h-full md:w-11/12 lg:w-8/12">
-                        <ModalChat student_id={items.student_id} mentor_id={items.mentor_id} />
+                    <input
+                      type="checkbox"
+                      id="my-modal-5"
+                      className="modal-toggle"
+                    />
+                    <div className="modal">
+                      <div className="modal-box w-11/12 max-w-5xl bg-white">
+                        <ModalChat mentor_id={items.mentor_id} student_id={items.student_id} />
+                        <div className="modal-action">
+                          <label htmlFor="my-modal-5" className="btn">
+                            Close
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </>

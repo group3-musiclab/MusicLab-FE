@@ -75,7 +75,7 @@ function App() {
       element: checkToken ? <Genre /> : <Navigate to="/" />,
     },
     {
-      path: "/editTeacher/:id",
+      path: "/editTeacher/:mentor_id",
       element: checkToken ? <EditTeacher /> : <Navigate to="/" />,
     },
     {

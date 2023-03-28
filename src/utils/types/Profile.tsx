@@ -1,5 +1,7 @@
 export interface ProfileType {
   id?: any;
+  mentor_id?: any;
+  student_id?: any;
   avatar?: string;
   name?: string;
   email?: string;
