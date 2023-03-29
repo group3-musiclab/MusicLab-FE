@@ -9,21 +9,12 @@ import { ChatsType } from "../../utils/types/Chat";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
-
-interface Chat {
-  id: number;
-  sender: string;
-  message: string;
-}
-
 interface Props {
-  mentor_id?: number;
+  mentor_id?: number | string;
   student_id?: number;
 }
 
-
 const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
-  // const { mentor_id, student_id } = useParams();
   const [message, setMessage] = useState<string>("");
   const [chats, setChats] = useState<ChatsType[]>([]);
   const [loading, setLoading] = useState(false);
@@ -36,8 +27,6 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
 
   function ChatsList() {
     setLoading(true);
-    console.log("mentor_id", mentor_id);
-    console.log("student_id", student_id);
     axios
       .get(`/chats?mentor=${mentor_id}&student=${student_id}`, {
         headers: {
@@ -47,6 +36,7 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
       .then((response) => {
         const data = response.data.data;
         setChats(data);
+        console.log("test chat",data);
       })
       .catch((error) => {
         console.log(error);
@@ -61,8 +51,8 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
     e.preventDefault();
     try {
       const body = {
-        student_id,
         mentor_id,
+        student_id,
         chat: message,
       };
       const response = await axios.post(`/chats`, body, {
@@ -71,25 +61,19 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
         },
       });
       const data = response.data.data;
-      // console.log("sendername", response.data.data.sender_name);
-      setChats((prevChats) => [...prevChats, data]);
+      setChats([...chats, data]);
       setMessage("");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
-
-  // console.log(
-  //   "sender",
-  //   chats.map((item) => item.sender_name)
-  // );
 
   return (
     <div className="rounded-lg bg-white p-10">
       <div className="flex flex-col justify-center">
         <div className="card">
           <div className="card-body">
-            {chats &&
+          {chats &&
               chats.map((item: any, index) => (
                 <div key={index} className="w-7/12">
                   <p className="text-black font-poppins font-semibold">
@@ -119,7 +103,7 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
             type="submit"
             label="Send"
             className="btn w-28 rounded-xl text-white"
-            // disabled={!message.trim()}
+            disabled={!message.trim()}
           />
         </form>
       </div>
