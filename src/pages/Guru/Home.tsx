@@ -7,6 +7,7 @@ import { MentorClass } from "../../utils/types/Datatypes";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import Button from "../../components/Button";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -48,10 +49,24 @@ const Home = () => {
     <Layout>
       <div className="container mx-auto p-10">
         <div className="card shadow-black shadow-sm">
-          <div className="mr-20 mt-9 flex justify-end">
-            <button className="btn bg-[#3A2BE8] text-white rounded-xl w-2/12 font-poppins">
-              Create Your Course
-            </button>
+          <div className="flex flex-row w-full ">
+            <div className=" mt-9 flex-1 flex justify-start ml-10">
+              <Button
+                id="btn-back"
+                label="Kembali"
+                className="btn bg-[#3A2BE8] text-white rounded-xl w-10/12 font-poppins"
+                onClick={() => navigate("/profileTeacher")}
+              />
+            </div>
+            <div className="flex flex-1 mt-9  justify-end">
+              <Link to="/uploadCourse">
+                <Button
+                  id="btn-uploadnewcourse"
+                  label="Upload New Course"
+                  className="btn bg-[#3A2BE8] text-white rounded-xl w-10/12 font-poppins"
+                />
+              </Link>
+            </div>
           </div>
           <div className="card-body w-10/12">
             <div className="grid grid-flow-row auto-rows-max grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-4">
@@ -63,6 +78,7 @@ const Home = () => {
                         name={item.name}
                         image={item.image}
                         price={item.price}
+                        onClick={() => navigate(`/detailCourse/${item.id}`)}
                       />
                       <div className="flex flex-row mt-5">
                         <Button

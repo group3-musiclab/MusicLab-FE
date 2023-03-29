@@ -11,7 +11,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { useCookies } from "react-cookie";
 
-const Profile = () => {
+const ProfilStudent = () => {
   const MySwal = withReactContent(Swal);
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
@@ -138,4 +138,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilStudent;

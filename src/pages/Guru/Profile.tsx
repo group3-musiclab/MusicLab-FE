@@ -24,8 +24,7 @@ interface MentorClass {
   price?: string;
 }
 
-const DetailTeacher = () => {
-  const idUser = localStorage.getItem("id");
+const Profile = () => {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
@@ -39,10 +38,9 @@ const DetailTeacher = () => {
   const [start_time, setStartTime] = useState<string>("");
   const [end_time, setEndTime] = useState<string>("");
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
-  const [course, setCourse] = useState<MentorClass[]>([]);
   const { id } = useParams();
   const idUsers = localStorage.getItem("id");
-  const idMentor = localStorage.setItem("idMentor", JSON.stringify(id));
+  const [course, setCourse] = useState<MentorClass[]>([]);
 
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
@@ -58,7 +56,7 @@ const DetailTeacher = () => {
 
   function Profile() {
     axios
-      .get(`/mentors/${id}`, {
+      .get(`/mentors/${idUsers}`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
@@ -74,7 +72,7 @@ const DetailTeacher = () => {
 
   function Instrument() {
     axios
-      .get(`mentors/instrument`)
+      .get(`mentors/${idUsers}/instrument`)
       .then((response) => {
         const datas = response.data.data;
         SetInstrument(datas);
@@ -154,7 +152,7 @@ const DetailTeacher = () => {
       SetLoading(true);
 
       axios
-        .get(`mentors/${idUser}/schedules`)
+        .get(`mentors/${idUsers}/schedules`)
         .then((res) => {
           const { data, message } = res.data;
           setSchedules(data);
@@ -171,7 +169,7 @@ const DetailTeacher = () => {
 
   const handleDeleteSchedule = (id: any) => {
     axios
-      .delete(`schedules/${idUser}`)
+      .delete(`schedules/${id}`)
       .then(() => {
         setSchedules((prevState) => prevState.filter((item) => item.id !== id));
       })
@@ -186,9 +184,9 @@ const DetailTeacher = () => {
       SetLoading(true);
 
       axios
-        .get(`/mentors/${id}/class`)
+        .get(`/mentors/${idUsers}/class`)
         .then((res) => {
-          const data = res.data.data;
+          const data = res.data;
           setCourse(data);
         })
         .catch((err) => {
@@ -225,7 +223,7 @@ const DetailTeacher = () => {
             <div className="mt-7">
               <p className="font-semibold text-xl">my Course</p>
               <div className="m-2 mt-7 grid grid-cols-2 space-x-5 gap-14">
-                {course?.map((item, index) => {
+                {course.map((item, index) => {
                   return (
                     <Card
                       key={index}
@@ -402,4 +400,4 @@ const DetailTeacher = () => {
   );
 };
 
-export default DetailTeacher;
+export default Profile;

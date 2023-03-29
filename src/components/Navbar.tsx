@@ -85,7 +85,6 @@ const ReusableNav = () => {
         </div>
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
-          {<MainHomePage /> ? <></> : <></>}
           <ul className="menu menu-horizontal px-1 lg:flex hidden">
             <li>
               <Link
@@ -119,7 +118,7 @@ const ReusableNav = () => {
             <>
               {" "}
               <Link
-                to="/profile"
+                to="/ProfilStudent"
                 className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
               >
                 Profile
@@ -128,12 +127,12 @@ const ReusableNav = () => {
           ) : checkToken && checkRole === "Mentor" ? (
             <>
               {" "}
-              <Link
-                to={`profileTeacher/${id}`}
+              <a
+                href={`profileTeacher`}
                 className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
               >
                 Profile
-              </Link>
+              </a>
             </>
           ) : (
             <>
@@ -245,7 +244,7 @@ const NavMain = () => {
             <>
               {" "}
               <Link
-                to="/profile"
+                to="/ProfilStudent"
                 className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
               >
                 Profile
@@ -254,12 +253,12 @@ const NavMain = () => {
           ) : checkToken && checkRole === "Mentor" ? (
             <>
               {" "}
-              <p
-                onClick={() => navigate(`profileTeacher/${id}`)}
+              <Link
+                to={`profileTeacher`}
                 className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
               >
                 Profile
-              </p>
+              </Link>
             </>
           ) : (
             <>

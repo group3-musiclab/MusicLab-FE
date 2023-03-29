@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import { NavMain, ReusableNav } from "../components/Navbar";
 import icon1 from "../assets/icon/Icon-1.webp";
 import Logo from "../assets/logo-musiclab.webp";
-
+import { Link } from "react-router-dom";
 import icon2 from "../assets/icon/icon-2.webp";
 import icon3 from "../assets/icon/icon-3.webp";
 import icon4 from "../assets/icon/icon-4.webp";
@@ -59,12 +59,13 @@ const Header = () => {
           <h1 className=" text-4xl lg:text-6xl font-bold w-[20rem] lg:w-[50rem] text-center text-white">
             Turn your passionate with music better with us
           </h1>
-          <Button
-            id="btn-findmentor"
-            label="Find Mentor"
-            className="input input-bordered font-bold font-popins px-20 py-3 bg-white mt-10 text-black hover:bg-black hover:text-white border-none"
-            onClick={() => navigate("/searching")}
-          />
+          <Link to="/searching">
+            <Button
+              id="btn-findmentor"
+              label="Find Mentor"
+              className="input input-bordered font-bold font-popins px-20 py-3 bg-white mt-10 text-black hover:bg-black hover:text-white border-none"
+            />
+          </Link>
         </div>
       </div>
     </>
@@ -253,72 +254,6 @@ const TopPicks = () => {
             );
           })}
         </div>
-        {/* 
-          <div>
-            <CardMentor
-              name="Ana De Arnas"
-              desc="Ana de arnas is a internationally certified teacher for guitar, has experienced"
-              skills="Guitar Teacher"
-              image={pic1}
-              groupImg={
-                <>
-                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
-                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
-                </>
-              }
-            />
-          </div>
-          <div>
-            <CardMentor
-              name="Guilermo"
-              desc="Guilermo is a internationally certified teacher for guitar, has experienced"
-              skills="Drum Teacher"
-              image={pic2}
-              groupImg={
-                <>
-                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
-                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
-                </>
-              }
-            />
-          </div>
-          <div>
-            <CardMentor
-              name="Michael Don"
-              desc="Michael Don is a internationally certified teacher for guitar, has experienced"
-              skills="Bass Teacher"
-              image={pic4}
-              groupImg={
-                <>
-                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
-                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
-                </>
-              }
-            />
-          </div>
-          <div>
-            <CardMentor
-              name="Aubrey"
-              desc="Aubrey is a internationally certified teacher for guitar, has experienced"
-              skills="Vocal Teacher"
-              image={pic3}
-              groupImg={
-                <>
-                  <img src={fb} className="w-[2.3rem] h-[2rem]" />
-                  <img src={ig} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={yt} className="w-[2.3rem] h-[2rem] ml-2" />
-                  <img src={twt} className="w-[2.3rem] h-[2rem] ml-2" />
-                </>
-              }
-            />
-          </div>
-        </div> */}
       </div>
     </>
   );

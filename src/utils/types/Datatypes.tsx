@@ -84,3 +84,29 @@ export interface Shcedules {
   start_time?: string;
   end_time?: string;
 }
+
+export interface ClassDetail {
+  id?: number;
+  description?: string;
+  for_whom?: string;
+  image?: any;
+  level?: string;
+  name?: string;
+  price?: string;
+  requirement?: string;
+  syllabus?: string;
+}
+
+export interface MentorDetail {
+  id?: any;
+  name?: string;
+  phone?: string;
+  sex?: string;
+  about?: string;
+  address?: string;
+  avatar?: any;
+  email?: string;
+  instagram?: string;
+  rating?: any;
+  count_reviews?: number;
+}
