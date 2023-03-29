@@ -11,7 +11,7 @@ export default function History() {
 
   useEffect(() => {
     fetchDataHistoryMentor();
-    fetchGoogleUrl();
+    // fetchGoogleUrl();
   }, []);
 
   const fetchDataHistoryMentor = () => {

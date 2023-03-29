@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
-import { Card } from "../../components/Card";
+import { Card, CardTestimonial, CardUlasan } from "../../components/Card";
 import Button from "../../components/Button";
 
 import { ProfileType } from "../../utils/types/Profile";
@@ -13,7 +13,7 @@ import { InboxType } from "../../utils/types/Chat";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
-import { GenreType, Shcedules } from "../../utils/types/Datatypes";
+import { GenreType, Review, Shcedules } from "../../utils/types/Datatypes";
 import ModalChat from "../User/ModalChat";
 import Input from "../../components/Input";
 
@@ -39,8 +39,10 @@ const Profile = () => {
   const [end_time, setEndTime] = useState<string>("");
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
   const { id } = useParams();
+
   const idUsers = localStorage.getItem("id");
   const [course, setCourse] = useState<MentorClass[]>([]);
+  const [comment, setComment] = useState<Review[]>([]);
 
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
@@ -196,6 +198,23 @@ const Profile = () => {
     };
 
     fetchCourseMentor();
+  }, []);
+
+  useEffect(() => {
+    const fetchCommentMentor = () => {
+      SetLoading(true);
+
+      axios
+        .get(`/mentors/${idUsers}/reviews`)
+        .then((res) => {
+          const data = res.data.data;
+          setComment(data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => SetLoading(false));
+    };
+
+    fetchCommentMentor();
   }, []);
 
   return (
@@ -402,6 +421,21 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <h1 className="text-black text-xl font-poppins font-bold">Ulasan</h1>
+        {comment?.map((item, index) => {
+          return (
+            <>
+              <CardUlasan
+                key={index}
+                image={item?.avatar}
+                name={item?.name}
+                date={item?.created_at}
+                comment={item?.comment}
+                rating={item?.rating}
+              />
+            </>
+          );
+        })}
       </div>
     </Layout>
   );
