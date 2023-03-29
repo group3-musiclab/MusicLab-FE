@@ -128,6 +128,7 @@ const ProfilStudent = () => {
                 <Button
                   label="Jadwal"
                   className="btn border-none rounded-xl w-3/6 bg-[#3A2BE8] text-white font-semibold mt-5"
+                  onClick={() => navigate("/historyStudent")}
                 />
               </div>
             </div>

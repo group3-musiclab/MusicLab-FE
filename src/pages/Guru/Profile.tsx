@@ -74,7 +74,7 @@ const Profile = () => {
     axios
       .get(`mentors/${idUsers}/instrument`)
       .then((response) => {
-        const datas = response.data.data;
+        const datas = response.data;
         SetInstrument(datas);
       })
       .catch((error) => {
@@ -186,7 +186,7 @@ const Profile = () => {
       axios
         .get(`/mentors/${idUsers}/class`)
         .then((res) => {
-          const data = res.data;
+          const data = res.data.data;
           setCourse(data);
         })
         .catch((err) => {
@@ -223,7 +223,7 @@ const Profile = () => {
             <div className="mt-7">
               <p className="font-semibold text-xl">my Course</p>
               <div className="m-2 mt-7 grid grid-cols-2 space-x-5 gap-14">
-                {course.map((item, index) => {
+                {course?.map((item, index) => {
                   return (
                     <Card
                       key={index}
@@ -285,6 +285,13 @@ const Profile = () => {
                     label="Kursus Saya"
                     className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                     onClick={() => navigate("/daftarKursus")}
+                  />
+
+                  <Button
+                    id="btn-jadwalsaya"
+                    label="Jadwal Saya"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                    onClick={() => navigate("/historyTeacher")}
                   />
 
                   <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
