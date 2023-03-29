@@ -112,7 +112,8 @@ export interface MentorDetail {
 }
 
 export interface HistoryStudent {
-  order_id?: number;
+  id?: number;
+  mentor_id?: number;
   mentor_name?: string;
   class_name?: string;
   start_date?: string;
@@ -129,4 +130,13 @@ export interface HistoryMentor {
   start_date?: string;
   status?: string;
   student_name?: string;
+}
+
+export interface Review {
+  avatar?: string;
+  comment?: string;
+  created_at?: string;
+  id?: string;
+  name?: string;
+  rating?: number;
 }

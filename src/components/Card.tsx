@@ -168,4 +168,36 @@ const CardSide = () => {
   );
 };
 
-export { Card, CardSide, CardMentor, CardTestimonial };
+interface CardUlasan {
+  image?: any;
+  name?: string;
+  date?: string;
+  comment?: string;
+  rating?: number;
+}
+
+const CardUlasan = ({ image, name, date, comment, rating }: CardUlasan) => {
+  return (
+    <>
+      <div className="w-full mt-8 flex justify-center flex-row">
+        <div className=" w-[15%] flex">
+          <img src={image} className="w-[7rem] rounded-full" />
+        </div>
+        <div className=" flex-col w-[80%] ">
+          <h1 className="text-black font-bold text-xl font-poppins">{name}</h1>
+          <h2 className="text-slate-400 font-semibold text-md font-poppins">
+            {date}
+          </h2>
+          <p className="text-slate-500 font-normal w-[50rem] font-poppins mt-3">
+            {comment}
+          </p>
+          <p className="text-slate-500 font-normal w-[50rem] font-poppins mt-3">
+            Rating : {rating}
+          </p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export { Card, CardSide, CardMentor, CardTestimonial, CardUlasan };

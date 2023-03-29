@@ -5,9 +5,9 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
-import { Card } from "../../components/Card";
+import { Card, CardTestimonial } from "../../components/Card";
 import Button from "../../components/Button";
-
+import ModalChat from "../User/ModalChat";
 import { ProfileType } from "../../utils/types/Profile";
 import { InboxType } from "../../utils/types/Chat";
 import withReactContent from "sweetalert2-react-content";
@@ -15,8 +15,6 @@ import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
 import { GenreType, Shcedules } from "../../utils/types/Datatypes";
 import Input from "../../components/Input";
-import { Link } from "react-router-dom";
-
 
 interface MentorClass {
   id?: number;
@@ -26,7 +24,7 @@ interface MentorClass {
 }
 
 const DetailTeacher = () => {
-const idUser = localStorage.getItem("id");
+  const idUser = localStorage.getItem("id");
   const { schedule_id } = useParams();
   const { student_id } = useParams();
   const { mentor_id } = useParams();
@@ -61,19 +59,6 @@ const idUser = localStorage.getItem("id");
     };
   }, []);
 
-
-  function Profile() {
-    axios
-      .get(`/mentors/${id}`, {
-       .then((response) => {
-        const data = response.data.data;
-        SetUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   const Chats = () => {
     axios
       .get(`/chats`, {
@@ -81,14 +66,14 @@ const idUser = localStorage.getItem("id");
           Authorization: `Bearer ${checkToken}`,
         },
       })
-       .then((response) => {
+      .then((response) => {
         const data = response.data.data;
         SetUser(data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   function Profile() {
     axios
@@ -299,7 +284,7 @@ const idUser = localStorage.getItem("id");
                 <img src={twitter} alt="twitter" width={25} />
                 <img src={youtube} alt="youtube" width={25} /> */}
               </div>
-              
+
               {user.id ? (
                 <>
                   <Link to={user?.instagram}>
@@ -322,7 +307,10 @@ const idUser = localStorage.getItem("id");
                     className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                     onClick={() => navigate("/daftarKursus")}
                   />
-                  <label htmlFor="my-modal-5" className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none">
+                  <label
+                    htmlFor="my-modal-5"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                  >
                     See Message
                   </label>
                   <input
@@ -332,11 +320,7 @@ const idUser = localStorage.getItem("id");
                   />
                   <div className="modal">
                     <div className="modal-box w-11/12 max-w-5xl bg-white">
-                   
-                      <ModalChat
-                        student_id={user.id}
-                        mentor_id={5}
-                      />
+                      <ModalChat student_id={user.id} mentor_id={5} />
                       <div className="modal-action">
                         <label htmlFor="my-modal-5" className="btn">
                           Close
@@ -451,6 +435,7 @@ const idUser = localStorage.getItem("id");
               )}
             </div>
           </div>
+          <CardTestimonial name="mantap" />
         </div>
       </div>
     </Layout>
