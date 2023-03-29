@@ -28,7 +28,6 @@ interface MentorClass {
 const DetailTeacher = () => {
 const idUser = localStorage.getItem("id");
   const { schedule_id } = useParams();
-  const { student_id } = useParams();
   const { mentor_id } = useParams();
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
@@ -291,7 +290,7 @@ const idUser = localStorage.getItem("id");
                 Address : <span>{user?.address}</span>
               </p>
               <p>
-                Gmail : <span>{user?.email}</span>
+                Gmail :  <span>{user?.email}</span>
               </p>
               <div className="flex space-x-3 ml-4">
                 {/* <img src={facebook} alt="facebook" width={25} />

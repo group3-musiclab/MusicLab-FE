@@ -56,7 +56,7 @@ const Chat = () => {
                         <div id={items.student_id} className="flex space-x-8">
                           <img
                             src={items.avatar}
-                            className="w-20 rounded-full object-contain"
+                            className="w-14 mt-2 rounded-full object-contain"
                           />
                           <div className="mt-2 text-black font-poppins">
                             <p className="font-semibold">
