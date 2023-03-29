@@ -15,7 +15,7 @@ import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
 import { GenreType, Shcedules } from "../../utils/types/Datatypes";
 import Input from "../../components/Input";
-import { Link } from "react-router-dom";
+import ModalChat from "../User/ModalChat";
 
 
 interface MentorClass {
@@ -46,7 +46,6 @@ const idUser = localStorage.getItem("id");
   const { id } = useParams();
   const idUsers = localStorage.getItem("id");
   const idMentor = localStorage.setItem("idMentor", JSON.stringify(id));
-
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
   const [schduleId, setScheduleId] = useState<number>();
@@ -60,18 +59,6 @@ const idUser = localStorage.getItem("id");
     };
   }, []);
 
-
-  function Profile() {
-    axios
-      .get(`/mentors/${id}`, {
-       .then((response) => {
-        const data = response.data.data;
-        SetUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   const Chats = () => {
     axios
@@ -150,13 +137,11 @@ const idUser = localStorage.getItem("id");
 
   const handlePostJadwal = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-
     const body = {
       day,
       start_time,
       end_time,
     };
-
     axios
       .post("mentors/schedules", body)
       .then((res) => {
@@ -283,9 +268,9 @@ const idUser = localStorage.getItem("id");
               </div>
             </div>
           </div>
-          <div className="w-full md:w-10/12 flex items-end flex-col  ml-40">
+          <div className="w-full md:w-9/12 flex items-end flex-col ml-36">
             <img src={user?.avatar} alt="photo" width={250} />
-            <div className="text-black text-md font-semibold ml-16 sm:ml-10 mt-2">
+            <div className="text-black text-md font-semibold ml-14 sm:ml-10 mt-2">
               <p>
                 Address : <span>{user?.address}</span>
               </p>
@@ -332,7 +317,7 @@ const idUser = localStorage.getItem("id");
                   <div className="modal">
                     <div className="modal-box w-11/12 max-w-5xl bg-white">
                    
-                      <ModalChat
+                     <ModalChat
                         student_id={user.id}
                         mentor_id={5}
                       />

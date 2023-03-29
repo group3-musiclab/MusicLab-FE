@@ -26,7 +26,6 @@ function DetailCourse() {
 
   const fetchDataClassDetail = () => {
     setLoading(true);
-
     axios
       .get(`/class/${id}`)
       .then((res) => {
@@ -41,7 +40,6 @@ function DetailCourse() {
 
   const fetchMentorDetail = () => {
     setLoading(true);
-
     axios
       .get(`/mentors/${idUser}`)
       .then((res) => {
@@ -121,7 +119,7 @@ function DetailCourse() {
                 <div className="flex flex-col w-full lg:w-[85%] lg:mt-7">
                   <div className="w-full  h-[10rem] rounded-xl">
                     <div className="flex lg:flex-row bg-slate-100 rounded-xl shadow-lg">
-                      <div className="flex-1">
+                      <div className="flex-1 -mt-7">
                         <img
                           src={mentor?.avatar}
                           className="w-full rounded-xl"
@@ -191,32 +189,67 @@ function DetailCourse() {
 const UploadCourse = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [image, setImage] = useState<string>("");
+  const [images, setImages] = useState<any>();
   const [name, setName] = useState<string>("");
   const [level, setLevel] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [syllabus, setSyllabus] = useState<string>("");
   const [requirement, setRequirement] = useState<string>("");
   const [for_whom, setForWhom] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
+  const [price, setPrice] = useState<number | Blob>();
+  const [prices, setPrices] = useState<string>("");
   const [duration, setDuration] = useState<string>("");
+  const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const handlePostCourse = (e: React.FormEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (
+      name &&
+      images &&
+      level &&
+      description &&
+      syllabus &&
+      requirement &&
+      for_whom &&
+      price &&
+      duration
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  });
+
+  const handlePostCourse = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("level", level);
+    formData.append("description", description);
+    formData.append("syllabus", syllabus);
+    formData.append("requirement", requirement);
+    formData.append("form_who", for_whom);
+    formData.append("price", JSON.stringify(price));
+    formData.append("duration", duration);
+    for (let i = 0; i < images.lenght; i++) {
+      formData.append(`images`, images[i]);
+    }
 
-    const body = {
-      name,
-      level,
-      description,
-      syllabus,
-      requirement,
-      for_whom,
-      price: +price,
-      duration: +duration,
-    };
+    // const body = {
+    //   name,
+    //   images,
+    //   level,
+    //   description,
+    //   syllabus,
+    //   requirement,
+    //   for_whom,
+    //   prices: +prices,
+    //   duration: +duration,
+    // };
 
     axios
-      .post("mentors/classes", body, {
+      .post("mentors/classes", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -242,10 +275,17 @@ const UploadCourse = () => {
       });
   };
 
+  const preventChar = (e: React.KeyboardEvent) =>
+    ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
+
   return (
     <>
       <Layout>
-        <div className="w-full min-h-screen flex flex-col bg-white items-center mt-10">
+        <form
+          onSubmit={handlePostCourse}
+          encType="multipart/form-data"
+          className="w-full min-h-screen flex flex-col bg-white items-center mt-10"
+        >
           <h1 className="text-black font-bold w-9/12 flex justify-center text-2xl font-poppins lg:mt-0 -mt-8">
             Upload Kursus
           </h1>
@@ -254,7 +294,7 @@ const UploadCourse = () => {
             style={{
               width: "80%",
               height: "25rem",
-              backgroundImage: `url(${image})`,
+              backgroundImage: `url(${images})`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
             }}
@@ -267,7 +307,7 @@ const UploadCourse = () => {
               if (!e.currentTarget.files) {
                 return;
               }
-              setImage(URL.createObjectURL(e.currentTarget.files[0]));
+              setImages(URL.createObjectURL(e.currentTarget.files[0]));
             }}
           />
           <div className="flex flex-col-reverse lg:flex-row w-10/12 min-h-screen mt-5 lg:mt-16">
@@ -347,40 +387,42 @@ const UploadCourse = () => {
                   id="btn-uploadkursus"
                   label="Upload Kursus"
                   className="btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
-                  onClick={(e: any) => handlePostCourse(e)}
+                  disabled={disabled || loading}
                 />
               </div>
             </div>
-            <div className="flex-1 lg:pl-16">
-              <label className="label mt-5">
-                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
-                  Harga Kursus
-                </span>
-              </label>
-
-              <Input
-                id="input-harga-kursus"
-                type="number"
-                placeholder="Harga Kursus..."
-                className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
-                onChange={(e: any) => setPrice(e.target.value)}
-              />
-              <label className="label mt-5">
-                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
-                  Duration
-                </span>
-              </label>
-
-              <Input
-                id="input-duratopn"
-                type="number"
-                placeholder="Durasi..."
-                className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
-                onChange={(e: any) => setDuration(e.target.value)}
-              />
-            </div>
           </div>
-        </div>
+          <div className="flex-1 lg:pl-16">
+            <label className="label mt-5">
+              <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                Harga Kursus
+              </span>
+            </label>
+
+            <Input
+              id="input-harga-kursus"
+              type="number"
+              placeholder="Harga Kursus..."
+              className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+              onKeyDown={preventChar}
+              onChange={(e: any) => setPrice(parseInt(e.target.value))}
+              accept="image/jpg, image/png"
+            />
+            <label className="label mt-5">
+              <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                Duration
+              </span>
+            </label>
+
+            <Input
+              id="input-duratopn"
+              type="number"
+              placeholder="Durasi..."
+              className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+              onChange={(e: any) => setDuration(e.target.value)}
+            />
+          </div>
+        </form>
       </Layout>
     </>
   );
