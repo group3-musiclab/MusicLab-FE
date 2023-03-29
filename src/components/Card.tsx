@@ -15,13 +15,14 @@ interface CardCourseProps {
   image: string;
   name: any;
   price: any;
+  onClick: any;
 }
 
-const Card = ({ image, name, price }: CardCourseProps) => {
+const Card = ({ image, name, price, onClick }: CardCourseProps) => {
   return (
     <div className="card-compact w-full card bg-white shadow-xl">
       <figure>
-        <img src={image} alt="Album" />
+        <img src={image} alt="Album" onClick={onClick} />
       </figure>
       <div className="card-body text-black">
         <h2 className="card-title">{name}</h2>

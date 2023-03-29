@@ -14,9 +14,8 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
 import { GenreType, Shcedules } from "../../utils/types/Datatypes";
+import ModalChat from "../User/ModalChat";
 import Input from "../../components/Input";
-import { Link } from "react-router-dom";
-
 
 interface MentorClass {
   id?: number;
@@ -25,15 +24,11 @@ interface MentorClass {
   price?: string;
 }
 
-const DetailTeacher = () => {
-const idUser = localStorage.getItem("id");
-  const { schedule_id } = useParams();
-  const { student_id } = useParams();
-  const { mentor_id } = useParams();
+const Profile = () => {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
-  const [inbox, setInbox] = useState<InboxType>({});
+  const [inbox, setInbox] = useState<InboxType[]>([]);
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
 
@@ -43,10 +38,9 @@ const idUser = localStorage.getItem("id");
   const [start_time, setStartTime] = useState<string>("");
   const [end_time, setEndTime] = useState<string>("");
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
-  const [course, setCourse] = useState<MentorClass[]>([]);
   const { id } = useParams();
   const idUsers = localStorage.getItem("id");
-  const idMentor = localStorage.setItem("idMentor", JSON.stringify(id));
+  const [course, setCourse] = useState<MentorClass[]>([]);
 
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
@@ -54,45 +48,15 @@ const idUser = localStorage.getItem("id");
   useEffect(() => {
     Profile();
     Instrument();
-    Chats();
 
     return () => {
       Profile();
     };
   }, []);
 
-
   function Profile() {
     axios
-      .get(`/mentors/${id}`, {
-       .then((response) => {
-        const data = response.data.data;
-        SetUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  const Chats = () => {
-    axios
-      .get(`/chats`, {
-        headers: {
-          Authorization: `Bearer ${checkToken}`,
-        },
-      })
-       .then((response) => {
-        const data = response.data.data;
-        SetUser(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function Profile() {
-    axios
-      .get(`/mentors/profile`, {
+      .get(`/mentors/${idUsers}`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
@@ -108,9 +72,9 @@ const idUser = localStorage.getItem("id");
 
   function Instrument() {
     axios
-      .get(`mentors/instrument`)
+      .get(`mentors/${idUsers}/instrument`)
       .then((response) => {
-        const datas = response.data.data;
+        const datas = response.data;
         SetInstrument(datas);
       })
       .catch((error) => {
@@ -186,9 +150,9 @@ const idUser = localStorage.getItem("id");
   useEffect(() => {
     const fetchJadwalMentor = () => {
       SetLoading(true);
-      axios
-        .get(`mentors/${idUser}/schedules`)
 
+      axios
+        .get(`mentors/${idUsers}/schedules`)
         .then((res) => {
           const { data, message } = res.data;
           setSchedules(data);
@@ -205,7 +169,7 @@ const idUser = localStorage.getItem("id");
 
   const handleDeleteSchedule = (id: any) => {
     axios
-      .delete(`schedules/${idUser}`)
+      .delete(`schedules/${id}`)
       .then(() => {
         setSchedules((prevState) => prevState.filter((item) => item.id !== id));
       })
@@ -220,7 +184,7 @@ const idUser = localStorage.getItem("id");
       SetLoading(true);
 
       axios
-        .get(`/mentors/${id}/class`)
+        .get(`/mentors/${idUsers}/class`)
         .then((res) => {
           const data = res.data.data;
           setCourse(data);
@@ -299,8 +263,7 @@ const idUser = localStorage.getItem("id");
                 <img src={twitter} alt="twitter" width={25} />
                 <img src={youtube} alt="youtube" width={25} /> */}
               </div>
-              
-              {user.id ? (
+              {idUsers == user.id ? (
                 <>
                   <Link to={user?.instagram}>
                     <Button
@@ -309,6 +272,7 @@ const idUser = localStorage.getItem("id");
                       className="border-2 font-poppins font-semibold border-[#3A2BE8] text-[#3A2BE8] py-2 px-12 rounded-xl mt-5 hover:bg-[#3A2BE8] hover:text-white"
                     />
                   </Link>
+
                   <Button
                     id="btn-editTeacher"
                     label="Edit Profile"
@@ -322,29 +286,15 @@ const idUser = localStorage.getItem("id");
                     className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                     onClick={() => navigate("/daftarKursus")}
                   />
-                  <label htmlFor="my-modal-5" className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none">
-                    See Message
-                  </label>
-                  <input
-                    type="checkbox"
-                    id="my-modal-5"
-                    className="modal-toggle"
+
+                  <Button
+                    id="btn-jadwalsaya"
+                    label="Jadwal Saya"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                    onClick={() => navigate("/historyTeacher")}
                   />
-                  <div className="modal">
-                    <div className="modal-box w-11/12 max-w-5xl bg-white">
-                   
-                      <ModalChat
-                        student_id={user.id}
-                        mentor_id={5}
-                      />
-                      <div className="modal-action">
-                        <label htmlFor="my-modal-5" className="btn">
-                          Close
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <details className="border-2 border-black p-4 rounded-2xl mt-5">
+
+                  <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
                     <summary>Tambah Jadwal</summary>
                     <form className="w-[11rem] p-3">
                       <label className="label">
@@ -388,7 +338,7 @@ const idUser = localStorage.getItem("id");
                     />
                   </details>
 
-                  <details className="border-2 border-black p-4 rounded-2xl mt-5">
+                  <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
                     <summary>Lihat Jadwal</summary>
                     <div className="w-[14rem] p-3">
                       {schedules?.map((item, index) => {
@@ -457,4 +407,4 @@ const idUser = localStorage.getItem("id");
   );
 };
 
-export default DetailTeacher;
+export default Profile;

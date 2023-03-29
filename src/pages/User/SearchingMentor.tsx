@@ -16,11 +16,13 @@ const SearchingMentor = () => {
   const [mentor, setMentor] = useState<AllMentor[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(1);
 
-  const fetchDataMentors = () => {
+  const fetchDataMentors = (page: number) => {
     setLoading(true);
     axios
-      .get("mentors")
+      .get(`mentors?limit=6&page=${page}`)
       .then((res) => {
         const { data } = res.data;
         setMentor(data);
@@ -31,8 +33,20 @@ const SearchingMentor = () => {
       .finally(() => setLoading(false));
   };
 
+  function nextPage() {
+    const newPage = page + 1;
+    setPage(newPage);
+    fetchDataMentors(newPage);
+  }
+
+  function prevPage() {
+    const newPage = page - 1;
+    setPage(newPage);
+    fetchDataMentors(newPage);
+  }
+
   useEffect(() => {
-    fetchDataMentors();
+    fetchDataMentors(1);
   }, []);
 
   return (
@@ -104,11 +118,31 @@ const SearchingMentor = () => {
                       desc={item.about}
                       instagram={item.instagram}
                       rating={item.rating}
-                      onClick={() => navigate(`/profileTeacher/${item.id}`)}
+                      onClick={() => navigate(`/ProfileDetail/${item.id}`)}
                     />
                   );
                 })}
               </div>
+            </div>
+            <div
+              className="btn-group dark:bg-gray-600 w-full justify-center"
+              style={{ paddingTop: "2rem" }}
+            >
+              <button
+                className="btn "
+                onClick={() => prevPage()}
+                disabled={page === 1}
+              >
+                «
+              </button>
+              <button className="btn">{page}</button>
+              <button
+                className="btn"
+                onClick={() => nextPage()}
+                // disabled={page === totalPage}
+              >
+                »
+              </button>
             </div>
           </div>
         </div>

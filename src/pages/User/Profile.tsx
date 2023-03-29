@@ -11,7 +11,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { useCookies } from "react-cookie";
 
-const Profile = () => {
+const ProfilStudent = () => {
   const MySwal = withReactContent(Swal);
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
@@ -128,6 +128,7 @@ const Profile = () => {
                 <Button
                   label="Jadwal"
                   className="btn border-none rounded-xl w-3/6 bg-[#3A2BE8] text-white font-semibold mt-5"
+                  onClick={() => navigate("/historyStudent")}
                 />
               </div>
             </div>
@@ -138,4 +139,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilStudent;

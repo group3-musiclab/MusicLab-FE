@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
+import axios from "axios";
+import { HistoryStudent } from "../../utils/types/Datatypes";
 
 export default function HIstory() {
+  const [history, setHistory] = useState<HistoryStudent[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchDataHistory = () => {
+      setLoading(true);
+      axios
+        .get("/students/transactions")
+        .then((res) => {
+          const data = res.data.data;
+          setHistory(data);
+          console.log(data.ulasan);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setLoading(false));
+    };
+    fetchDataHistory();
+  }, []);
+
+  //
+
   return (
     <>
       <Layout>
@@ -21,48 +46,30 @@ export default function HIstory() {
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Status</th>
-                  <th>Tipe</th>
+
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {/* row 1 */}
-                <tr className="hover">
-                  <th>1</th>
-                  <td>Adri</td>
-                  <td>
-                    Complete Electronic Music Production for EDM Music Producers
-                  </td>
-                  <td>25/4/2023</td>
-                  <td>24/5/2023</td>
-                  <td>Selesai</td>
-                  <td>Sesi</td>
-                  <td>Beri Ulasan</td>
-                </tr>
-                {/* row 2 */}
-                <tr className="hover">
-                  <th>2</th>
-                  <td>Blake</td>
-                  <td>How to play Drums : The Ultimate Guide to Drumming</td>
-                  <td>13/4/2023</td>
-                  <td>12/5/2023</td>
-                  <td>Ongoing</td>
-                  <td>Subscription</td>
-                  <td>-</td>
-                </tr>
-                {/* row 3 */}
-                <tr className="hover">
-                  <th>3</th>
-                  <td>Aubrey</td>
-                  <td>
-                    The Professional Bass Masterclass - Bass 1, Bass 2, Bass 3
-                  </td>
-                  <td>30/4/2023</td>
-                  <td>7/5/2023</td>
-                  <td>Selesai</td>
-                  <td>Subscription</td>
-                  <td>Beri Ulasan</td>
-                </tr>
+
+                {history?.map((item, index) => {
+                  return (
+                    <>
+                      <tr className="hover">
+                        <td>{index + 1}</td>
+                        <td>{item?.mentor_name}</td>
+                        <td>{item?.class_name}</td>
+                        <td>{item?.start_date}</td>
+                        <td>{item?.end_date}</td>
+                        <td>{item?.status}</td>
+                        <td>
+                          {item?.status === "Pending" ? "-" : <>Ulasan</>}
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
               </tbody>
             </table>
           </div>

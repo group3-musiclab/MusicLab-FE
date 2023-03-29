@@ -1,13 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
+import axios from "axios";
+import { HistoryMentor } from "../../utils/types/Datatypes";
 
 export default function History() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [historyMentor, setHistoryMentor] = useState<HistoryMentor[]>([]);
+  const [urlGoogle, setUrlGoogle] = useState<string>("");
+
+  useEffect(() => {
+    fetchDataHistoryMentor();
+    fetchGoogleUrl();
+  }, []);
+
+  const fetchDataHistoryMentor = () => {
+    setLoading(true);
+
+    axios
+      .get("/mentors/transactions ")
+      .then((res) => {
+        const data = res.data.data;
+        setHistoryMentor(data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  };
+
+  const fetchGoogleUrl = () => {
+    setLoading(true);
+
+    axios
+      .get("/login/oauth")
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
     <>
       <Layout>
         <div className="w-full min-h-screen">
-         <div className="w-[85%] mx-auto mt-10 mb-5 pl-5">
+          <div className="w-[85%] mx-auto mt-10 mb-5 pl-5">
             <h1 className="text-button font-bold text-2xl">Histori Mengajar</h1>
           </div>
           <div className="overflow-x-auto ">
@@ -21,47 +60,34 @@ export default function History() {
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Status</th>
-                  <th>Tipe</th>
+                  <th>Create Events</th>
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                <tr className="hover">
-                  <th>1</th>
-                  <td>Aubrey</td>
-                  <td>
-                    Complete Electronic Music Production for EDM Music Producers
-                  </td>
-                  <td>25/4/2023</td>
-                  <td>24/5/2023</td>
-                  <td>Selesai</td>
-                  <td>Sesi</td>
-                </tr>
-                {/* row 2 */}
-                <tr className="hover">
-                  <th>2</th>
-                  <td>Gillian</td>
-                  <td>How to play Drums : The Ultimate Guide to Drumming</td>
-                  <td>13/4/2023</td>
-                  <td>12/5/2023</td>
-                  <td>Complete</td>
-                  <td>Subscription</td>
-                </tr>
-                {/* row 3 */}
-                <tr className="hover">
-                  <th>3</th>
-                  <td>Jake</td>
-                  <td>
-                    The Professional Bass Masterclass - Bass 1, Bass 2, Bass 3
-                  </td>
-                  <td>30/4/2023</td>
-                  <td>7/5/2023</td>
-                  <td>Complete</td>
-                  <td>Subscription</td>
-                </tr>
+                {historyMentor?.map((item, index) => {
+                  return (
+                    <>
+                      <tr className="hover">
+                        <th>{index + 1}</th>
+                        <td>{item?.student_name}</td>
+                        <td>{item?.class_name}</td>
+                        <td>{item?.start_date}</td>
+                        <td>{item?.end_date}</td>
+                        <td>{item?.status}</td>
+                        <td>
+                          {item?.status === "settlement" ? "Create Event" : "-"}
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
               </tbody>
             </table>
           </div>
+          <h1 className="text-black text-md font-poppins font-semibold text-center">
+            * To Create Event Please Login With your Google Accounts ?{" "}
+            <span className="text-black font-bold text-lg">Click Here</span>
+          </h1>
           <div className="flex w-[93%] justify-end">
             <Button
               id="btn-kembali"

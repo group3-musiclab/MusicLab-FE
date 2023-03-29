@@ -12,7 +12,8 @@ import Genre from "../pages/Guru/Genre";
 import MainHomePage from "../pages/MainHomePage";
 import EditTeacher from "../pages/Guru/EditTeacher";
 import Chat from "../pages/User/Chat";
-import Profile from "../pages/User/Profile";
+import Profile from "../pages/Guru/Profile";
+import ProfilStudent from "../pages/User/Profile";
 import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
 import HIstory from "../pages/User/HIstory";
 import History from "../pages/Guru/History";
@@ -21,6 +22,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import EditStudent from "../pages/User/EditStudent";
 import ModalChat from "../pages/User/ModalChat";
+import Ulasan from "../pages/User/Ulasan";
 
 function App() {
   const [cookie, setCookie] = useCookies(["token"]);
@@ -41,13 +43,14 @@ function App() {
       element: <Register />,
     },
     {
-      path: "/profileTeacher/:id",
+      path: "/ProfileDetail/:id",
       element: <DetailTeacher />,
     },
     {
       path: "/profileTeacher",
-      element: <DetailTeacher />,
+      element: <Profile />,
     },
+
     {
       path: "/searching",
       element: <SearchingMentor />,
@@ -79,11 +82,11 @@ function App() {
       element: checkToken ? <EditTeacher /> : <Navigate to="/" />,
     },
     {
-      path: "/profile",
-      element: checkToken ? <Profile /> : <Navigate to="/" />,
+      path: "/ProfilStudent",
+      element: checkToken ? <ProfilStudent /> : <Navigate to="/" />,
     },
     {
-      path: "/detailCourse",
+      path: "/detailCourse/:id",
       element: checkToken ? <DetailCourse /> : <Navigate to="/" />,
     },
     {
@@ -112,8 +115,12 @@ function App() {
       element: checkToken ? <EditStudent /> : <Navigate to="/" />,
     },
     {
-      path: "/payment",
+      path: "/payment/:id",
       element: checkToken ? <Payment /> : <Navigate to="/" />,
+    },
+    {
+      path: "/ulasan",
+      element: checkToken ? <Ulasan /> : <Navigate to="/" />,
     },
   ]);
 
