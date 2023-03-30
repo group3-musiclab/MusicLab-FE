@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
-import { Card } from "../../components/Card";
+import { Card, CardTestimonial, CardUlasan } from "../../components/Card";
 import Button from "../../components/Button";
 
 import { ProfileType } from "../../utils/types/Profile";
@@ -13,7 +13,7 @@ import { InboxType } from "../../utils/types/Chat";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
-import { GenreType, Shcedules } from "../../utils/types/Datatypes";
+import { GenreType, Review, Shcedules } from "../../utils/types/Datatypes";
 import ModalChat from "../User/ModalChat";
 import Input from "../../components/Input";
 
@@ -29,38 +29,44 @@ const Profile = () => {
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
   const [inbox, setInbox] = useState<InboxType[]>([]);
-  const [loading, SetLoading] = useState<boolean>(false);
+  const [Isloading, SetIsLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
 
   const [genre, setGenre] = useState<GenreType[]>([]);
-  // console.log(`id=${idUsers} || userId=${user.id}`);
+
   const [day, setDay] = useState<string>("");
   const [start_time, setStartTime] = useState<string>("");
   const [end_time, setEndTime] = useState<string>("");
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
-  const { id } = useParams();
+  // const { id } = useParams();
+
   const idUsers = localStorage.getItem("id");
   const [course, setCourse] = useState<MentorClass[]>([]);
+  const [comment, setComment] = useState<Review[]>([]);
 
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
   const checkToken = cookie.token;
   const [schduleId, setScheduleId] = useState<number>();
+  const [totalPage, setTotalPage] = useState<number>(20);
+  const [page, setPage] = useState<number>(1);
+
   useEffect(() => {
     Profile();
     Instrument();
+    fethcDataMentor();
+    fetchCourseMentor(1);
 
     return () => {
       Profile();
+      Instrument();
+      fethcDataMentor();
+      fetchCourseMentor(1);
     };
   }, []);
 
   function Profile() {
     axios
-      .get(`/mentors/${idUsers}`, {
-        headers: {
-          Authorization: `Bearer ${checkToken}`,
-        },
-      })
+      .get(`/mentors/${idUsers}`)
       .then((response) => {
         const data = response.data.data;
         SetUser(data);
@@ -113,16 +119,14 @@ const Profile = () => {
       });
   };
 
-  const handlePostJadwal = (e: React.FormEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
+  const handlePostJadwal = async (e: React.FormEvent<HTMLInputElement>) => {
     const body = {
       day,
       start_time,
       end_time,
     };
 
-    axios
+    await axios
       .post("mentors/schedules", body)
       .then((res) => {
         const { data, message } = res.data;
@@ -132,9 +136,10 @@ const Profile = () => {
           text: message,
           showCancelButton: false,
         });
+
         setSchedules((prevState) => [...prevState, data]);
-        // window.location.reload(false);
       })
+
       .catch((err) => {
         const { message } = err.response.data;
 
@@ -143,29 +148,25 @@ const Profile = () => {
           text: message,
           showCancelButton: false,
         });
-      })
-      .finally(() => SetLoading(false));
+      });
   };
 
-  useEffect(() => {
-    const fetchJadwalMentor = () => {
-      SetLoading(true);
+  // https://virtserver.swaggerhub.com/KHARISMAJANUAR/MusicLab-API/1.0.0
 
-      axios
-        .get(`mentors/${idUsers}/schedules`)
-        .then((res) => {
-          const { data, message } = res.data;
-          setSchedules(data);
+  const fethcDataMentor = () => {
+    SetIsLoading(true);
+    axios
+      .get(`mentors/${idUsers}/schedules`)
+      .then((res) => {
+        const { data, message } = res.data;
+        setSchedules(res.data.data);
 
-          // console.log(schduleId);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => SetLoading(false));
-    };
-    fetchJadwalMentor();
-  }, []);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleDeleteSchedule = (id: any) => {
     axios
@@ -175,27 +176,51 @@ const Profile = () => {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => SetLoading(false));
+      });
   };
 
+  const fetchCourseMentor = (page: number) => {
+    SetIsLoading(true);
+
+    axios
+      .get(`/mentors/${idUsers}/class?limit=4&page=${page}`)
+      .then((res) => {
+        const data = res.data.data;
+        setCourse(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => SetIsLoading(false));
+  };
+
+  function nextPage() {
+    const newPage = page + 1;
+    setPage(newPage);
+    fetchCourseMentor(newPage);
+  }
+
+  function prevPage() {
+    const newPage = page - 1;
+    setPage(newPage);
+    fetchCourseMentor(newPage);
+  }
+
   useEffect(() => {
-    const fetchCourseMentor = () => {
-      SetLoading(true);
+    const fetchCommentMentor = () => {
+      SetIsLoading(true);
 
       axios
-        .get(`/mentors/${idUsers}/class`)
+        .get(`/mentors/${idUsers}/reviews`)
         .then((res) => {
           const data = res.data.data;
-          setCourse(data);
+          setComment(data);
         })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => SetLoading(false));
+        .catch((err) => console.log(err))
+        .finally(() => SetIsLoading(false));
     };
 
-    fetchCourseMentor();
+    fetchCommentMentor();
   }, []);
 
   return (
@@ -239,11 +264,15 @@ const Profile = () => {
                 <Button
                   label="Prev"
                   className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+                  onClick={() => prevPage()}
+                  disabled={page === 1}
                 />
-                <p className="mx-auto text-xl text-[#3A2BE8] mt-2">1</p>
+                <p className="mx-auto text-xl text-[#3A2BE8] mt-2">{page}</p>
                 <Button
                   label="Next"
                   className="btn border-none w-5/6 bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+                  onClick={() => nextPage()}
+                  disabled={page === totalPage}
                 />
               </div>
             </div>
@@ -321,12 +350,14 @@ const Profile = () => {
                         type="time"
                         className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
                         onChange={(e: any) => setStartTime(e.target.value)}
+                        defaultValue={start_time}
                       />
                       <Input
                         id="input-endTime"
                         type="time"
                         className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
                         onChange={(e: any) => setEndTime(e.target.value)}
+                        defaultValue={end_time}
                       />
                     </div>
                     <Button
@@ -344,8 +375,10 @@ const Profile = () => {
                       {schedules?.map((item, index) => {
                         return (
                           <>
-                            <div key={index} className="flex flex-row">
-                              <div className="w-[50%] text-sm">{item?.day}</div>
+                            <div className="flex flex-row">
+                              <div key={index} className="w-[50%] text-sm">
+                                {item?.day}
+                              </div>
                               <div className="w-[50%] flex justify-end">
                                 <p className="text-sm">{item?.start_time}</p>
                                 <p> - </p>
@@ -354,7 +387,7 @@ const Profile = () => {
                                   id="btn-delete"
                                   className="ml-2 -mt-1"
                                   label="x"
-                                  onClick={() => handleDeleteSchedule(item.id)}
+                                  onClick={() => handleDeleteSchedule(item?.id)}
                                 />
                               </div>
                             </div>
@@ -381,15 +414,15 @@ const Profile = () => {
                   <details className="border-2 border-black p-4 rounded-2xl mt-5">
                     <summary>Lihat Jadwal</summary>
                     <div className="w-[11rem] p-2">
-                      {schedules?.map((item) => {
+                      {schedules?.map((item, index) => {
                         return (
                           <>
-                            <div className="flex flex-row">
-                              <div className="w-[50%] text-sm">{item.day}</div>
+                            <div key={index} className="flex flex-row">
+                              <div className="w-[50%] text-sm">{item?.day}</div>
                               <div className="w-[50%] flex justify-end">
-                                <p className="text-sm">{item.start_time}</p>
+                                <p className="text-sm">{item?.start_time}</p>
                                 <p> - </p>
-                                <p className="text-sm">{item.end_time}</p>
+                                <p className="text-sm">{item?.end_time}</p>
                               </div>
                             </div>
                           </>
@@ -402,6 +435,21 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <h1 className="text-black text-xl font-poppins font-bold">Ulasan</h1>
+        {comment?.map((item, index) => {
+          return (
+            <>
+              <CardUlasan
+                key={index}
+                image={item?.avatar}
+                name={item?.name}
+                date={item?.created_at}
+                comment={item?.comment}
+                rating={item?.rating}
+              />
+            </>
+          );
+        })}
       </div>
     </Layout>
   );

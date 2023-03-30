@@ -2,10 +2,58 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import ulasanImg from "../../assets/ulasan.webp";
 import Button from "../../components/Button";
+import { useNavigate, useParams } from "react-router";
+import axios from "axios";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../../utils/Swal";
 
 const Ulasan = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+  const { id } = useParams();
+
+  const [comment, setComment] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
+
+  const handlePostReview = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const body = {
+      rating,
+      mentor_id: id,
+      comment,
+    };
+
+    axios
+      .post(`/mentors/${id}/reviews`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        const message = res.data;
+
+        MySwal.fire({
+          title: "Success Give Rating",
+          text: message,
+          showCancelButton: false,
+        });
+        navigate("/historyStudent");
+      })
+      .catch((err) => {
+        const message = err.response.data;
+
+        MySwal.fire({
+          title: "Please Fill All The Form",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
     <>
       <Layout>
@@ -16,12 +64,13 @@ const Ulasan = () => {
             </h1>
             <label className="label mt-3">
               <span className="label-text text-black font-semibold text-lg font-poppins  w-6/12 ">
-                Deskripsi
+                Comment
               </span>
             </label>
             <textarea
               id="input-deskripsi"
               className="textarea textarea-bordered h-40 bg-bg-input border-slate-300 w-11/12 text-black font-semibold font-popins bg-white"
+              onChange={(e: any) => setComment(e.target.value)}
               //
             ></textarea>
             <div>
@@ -40,6 +89,7 @@ const Ulasan = () => {
                         onClick={() => setRating(index)}
                         onMouseEnter={() => setHover(index)}
                         onMouseLeave={() => setHover(rating)}
+                        onChange={() => setRating(index)}
                       >
                         <span className="star text-6xl">&#9733;</span>
                       </button>
@@ -52,6 +102,7 @@ const Ulasan = () => {
               id="btn-submitulasan"
               label="Submit Ulasan"
               className="btn"
+              onClick={(e: any) => handlePostReview(e)}
             />
           </div>
           <div className="flex justify-center items-center flex-1 flex-col">

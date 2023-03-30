@@ -124,7 +124,7 @@ function App() {
       element: checkToken ? <Payment /> : <Navigate to="/" />,
     },
     {
-      path: "/ulasan",
+      path: "/ulasan/:id",
       element: checkToken ? <Ulasan /> : <Navigate to="/" />,
     },
   ]);

@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 import axios from "axios";
 import { HistoryStudent } from "../../utils/types/Datatypes";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function HIstory() {
   const navigate = useNavigate();
@@ -65,8 +66,22 @@ export default function HIstory() {
                         <td>{item?.start_date}</td>
                         <td>{item?.end_date}</td>
                         <td>{item?.status}</td>
+
                         <td>
-                          {item?.status === "Pending" ? "-" : <>Ulasan</>}
+                          {item?.status === "Pending" ? (
+                            "-"
+                          ) : (
+                            <>
+                              <Button
+                                id="btn-linkulasan"
+                                className="btn"
+                                label="Beri Ulasan"
+                                onClick={() =>
+                                  navigate(`/ulasan/${item.mentor_id}`)
+                                }
+                              />
+                            </>
+                          )}
                         </td>
                       </tr>
                     </>

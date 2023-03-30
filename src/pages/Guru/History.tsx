@@ -4,16 +4,18 @@ import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 import axios from "axios";
 import { HistoryMentor } from "../../utils/types/Datatypes";
+import { useNavigate } from "react-router";
 
 export default function History() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [historyMentor, setHistoryMentor] = useState<HistoryMentor[]>([]);
   const [urlGoogle, setUrlGoogle] = useState<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDataHistoryMentor();
-    fetchGoogleUrl();
+    // fetchGoogleUrl();
   }, []);
 
   const fetchDataHistoryMentor = () => {
@@ -43,6 +45,10 @@ export default function History() {
       })
       .finally(() => setLoading(false));
   };
+
+  useEffect(() => {
+    fetchGoogleUrl();
+  }, []);
 
   return (
     <>
