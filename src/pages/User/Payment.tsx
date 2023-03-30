@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
 
 import Layout from "../../components/Layout";
@@ -15,13 +14,11 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 const Payment = () => {
-  // const { idMentor } = useParams();
-  // const { class_id } = useParams();
   const [cookie, setCookie] = useCookies(["token"]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, SetLoading] = useState(true);
   const [course, setCourse] = useState<ClassDetail>({});
   const tax = 20000;
-  const [id, setId] = useState<number>(0);
+
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
   const checkToken = cookie.token;
   const class_id = JSON.parse(localStorage.getItem("idClass") || "");
@@ -29,7 +26,9 @@ const Payment = () => {
   const [schedule_id, setIdSchedule] = useState<string>("");
   const [start_date, setStartDate] = useState<string>("");
   const [dataAvail, setDataAvail] = useState<any>("");
+  console.log(dataAvail);
   const availData = localStorage.getItem("responAvai");
+  console.log(availData);
 
   const [urlPayment, setUrlPayment] = useState<any>("");
   console.log(urlPayment);
@@ -50,11 +49,11 @@ const Payment = () => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => SetLoading(false));
   };
 
   const fetchJadwalMentor = () => {
-    setLoading(true);
+    SetLoading(true);
 
     axios
       .get(`mentors/${idMentor}/schedules`)
@@ -71,7 +70,7 @@ const Payment = () => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => SetLoading(false));
   };
 
   useEffect(() => {
@@ -118,18 +117,18 @@ const Payment = () => {
           showCancelButton: false,
         });
       })
-      .finally(() => setLoading(false));
+      .finally(() => SetLoading(false));
   };
 
   const handlePayment = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-  
+
     const body = {
       class_id: +class_id,
       schedule_id: +schedule_id,
       start_date,
     };
-  
+
     axios
       .post("/transactions", body, {
         headers: {
@@ -137,20 +136,30 @@ const Payment = () => {
         },
       })
       .then((res) => {
-        const paymentUrl = res.data.data.payment_url;
-        window.location.href = paymentUrl;
+        const message = res.data;
+        const data = localStorage.setItem(
+          "responsPayment",
+          JSON.stringify(res.data.data.payment_url)
+        );
+        const getResponsePayment = localStorage.getItem("responsPayment");
+        setUrlPayment(getResponsePayment);
+        MySwal.fire({
+          title: "Payment Succes",
+          text: message,
+          showCancelButton: false,
+        });
       })
       .catch((err) => {
         const message = err.response.data;
+
         MySwal.fire({
           title: "Payment Failed",
           text: message,
           showCancelButton: false,
         });
       })
-      .finally(() => setLoading(false));
+      .finally(() => SetLoading(false));
   };
-  
 
   const header = {
     width: "80%",
@@ -222,30 +231,34 @@ const Payment = () => {
                 </select>
               </form>
               <Button
-                label="Check Availability"
+                label="check availibility"
                 className="btn bg-[#3A2BE8] mt-4"
                 onClick={(e: any) => handleCheck(e)}
               />
-              {availData ? (
-                <Button
-                  label="Continue Payment"
-                  className="btn bg-[#3A2BE8] mt-4"
-                  onClick={(e: any) => handlePayment(e)}
-                />
+              {availData === "schedule available" ? (
+                <>
+                  <Button
+                    label="Continue Payment"
+                    className="btn bg-[#3A2BE8] mt-4"
+                    onClick={(e: any) => {
+                      handlePayment(e);
+                    }}
+                  />
+                </>
               ) : (
-                <Button
-                  label="Continue Payment"
-                  className="btn bg-[#3A2BE8] mt-4 disabled:border-slate-200 disabled:cursor-not-alloweds"
-                  onClick={(e: any) => handlePayment(e)}
-                />
+                <>
+                  <Button
+                    label="Continue Payment"
+                    className="btn bg-[#3A2BE8] mt-4 disabled:border-slate-200 disabled:cursor-not-alloweds"
+                    onClick={(e: any) => {
+                      handlePayment(e);
+                    }}
+                  />
+                </>
               )}
-              {urlPayment && (
-                <Button
-                  label="Proceed to Payment"
-                  className="btn bg-[#3A2BE8] mt-4"
-                  onClick={() => (window.location.href = urlPayment)}
-                />
-              )}
+              <a href={urlPayment} target="_blank">
+                Pay
+              </a>
             </div>
           </div>
         </div>

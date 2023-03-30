@@ -4,7 +4,6 @@ import App from "./routes/App";
 import "./styles/index.css";
 import axios from "axios";
 import Store from "./utils/context/store";
-import PaymentSuccess from "./pages/User/PaymentSuccess";
 
 axios.defaults.baseURL = "https://baggioshop.site/";
 
