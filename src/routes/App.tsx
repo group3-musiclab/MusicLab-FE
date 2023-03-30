@@ -63,7 +63,7 @@ function App() {
 
     {
       path: "/instrument",
-      element: checkToken ? <Instrument /> : <Navigate to="/" />,
+      element:  <Instrument />,
     },
     {
       path: "/genre",

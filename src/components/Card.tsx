@@ -86,7 +86,7 @@ const CardMentor: FC<CardMentorProps> = ({
   const { id } = useParams();
   return (
     <>
-      <div className="flex flex-col lg:flex-row w-full  shadow-xl rounded-xl bg-slate-200 mt-10">
+      <div className="flex flex-col lg:flex-row w-full  shadow-xl rounded-xl bg-white mt-10">
         <div className="flex-1">
           <img
             src={image}

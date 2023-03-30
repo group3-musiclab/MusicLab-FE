@@ -64,7 +64,7 @@ const Chat = () => {
                             </p>
                             <label
                               htmlFor="my-modal-5"
-                              className="font-semibold"
+                              className="btn font-semibold"
                             >
                               See Message
                             </label>

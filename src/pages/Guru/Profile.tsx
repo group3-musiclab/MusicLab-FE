@@ -80,7 +80,7 @@ const Profile = () => {
     axios
       .get(`mentors/${idUsers}/instrument`)
       .then((response) => {
-        const datas = response.data;
+        const datas = response.data.data;
         SetInstrument(datas);
       })
       .catch((error) => {
