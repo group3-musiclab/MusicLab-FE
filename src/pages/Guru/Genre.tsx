@@ -50,7 +50,7 @@ export default function Genre() {
           text: message,
           showCancelButton: false,
         });
-        navigate(`/profileTeacher/${id}`);
+        navigate(`/profileTeacher`);
       })
       .catch((err) => {
         const { message } = err.response.data;

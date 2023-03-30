@@ -1,34 +1,46 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Layout from "../../components/Layout";
 
 import { useNavigate } from "react-router";
 import { ProfileType } from "../../utils/types/Profile";
+import { GenreType } from "../../utils/types/Datatypes";
+import { InstrumenType } from "../../utils/types/Instrument";
+import { EditProfilType } from "../../utils/types/Datatypes";
+import { EditPassword } from "../../utils/types/Datatypes";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
-import { EditProfilType } from "../../utils/types/Datatypes";
-import { EditPassword } from "../../utils/types/Datatypes";
 
 export default function EditTeacher() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
+  const [cookie, setCookie] = useCookies(["token"]);
   const [editUser, setEditUser] = useState<EditProfilType>({});
+  const [genre, setGenre] = useState<GenreType[]>([]);
+  const [genre_id, setGenreId] = useState<string>("");
+  const [instrumentData, setInstrumentData] = useState<InstrumenType[]>([]);
   const [editPassword, setEditPassword] = useState<EditPassword>({});
   const [user, SetUser] = useState<ProfileType>();
   const [certificate_file, setSertificateFile] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [type, setType] = useState<string>("");
-
+  const [instrument_id, setId] = useState<string>("");
   const [pictures, setPictures] = useState<any>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const checkToken = cookie.token;
 
   useEffect(() => {
     Profile();
+    Instrument();
+    Genres();
 
     return () => {
       Profile();
+      Instrument();
+      Genres();
     };
   }, []);
 
@@ -38,12 +50,104 @@ export default function EditTeacher() {
       .then((response) => {
         const data = response.data.data;
         SetUser(data);
-        console.log("datas", response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
+  function Genres() {
+    axios
+      .get("/genres")
+      .then((res) => {
+        const data = res.data.data;
+        setGenre(data);
+        console.log("Genres", res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  function Instrument() {
+    axios
+      .get("/instruments")
+      .then((res) => {
+        const data = res.data.data;
+        setInstrumentData(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handlePostGenre = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const body = {
+      genre_id: +genre_id,
+    };
+    axios
+      .post("mentors/genres", body, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`
+        }
+      })
+      .then((res) => {
+        const { message } = res.data;
+        MySwal.fire({
+          title: "Succces",
+          text: message,
+          showCancelButton: false,
+        });
+        navigate(`/profileTeacher`);
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+        MySwal.fire({
+          title: "Failed",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handlePostInstrument = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const body = {
+      instrument_id: +instrument_id,
+    };
+
+    axios
+      .post("/mentors/instruments", body, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`
+        },
+      })
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          title: "Succes",
+          text: message,
+          showCancelButton: false,
+        });
+
+        navigate("/profileTeacher");
+      })
+      .catch((err) => {
+        const { message } = err.response.data;
+
+        MySwal.fire({
+          title: "Failed",
+          text: message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
 
   const handleChangePassword = (
     value: String | File,
@@ -245,15 +349,55 @@ export default function EditTeacher() {
                       setSertificateFile(e.currentTarget.files[0]);
                     }}
                   />
+                  {/* Instrument */}
+                  <h1 className="text-center text-xl font-poppins text-black font-bold mt-12">
+                    instrument you want to teach
+                  </h1>
+                  <select
+                    className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto mt-6  text-black font-semibold font-poppins"
+                    onChange={(e: any) => setId(e.target.value)}
+                  >
+                    <option>Pilih Salah Satu</option>
+                    {instrumentData?.map((item) => {
+                      return (
+                        <>
+                          <option value={item.id}>{item.name}</option>
+                        </>
+                      );
+                    })}
+                  </select>
                   <div className="w-full flex justify-center mt-10">
                     <Button
-                      id="btn-uploadsertifikat"
-                      label="Upload Sertifikat"
+                      id="btn-updatepassword"
+                      label="Update Instruments"
                       className="bg-button w-[20rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
-                      onClick={(e: any) => handlePostCredentials(e)}
+                      onClick={(e: any) => handlePostInstrument(e)}
                     />
                   </div>
-
+                  <h1 className="text-center text-xl font-poppins text-black font-bold mt-12">
+                    Your Genre Music
+                  </h1>
+                  <select
+                    className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto mt-6  text-black font-semibold font-poppins"
+                    onChange={(e: any) => setGenreId(e.target.value)}
+                  >
+                    <option>Pilih Salah Satu</option>
+                    {genre?.map((item) => {
+                      return (
+                        <>
+                          <option value={item.id}>{item.name}</option>
+                        </>
+                      );
+                    })}
+                  </select>
+                  <div className="w-full flex justify-center mt-10">
+                    <Button
+                      id="btn-updatepassword"
+                      label="Update Genres"
+                      className="bg-button w-[20rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
+                      onClick={(e: any) => handlePostGenre(e)}
+                    />
+                  </div>
                   <h1 className="text-center text-xl font-poppins text-black font-bold mt-12">
                     Update Password
                   </h1>
