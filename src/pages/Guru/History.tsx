@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 import axios from "axios";
@@ -6,6 +7,7 @@ import { HistoryMentor } from "../../utils/types/Datatypes";
 import { useNavigate } from "react-router";
 
 export default function History() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [historyMentor, setHistoryMentor] = useState<HistoryMentor[]>([]);
   const [urlGoogle, setUrlGoogle] = useState<string>("");
