@@ -115,14 +115,14 @@ function DetailCourse() {
               </div>
             </div>
             <div className="lg:w-[35%] w-full text-black flex justify-center sticky">
-              <div className="card bg-bg-card w-full h-[35rem] items-center">
+              <div className="card bg-card w-full h-[45rem] items-center">
                 <div className="flex flex-col w-full lg:w-[85%] lg:mt-7">
                   <div className="w-full  h-[10rem] rounded-xl">
-                    <div className="flex lg:flex-row bg-slate-100 rounded-xl shadow-lg">
+                    <div className="flex lg:flex-row h-full bg-white rounded-xl shadow-lg">
                       <div className="flex-1 -mt-7">
                         <img
                           src={mentor?.avatar}
-                          className="w-full rounded-xl"
+                          className="w-full rounded-xl mt-7"
                         />
                       </div>
                       <div className="flex-1 mt-5 ml-4">

@@ -80,8 +80,7 @@ const Profile = () => {
     axios
       .get(`mentors/${idUsers}/instrument`)
       .then((response) => {
-        const datas = response.data.data;
-        SetInstrument(datas);
+        SetInstrument(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -158,10 +157,7 @@ const Profile = () => {
     axios
       .get(`mentors/${idUsers}/schedules`)
       .then((res) => {
-        const { data, message } = res.data;
         setSchedules(res.data.data);
-
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -231,11 +227,13 @@ const Profile = () => {
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
             <div className="font-semibold space-x-2">
-              {instrument.map((item, index) => (
-                <a key={index} className="text-black">
+              {instrument.map((item, index) => {
+                return (
+                  <a key={index} className="text-black">
                   {item.name}
                 </a>
-              ))}
+                )
+              })}
             </div>
             <div className="mt-2">
               <p className="font-semibold opacity-75">Ulasan</p>
