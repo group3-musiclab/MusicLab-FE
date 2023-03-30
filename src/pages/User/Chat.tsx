@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -11,7 +10,6 @@ import { InboxType } from "../../utils/types/Chat";
 import { IoIosArrowBack } from "react-icons/io";
 
 const Chat = () => {
-  const navigate = useNavigate();
   const [inbox, setInbox] = useState<InboxType[]>([]);
   const [cookie, setCookie] = useCookies(["token", "id"]);
   const checkToken = cookie.token;
@@ -42,7 +40,7 @@ const Chat = () => {
         <div className="flex flex-row">
           <div className="flex text-black font-semibold">
             <IoIosArrowBack size={35} />
-            <p className="text-xl font-poppins mt-1" onClick={() => navigate("/profileTeacher")}>Back</p>
+            <p className="text-xl font-poppins mt-1">Back</p>
           </div>
           <div className="mt-24">
             <p className="text-black text-4xl font-poppins">Chat</p>

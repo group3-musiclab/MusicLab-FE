@@ -28,7 +28,6 @@ const ReusableNav = () => {
       showCancelButton: false,
     });
   };
-
   return (
     <>
       <div className="navbar mx-auto p-8">
@@ -113,13 +112,6 @@ const ReusableNav = () => {
               >
                 Logout
               </a>
-            </li>
-            <li>
-              {checkToken && checkRole === "Mentor" && (
-                <Link to="/chat" className="text-black font-bold font-poppins">
-                  Chat
-                </Link>
-              )}
             </li>
           </ul>
           {checkToken && checkRole === "Student" ? (

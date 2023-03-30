@@ -281,7 +281,11 @@ const UploadCourse = () => {
   return (
     <>
       <Layout>
-      <div className="w-full min-h-screen flex flex-col bg-white items-center mt-10">
+        <form
+          onSubmit={handlePostCourse}
+          encType="multipart/form-data"
+          className="w-full min-h-screen flex flex-col bg-white items-center mt-10"
+        >
           <h1 className="text-black font-bold w-9/12 flex justify-center text-2xl font-poppins lg:mt-0 -mt-8">
             Upload Kursus
           </h1>
@@ -295,7 +299,6 @@ const UploadCourse = () => {
               backgroundRepeat: "no-repeat",
             }}
           ></div>
-          <h1>*Max File : 500 kb</h1>
           <Input
             id="input-header-kursus"
             type="file"
@@ -317,7 +320,7 @@ const UploadCourse = () => {
 
               <Input
                 id="input-judulkursus"
-                type="text"
+                type="Template"
                 placeholder="Ketik Judul Kursus Anda..."
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
                 onChange={(e: any) => setName(e.target.value)}
@@ -333,10 +336,10 @@ const UploadCourse = () => {
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12  text-black font-semibold font-poppins bg-white"
                 onChange={(e: any) => setLevel(e.target.value)}
               >
-                <option defaultValue={level}></option>
+                <option defaultValue={"DEFAULT"}>Pilih Salah Satu</option>
                 <option value="Basic">Basic</option>
                 <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
+                <option value="Advanced">Advance</option>
               </select>
 
               <label className="label" id="desc-kursus">
@@ -346,9 +349,8 @@ const UploadCourse = () => {
               </label>
               <textarea
                 id="input-deskripsikursus"
-                defaultValue={description}
-                onChange={(e: any) => setDescription(e.target.value)}
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
+                onChange={(e: any) => setDescription(e.target.value)}
               ></textarea>
               <label className="label">
                 <span className="label-text text-black font-semibold text-lg font-poppins w-11/12 lg:w-10/12  mt-5">
@@ -357,7 +359,6 @@ const UploadCourse = () => {
               </label>
               <textarea
                 id="input-apayangdipelajari"
-                defaultValue={syllabus}
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12  text-black font-semibold font-popins bg-white"
                 onChange={(e: any) => setSyllabus(e.target.value)}
               ></textarea>
@@ -368,8 +369,8 @@ const UploadCourse = () => {
               </label>
               <textarea
                 id="input-prasayrat-khusus"
-                onChange={(e: any) => setRequirement(e.target.value)}
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
+                onChange={(e: any) => setRequirement(e.target.value)}
               ></textarea>
               <label className="label">
                 <span className="label-text text-black font-semibold text-lg font-poppins  w-11/12 lg:w-10/12 mt-5">
@@ -378,27 +379,27 @@ const UploadCourse = () => {
               </label>
               <textarea
                 id="input-untuk-siapa-kursus-ini"
-                onChange={(e: any) => setForWhom(e.target.value)}
                 className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-popins bg-white"
+                onChange={(e: any) => setForWhom(e.target.value)}
               ></textarea>
               <div className="flex justify-start w-[85%]">
                 <Button
-                  id="btn-updatekursus"
-                  label="Update Kursus"
+                  id="btn-uploadkursus"
+                  label="Upload Kursus"
                   className="btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
                   disabled={disabled || loading}
-                  onClick={(e: any) => handlePostCourse(e)}
                 />
               </div>
             </div>
-            <div className="flex-1 lg:pl-16">
-              <label className="label mt-5">
-                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
-                  Harga Kursus
-                </span>
-              </label>
+          </div>
+          <div className="flex-1 lg:pl-16">
+            <label className="label mt-5">
+              <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                Harga Kursus
+              </span>
+            </label>
 
-              <Input
+            <Input
               id="input-harga-kursus"
               type="number"
               placeholder="Harga Kursus..."
@@ -407,22 +408,21 @@ const UploadCourse = () => {
               onChange={(e: any) => setPrice(parseInt(e.target.value))}
               accept="image/jpg, image/png"
             />
-              <label className="label mt-5">
-                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
-                  Duration
-                </span>
-              </label>
+            <label className="label mt-5">
+              <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                Duration
+              </span>
+            </label>
 
-              <Input
+            <Input
               id="input-duratopn"
               type="number"
               placeholder="Durasi..."
               className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
               onChange={(e: any) => setDuration(e.target.value)}
             />
-            </div>
           </div>
-        </div>
+        </form>
       </Layout>
     </>
   );

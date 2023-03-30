@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 import axios from "axios";
@@ -95,7 +94,6 @@ export default function HIstory() {
               id="btn-kembali"
               label="Kembali"
               className="btn bg-button px-32 lg:px-20 py-2 text-white border-none mt-5"
-              onClick={() => navigate("/ProfilStudent")}
             />
           </div>
         </div>

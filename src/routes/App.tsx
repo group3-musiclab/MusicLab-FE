@@ -18,7 +18,6 @@ import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
 import HIstory from "../pages/User/HIstory";
 import History from "../pages/Guru/History";
 import Payment from "../pages/User/Payment";
-import PaymentSuccess from "../pages/User/PaymentSuccess";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import EditStudent from "../pages/User/EditStudent";
@@ -117,10 +116,6 @@ function App() {
     },
     {
       path: "/payment/:id",
-      element: checkToken ? <Payment /> : <Navigate to="/" />,
-    },
-    {
-      path: "/payment/success",
       element: checkToken ? <Payment /> : <Navigate to="/" />,
     },
     {
