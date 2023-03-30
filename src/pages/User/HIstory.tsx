@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 import axios from "axios";
 import { HistoryStudent } from "../../utils/types/Datatypes";
 
 export default function HIstory() {
+  const navigate = useNavigate();
   const [history, setHistory] = useState<HistoryStudent[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -78,6 +80,7 @@ export default function HIstory() {
               id="btn-kembali"
               label="Kembali"
               className="btn bg-button px-32 lg:px-20 py-2 text-white border-none mt-5"
+              onClick={() => navigate("/ProfilStudent")}
             />
           </div>
         </div>
