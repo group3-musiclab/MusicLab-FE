@@ -36,7 +36,7 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
       .then((response) => {
         const data = response.data.data;
         setChats(data);
-        console.log("test chat",data);
+        console.log("test chat", data);
       })
       .catch((error) => {
         console.log(error);
@@ -73,15 +73,15 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
       <div className="flex flex-col justify-center">
         <div className="card">
           <div className="card-body">
-          {chats &&
-              chats.map((item: any, index) => (
+            {chats &&
+              chats?.map((item: any, index) => (
                 <div key={index} className="w-7/12">
                   <p className="text-black font-poppins font-semibold">
-                    {item.sender_name}
+                    {item?.sender_name}
                   </p>
                   <div className="bg-white border border-black w-full h-14 flex justify-start items-center p-6 rounded-xl">
                     <div className="text-black font-poppins">
-                      <span>{item.chat}</span>
+                      <span>{item?.chat}</span>
                     </div>
                   </div>
                 </div>

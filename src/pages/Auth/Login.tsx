@@ -138,6 +138,12 @@ const Login = () => {
                   className="bg-button w-10/12 lg:w-6/12 rounded-lg py-2 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
                   loading={loading || disabled}
                 />
+                <Button
+                  id="btn-login"
+                  label="Login With Google Account"
+                  className="bg-button w-10/12 lg:w-6/12 rounded-lg py-2 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
+                  onClick={() => navigate("/oauthLogin")}
+                />
               </div>
             </form>
             <p className="text-center text-black  font-semibold mt-5 font-poppins">

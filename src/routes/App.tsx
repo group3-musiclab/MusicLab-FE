@@ -23,6 +23,7 @@ import { useCookies } from "react-cookie";
 import EditStudent from "../pages/User/EditStudent";
 import ModalChat from "../pages/User/ModalChat";
 import Ulasan from "../pages/User/Ulasan";
+import OauthLogin, { Success } from "../pages/Auth/OauthLogin";
 
 function App() {
   const [cookie, setCookie] = useCookies(["token"]);
@@ -121,6 +122,14 @@ function App() {
     {
       path: "/ulasan/:id",
       element: checkToken ? <Ulasan /> : <Navigate to="/" />,
+    },
+    {
+      path: "/oauthLogin",
+      element: <OauthLogin />,
+    },
+    {
+      path: "/succesOauth",
+      element: <Success />,
     },
   ]);
 
