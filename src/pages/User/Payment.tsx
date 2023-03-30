@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
 
 import Layout from "../../components/Layout";
@@ -14,11 +15,13 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 const Payment = () => {
+  // const { idMentor } = useParams();
+  // const { class_id } = useParams();
   const [cookie, setCookie] = useCookies(["token"]);
-  const [loading, SetLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [course, setCourse] = useState<ClassDetail>({});
   const tax = 20000;
-
+  const [id, setId] = useState<number>(0);
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
   const checkToken = cookie.token;
   const class_id = JSON.parse(localStorage.getItem("idClass") || "");
@@ -26,9 +29,8 @@ const Payment = () => {
   const [schedule_id, setIdSchedule] = useState<string>("");
   const [start_date, setStartDate] = useState<string>("");
   const [dataAvail, setDataAvail] = useState<any>("");
-  console.log(dataAvail);
+  const [availCheck, setAvailCheck] = useState<string>("");
   const availData = localStorage.getItem("responAvai");
-  console.log(availData);
 
   const [urlPayment, setUrlPayment] = useState<any>("");
   console.log(urlPayment);
@@ -44,33 +46,27 @@ const Payment = () => {
         setCourse(data);
         localStorage.setItem("availData", JSON.stringify(data));
         setDataAvail(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => SetLoading(false));
+      .finally(() => setLoading(false));
   };
 
   const fetchJadwalMentor = () => {
-    SetLoading(true);
+    setLoading(true);
 
     axios
       .get(`mentors/${idMentor}/schedules`)
       .then((res) => {
         const { data, message } = res.data;
-        console.log();
+
         setSchedules(data);
-
-        // setSchedules(idGet);
-        // setIdSchedule(idGet);
-
-        // console.log(idGet);
       })
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => SetLoading(false));
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -99,8 +95,9 @@ const Payment = () => {
           "responAvai",
           JSON.stringify(message.message)
         );
+        console.log();
         const getItem = localStorage.getItem("responAvai");
-        setDataAvail(getItem);
+        setDataAvail(message.message);
 
         MySwal.fire({
           title: "Schedules Available",
@@ -109,15 +106,18 @@ const Payment = () => {
         });
       })
       .catch((err) => {
-        const message = err.response.data;
+        const { message } = err.response.data;
+        setAvailCheck(message);
 
+        console.log(availCheck);
+        console.log(message);
         MySwal.fire({
-          title: "Your Choosen Date is Unavailable",
+          title: "Your Choosen Date is Unavailable, Pick Another Date",
           text: message,
           showCancelButton: false,
         });
       })
-      .finally(() => SetLoading(false));
+      .finally(() => setLoading(false));
   };
 
   const handlePayment = (e: React.FormEvent<HTMLInputElement>) => {
@@ -136,21 +136,12 @@ const Payment = () => {
         },
       })
       .then((res) => {
-        const message = res.data;
-        const data = localStorage.setItem(
-          "responsPayment",
-          JSON.stringify(res.data.data.payment_url)
-        );
-        const getResponsePayment = localStorage.getItem("responsPayment");
-        setUrlPayment(getResponsePayment);
-        MySwal.fire({
-          title: "Payment Succes",
-          text: message,
-          showCancelButton: false,
-        });
+        const paymentUrl = res.data.data.payment_url;
+
+        window.location.href = paymentUrl;
       })
       .catch((err) => {
-        const message = err.response.data;
+        const { message } = err.response.data;
 
         MySwal.fire({
           title: "Payment Failed",
@@ -158,7 +149,7 @@ const Payment = () => {
           showCancelButton: false,
         });
       })
-      .finally(() => SetLoading(false));
+      .finally(() => setLoading(false));
   };
 
   const header = {
@@ -206,11 +197,33 @@ const Payment = () => {
               <p className="text-black font-bold font-poppins mt-8">
                 check availibility
               </p>
-              <Input
-                id="input-start_date"
-                type="date"
-                onChange={(e: any) => setStartDate(e.target.value)}
-              />
+              <div className="flex flex-row">
+                <div className="flex-1">
+                  <Input
+                    id="input-start_date"
+                    type="date"
+                    className="border-2 border-slate-700 p-2 rounded-lg mt-3 font-poppins font-semibold bg-white text-black"
+                    onChange={(e: any) => setStartDate(e.target.value)}
+                  />
+                </div>
+                <div className="flex-1">
+                  {dataAvail === "schedule available" ? (
+                    <>
+                      {" "}
+                      <p className="text-green-500 hidden -ml-5 mt-2">
+                        Tanggal Tersedia, Lanjutkan Pembayaran
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <p className="text-red-500 hidden -ml-5 mt-2">
+                        Tanggal Tidak Tersedia, Silahkan Pilih Hari lain
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
               <form className="w-[11rem] p-3">
                 <label className="label">
                   <span className="label-text text-black font-semibold text-lg font-poppins  w-full lg:max-w-xs flex  bg-white mx-auto  "></span>
@@ -231,34 +244,31 @@ const Payment = () => {
                 </select>
               </form>
               <Button
-                label="check availibility"
+                label="Check Availability"
                 className="btn bg-[#3A2BE8] mt-4"
                 onClick={(e: any) => handleCheck(e)}
               />
-              {availData === "schedule available" ? (
-                <>
-                  <Button
-                    label="Continue Payment"
-                    className="btn bg-[#3A2BE8] mt-4"
-                    onClick={(e: any) => {
-                      handlePayment(e);
-                    }}
-                  />
-                </>
+              {dataAvail === "schedule available" ? (
+                <Button
+                  label="Continue Payment"
+                  className="btn bg-[#3A2BE8] mt-4 disabled:border-slate-200 disabled:cursor-not-alloweds"
+                  onClick={(e: any) => handlePayment(e)}
+                />
               ) : (
-                <>
-                  <Button
-                    label="Continue Payment"
-                    className="btn bg-[#3A2BE8] mt-4 disabled:border-slate-200 disabled:cursor-not-alloweds"
-                    onClick={(e: any) => {
-                      handlePayment(e);
-                    }}
-                  />
-                </>
+                <Button
+                  label="Continue Payment"
+                  className="btn disabled:bg-slate-200 disabled:cursor-not-allowed mt-4"
+                  onClick={(e: any) => handlePayment(e)}
+                  disabled
+                />
               )}
-              <a href={urlPayment} target="_blank">
-                Pay
-              </a>
+              {urlPayment && (
+                <Button
+                  label="Proceed to Payment"
+                  className="btn bg-[#3A2BE8] mt-4"
+                  onClick={() => (window.location.href = urlPayment)}
+                />
+              )}
             </div>
           </div>
         </div>
