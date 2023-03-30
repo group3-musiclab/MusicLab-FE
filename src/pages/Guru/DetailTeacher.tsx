@@ -82,7 +82,7 @@ const DetailTeacher = () => {
 
   function Profile() {
     axios
-      .get(`/mentors/profile`, {
+      .get(`/mentors/${id}`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
@@ -305,7 +305,7 @@ const DetailTeacher = () => {
                 <img src={youtube} alt="youtube" width={25} /> */}
               </div>
 
-              {user.id ? (
+              {user.id === idUser ? (
                 <>
                   <Link to={user?.instagram}>
                     <Button

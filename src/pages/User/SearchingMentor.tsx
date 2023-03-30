@@ -52,8 +52,8 @@ const SearchingMentor = () => {
   }, []);
 
   const filteredMentors = useCallback(() => {
-    const filtered = mentor.filter((mentor) =>
-      mentor.name?.toLowerCase().includes(searchText.toLowerCase())
+    const filtered = mentor?.filter((mentor) =>
+      mentor?.name?.toLowerCase().includes(searchText.toLowerCase())
     );
     setFiltered(filtered);
   }, [mentor, searchText]);
@@ -125,14 +125,15 @@ const SearchingMentor = () => {
             <div className="card mt-6">
               <div className="m-5 grid grid-cols-2 gap-3">
                 {searchText !== ""
-                  ? filtered.map((data, index) => (
+                  ? filtered?.map((data, index) => (
                       <>
                         <CardMentor
-                          image={data.avatar}
-                          name={data.name}
-                          desc={data.about}
-                          instagram={data.instagram}
-                          rating={data.rating}
+                          key={index}
+                          image={data?.avatar}
+                          name={data?.name}
+                          desc={data?.about}
+                          instagram={data?.instagram}
+                          rating={data?.rating}
                           onClick={() => navigate(`/ProfileDetail/${data.id}`)}
                         />
                       </>
@@ -142,11 +143,11 @@ const SearchingMentor = () => {
                         <>
                           <CardMentor
                             key={index}
-                            image={item.avatar}
-                            name={item.name}
-                            desc={item.about}
-                            instagram={item.instagram}
-                            rating={item.rating}
+                            image={item?.avatar}
+                            name={item?.name}
+                            desc={item?.about}
+                            instagram={item?.instagram}
+                            rating={item?.rating}
                             onClick={() =>
                               navigate(`/ProfileDetail/${item.id}`)
                             }
