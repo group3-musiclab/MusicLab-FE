@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Layout from "../../components/Layout";
 import { Card, CardMentor, CardSide } from "../../components/Card";
@@ -17,7 +17,9 @@ const SearchingMentor = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
-  const [totalPage, setTotalPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(20);
+  const [searchText, setSearchText] = useState<string>("");
+  const [filtered, setFiltered] = useState<AllMentor[]>([]);
 
   const fetchDataMentors = (page: number) => {
     setLoading(true);
@@ -48,6 +50,17 @@ const SearchingMentor = () => {
   useEffect(() => {
     fetchDataMentors(1);
   }, []);
+
+  const filteredMentors = useCallback(() => {
+    const filtered = mentor.filter((mentor) =>
+      mentor.name?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFiltered(filtered);
+  }, [mentor, searchText]);
+
+  useEffect(() => {
+    filteredMentors();
+  }, [filteredMentors]);
 
   return (
     <Layout>
@@ -103,6 +116,7 @@ const SearchingMentor = () => {
                 type="text"
                 placeholder="Search"
                 className="input input-bordered shadow-black shadow-sm bg-white text-black font-poppins"
+                onChange={(e: any) => setSearchText(e.target.value)}
               />
             </div>
             <div className="flex justify-end -mt-8 mr-5 text-black">
@@ -110,36 +124,52 @@ const SearchingMentor = () => {
             </div>
             <div className="card mt-6">
               <div className="m-5 grid grid-cols-2 gap-3">
-                {mentor?.map((item) => {
-                  return (
-                    <CardMentor
-                      image={item.avatar}
-                      name={item.name}
-                      desc={item.about}
-                      instagram={item.instagram}
-                      rating={item.rating}
-                      onClick={() => navigate(`/ProfileDetail/${item.id}`)}
-                    />
-                  );
-                })}
+                {searchText !== ""
+                  ? filtered.map((data, index) => (
+                      <>
+                        <CardMentor
+                          image={data.avatar}
+                          name={data.name}
+                          desc={data.about}
+                          instagram={data.instagram}
+                          rating={data.rating}
+                          onClick={() => navigate(`/ProfileDetail/${data.id}`)}
+                        />
+                      </>
+                    ))
+                  : mentor?.map((item, index) => {
+                      return (
+                        <>
+                          <CardMentor
+                            key={index}
+                            image={item.avatar}
+                            name={item.name}
+                            desc={item.about}
+                            instagram={item.instagram}
+                            rating={item.rating}
+                            onClick={() =>
+                              navigate(`/ProfileDetail/${item.id}`)
+                            }
+                          />
+                        </>
+                      );
+                    })}
               </div>
             </div>
-            <div
-              className="btn-group dark:bg-gray-600 w-full justify-center"
-              style={{ paddingTop: "2rem" }}
-            >
+
+            <div className="btn-group mx-auto w-full flex justify-center mt-10">
               <button
-                className="btn "
                 onClick={() => prevPage()}
                 disabled={page === 1}
+                className="btn"
               >
                 «
               </button>
               <button className="btn">{page}</button>
               <button
-                className="btn"
                 onClick={() => nextPage()}
-                // disabled={page === totalPage}
+                // disabled={(page === totalPage)}
+                className="btn"
               >
                 »
               </button>

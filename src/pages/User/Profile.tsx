@@ -19,8 +19,6 @@ const ProfilStudent = () => {
   const [student, setStudent] = useState<ProfileStudent>({});
 
   const fetchDataStudent = () => {
-    setLoading(true);
-
     axios
       .get("students/profile")
       .then((res) => {
@@ -29,16 +27,11 @@ const ProfilStudent = () => {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .catch(() => setLoading(false));
+      });
   };
 
   useEffect(() => {
     fetchDataStudent();
-
-    return () => {
-      fetchDataStudent();
-    };
   }, []);
 
   const handleDeleteAccount = () => {

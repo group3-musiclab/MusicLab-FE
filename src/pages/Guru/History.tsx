@@ -3,11 +3,13 @@ import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 import axios from "axios";
 import { HistoryMentor } from "../../utils/types/Datatypes";
+import { useNavigate } from "react-router";
 
 export default function History() {
   const [loading, setLoading] = useState<boolean>(false);
   const [historyMentor, setHistoryMentor] = useState<HistoryMentor[]>([]);
   const [urlGoogle, setUrlGoogle] = useState<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDataHistoryMentor();
@@ -41,6 +43,10 @@ export default function History() {
       })
       .finally(() => setLoading(false));
   };
+
+  useEffect(() => {
+    fetchGoogleUrl();
+  }, []);
 
   return (
     <>
@@ -93,6 +99,7 @@ export default function History() {
               id="btn-kembali"
               label="Kembali"
               className="btn bg-button px-32 lg:px-20 py-2 text-white border-none mt-5"
+              onClick={() => navigate("/profileTeacher")}
             />
           </div>
         </div>

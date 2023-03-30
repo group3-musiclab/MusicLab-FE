@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { Card, CardTestimonial, CardUlasan } from "../../components/Card";
 import Button from "../../components/Button";
-import ModalChat from "../User/ModalChat";
+
 import { ProfileType } from "../../utils/types/Profile";
 import { InboxType } from "../../utils/types/Chat";
 import withReactContent from "sweetalert2-react-content";
@@ -63,8 +63,7 @@ const DetailTeacher = () => {
       Profile();
     };
   }, []);
-  
-  
+
   const Chats = () => {
     axios
       .get(`/chats`, {
@@ -297,7 +296,7 @@ const DetailTeacher = () => {
                 Address : <span>{user?.address}</span>
               </p>
               <p>
-                Gmail :  <span>{user?.email}</span>
+                Gmail : <span>{user?.email}</span>
               </p>
               <div className="flex space-x-3 ml-4">
                 {/* <img src={facebook} alt="facebook" width={25} />
@@ -341,10 +340,7 @@ const DetailTeacher = () => {
                   />
                   <div className="modal">
                     <div className="modal-box w-11/12 max-w-5xl bg-white">
-                     <ModalChat
-                        student_id={user.id}
-                        mentor_id={5}
-                      />
+                      <ModalChat student_id={user.id} mentor_id={5} />
                       <div className="modal-action">
                         <label htmlFor="my-modal-5" className="btn">
                           Close
