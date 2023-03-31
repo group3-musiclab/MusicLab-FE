@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
-import { LayoutSec } from "../../components/Layout";
 import { ChatsType } from "../../utils/types/Chat";
 
 import Input from "../../components/Input";
@@ -71,10 +70,8 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
   return (
     <div className="rounded-lg bg-white p-10">
       <div className="flex flex-col justify-center">
-        <div className="card">
           <div className="card-body">
-            {chats &&
-              chats?.map((item: any, index) => (
+            {chats.map((item: ChatsType, index) => (
                 <div key={index} className="w-7/12">
                   <p className="text-black font-poppins font-semibold">
                     {item?.sender_name}
@@ -86,7 +83,6 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
                   </div>
                 </div>
               ))}
-          </div>
         </div>
       </div>
       <div className="sticky">

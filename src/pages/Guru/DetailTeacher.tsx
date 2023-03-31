@@ -329,6 +329,27 @@ const DetailTeacher = () => {
                     onClick={() => navigate("/daftarKursus")}
                   />
 
+                  <label
+                    htmlFor="my-modal-5"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                  >
+                    See Message
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="my-modal-5"
+                    className="modal-toggle"
+                  />
+                  <div className="modal">
+                    <div className="modal-box w-11/12 max-w-5xl bg-white">
+                      <ModalChat student_id={user.id} mentor_id={id} />
+                      <div className="modal-action">
+                        <label htmlFor="my-modal-5" className="btn">
+                          Close
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                   <details className="border-2 border-black p-4 rounded-2xl mt-5">
                     <summary>Tambah Jadwal</summary>
                     <form className="w-[11rem] p-3">
@@ -421,6 +442,27 @@ const DetailTeacher = () => {
                       })}
                     </div>
                   </details>
+                  <label
+                    htmlFor="my-modal-5"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                  >
+                    See Message
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="my-modal-5"
+                    className="modal-toggle"
+                  />
+                  <div className="modal">
+                    <div className="modal-box w-11/12 max-w-5xl bg-white">
+                      <ModalChat student_id={user.id} mentor_id={id} />
+                      <div className="modal-action">
+                        <label htmlFor="my-modal-5" className="btn">
+                          Close
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </>
               )}
             </div>
