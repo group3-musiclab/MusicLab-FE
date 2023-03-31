@@ -248,7 +248,7 @@ const TopPicks = () => {
                   desc={item.about}
                   instagram={item.instagram}
                   rating={item.rating}
-                  onClick={() => navigate(`/profileTeacher/${item.id}`)}
+                  onClick={() => navigate(`/ProfileDetail/${item.id}`)}
                 />
               </>
             );

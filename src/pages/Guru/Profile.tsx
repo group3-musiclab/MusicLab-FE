@@ -150,8 +150,6 @@ const Profile = () => {
       });
   };
 
-  // https://virtserver.swaggerhub.com/KHARISMAJANUAR/MusicLab-API/1.0.0
-
   const fethcDataMentor = () => {
     SetIsLoading(true);
     axios
@@ -230,9 +228,9 @@ const Profile = () => {
               {instrument.map((item, index) => {
                 return (
                   <a key={index} className="text-black">
-                  {item.name}
-                </a>
-                )
+                    {item.name}
+                  </a>
+                );
               })}
             </div>
             <div className="mt-2">
