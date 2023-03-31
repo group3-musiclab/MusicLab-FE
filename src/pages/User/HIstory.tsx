@@ -43,7 +43,7 @@ export default function HIstory() {
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Student Name</th>
+                  <th>Teacher Name</th>
                   <th>Course</th>
                   <th>Start Date</th>
                   <th>End Date</th>
