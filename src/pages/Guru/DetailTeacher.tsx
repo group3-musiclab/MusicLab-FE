@@ -9,6 +9,7 @@ import { Card, CardTestimonial, CardUlasan } from "../../components/Card";
 import Button from "../../components/Button";
 
 import { ProfileType } from "../../utils/types/Profile";
+import { ProfileStudent } from "../../utils/types/Datatypes";
 import { InboxType } from "../../utils/types/Chat";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
@@ -30,11 +31,12 @@ const DetailTeacher = () => {
   const idUser = localStorage.getItem("id");
   const { schedule_id } = useParams();
   const { mentor_id } = useParams();
+  const { student_id } = useParams();
 
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
-  const [inbox, setInbox] = useState<InboxType>({});
+  const [student, setStudent] = useState<ProfileStudent>({});
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
 
@@ -57,28 +59,30 @@ const DetailTeacher = () => {
   useEffect(() => {
     Profile();
     Instrument();
-    Chats();
+    fetchDataStudent();
 
     return () => {
       Profile();
     };
   }, []);
 
-  const Chats = () => {
+  const fetchDataStudent = () => {
     axios
-      .get(`/chats`, {
+      .get("students/profile", {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
       })
-      .then((response) => {
-        const data = response.data.data;
-        SetUser(data);
+      .then((res) => {
+        const { data } = res.data;
+        setStudent(data);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((err) => {
+        console.log(err);
+      })
   };
+
+  
 
   function Profile() {
     axios
@@ -432,6 +436,19 @@ const DetailTeacher = () => {
                     id="my-modal-5"
                     className="modal-toggle"
                   />
+                  <div className="modal">
+                    <div className="modal-box w-11/12 max-w-5xl bg-white">
+                      <ModalChat
+                        student_id={student.id}
+                        mentor_id={user.id}
+                      />
+                      <div className="modal-action">
+                        <label htmlFor="my-modal-5" className="btn">
+                          Close
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                   <details className="border-2 border-black p-4 rounded-2xl mt-5">
                     <summary>Lihat Jadwal</summary>
                     <div className="w-[11rem] p-2">

@@ -137,7 +137,6 @@ const Payment = () => {
       })
       .then((res) => {
         const paymentUrl = res.data.data.payment_url;
-
         window.location.href = paymentUrl;
       })
       .catch((err) => {
