@@ -4,9 +4,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   id?: string;
   label?: string;
   loading?: boolean;
+  icon?: JSX.Element;
 }
 
-const Button: FC<ButtonProps> = ({ id, label, loading, ...props }) => {
+const Button: FC<ButtonProps> = ({ id, label, loading, icon, ...props }) => {
   return (
     <div>
       <button
