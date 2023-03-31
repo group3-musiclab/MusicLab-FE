@@ -15,7 +15,7 @@ import Chat from "../pages/User/Chat";
 import Profile from "../pages/Guru/Profile";
 import ProfilStudent from "../pages/User/Profile";
 import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
-import HIstory from "../pages/User/HIstory";
+import HIstory from "pages/User/HIstory";
 import History from "../pages/Guru/History";
 import Payment from "../pages/User/Payment";
 import axios from "axios";
