@@ -9,6 +9,7 @@ export default function HIstory() {
   const navigate = useNavigate();
   const [history, setHistory] = useState<HistoryStudent[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const getStatus = localStorage.getItem("ratingStatus");
 
   useEffect(() => {
     const fetchDataHistory = () => {
@@ -67,9 +68,7 @@ export default function HIstory() {
                         <td>{item?.status}</td>
 
                         <td>
-                          {item?.status === "Pending" ? (
-                            "-"
-                          ) : (
+                          {item?.status === "settlement" ? (
                             <>
                               <Button
                                 id="btn-linkulasan"
@@ -80,6 +79,8 @@ export default function HIstory() {
                                 }
                               />
                             </>
+                          ) : (
+                            "-"
                           )}
                         </td>
                       </tr>

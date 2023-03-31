@@ -24,9 +24,10 @@ import EditStudent from "../pages/User/EditStudent";
 import ModalChat from "../pages/User/ModalChat";
 import Ulasan from "../pages/User/Ulasan";
 import OauthLogin, { Success } from "../pages/Auth/OauthLogin";
+import Create_events from "pages/Guru/Create_events";
 
 function App() {
-  const [cookie, setCookie] = useCookies(["token"]);
+  const [cookie, setCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
 
   axios.interceptors.request.use(function (config) {
@@ -64,7 +65,7 @@ function App() {
 
     {
       path: "/instrument",
-      element:  <Instrument />,
+      element: <Instrument />,
     },
     {
       path: "/genre",
@@ -130,6 +131,10 @@ function App() {
     {
       path: "/succesOauth",
       element: <Success />,
+    },
+    {
+      path: "/createEvents/:id",
+      element: <Create_events />,
     },
   ]);
 

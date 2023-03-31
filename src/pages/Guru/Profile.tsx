@@ -29,9 +29,10 @@ const Profile = () => {
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
   const [inbox, setInbox] = useState<InboxType[]>([]);
-  const [Isloading, SetIsLoading] = useState<boolean>(true);
-  const [cookie, removeCookie] = useCookies(["token", "role"]);
 
+  const [Isloading, SetIsLoading] = useState<boolean>(true);
+   const [cookie, removeCookie] = useCookies(["token", "role", "id"]);
+  const idUser = cookie.id;
   const [genre, setGenre] = useState<GenreType[]>([]);
 
   const [day, setDay] = useState<string>("");
@@ -40,7 +41,6 @@ const Profile = () => {
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
   // const { id } = useParams();
 
-  const idUsers = localStorage.getItem("id");
   const [course, setCourse] = useState<MentorClass[]>([]);
   const [comment, setComment] = useState<Review[]>([]);
 
@@ -59,7 +59,7 @@ const Profile = () => {
 
   function Profile() {
     axios
-      .get(`/mentors/${idUsers}`)
+      .get(`/mentors/${idUser}`)
       .then((response) => {
         const data = response.data.data;
         SetUser(data);
@@ -71,7 +71,7 @@ const Profile = () => {
 
   function Instrument() {
     axios
-      .get(`mentors/${idUsers}/instrument`)
+      .get(`mentors/${idUser}/instrument`)
       .then((response) => {
         const { data, message } = response.data;
         SetInstrument(response.data.data);
@@ -149,7 +149,7 @@ const Profile = () => {
   const fethcDataMentor = () => {
     SetIsLoading(true);
     axios
-      .get(`mentors/${idUsers}/schedules`)
+      .get(`mentors/${idUser}/schedules`)
       .then((res) => {
         setSchedules(res.data.data);
         console.log(res.data.data);
@@ -175,7 +175,7 @@ const Profile = () => {
     SetIsLoading(true);
 
     axios
-      .get(`/mentors/${idUsers}/class?limit=4&page=${page}`)
+      .get(`/mentors/${idUser}/class?limit=4&page=${page}`)
       .then((res) => {
         const data = res.data.data;
         setCourse(data);
@@ -203,7 +203,7 @@ const Profile = () => {
       SetIsLoading(true);
 
       axios
-        .get(`/mentors/${idUsers}/reviews`)
+        .get(`/mentors/${idUser}/reviews`)
         .then((res) => {
           const data = res.data.data;
           setComment(data);
@@ -278,7 +278,9 @@ const Profile = () => {
               <p>
                 Gmail : <span>{user?.email}</span>
               </p>
-              {idUsers == user.id && (
+
+              {idUser == user.id ? (
+
                 <>
                   <Link to={user?.instagram}>
                     <Button

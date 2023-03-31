@@ -160,7 +160,7 @@ const NavMain = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [cookie, setCookie, removeCookie] = useCookies(["token", "role"]);
+  const [cookie, removeCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
 
   const checkRole = cookie.role;
