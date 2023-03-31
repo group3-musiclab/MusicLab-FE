@@ -8,19 +8,18 @@ import { ApiContext } from "../utils/context/contextApi";
 import MainHomePage from "../pages/MainHomePage";
 
 const ReusableNav = () => {
-  const id = localStorage.getItem("id");
-  const user = useContext(ApiContext);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [color, setColor] = useState();
-  const checkToken = cookies.token;
+  const [cookie, setCookie, removeCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
 
-  const checkRole = localStorage.getItem("role");
+  const checkRole = cookie.role;
 
   const handleLogout = () => {
     removeCookie("token", { path: "/" });
+    removeCookie("role", { path: "/" });
     navigate("/login");
     MySwal.fire({
       title: "See Ya",
@@ -156,13 +155,14 @@ const NavMain = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  const checkToken = cookies.token;
-  const id = localStorage.getItem("id");
-  const checkRole = localStorage.getItem("role");
+  const [cookie, setCookie, removeCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+
+  const checkRole = cookie.role;
 
   const handleLogout = () => {
-    removeCookie("token");
+    removeCookie("token", { path: "/" });
+    removeCookie("role", { path: "/" });
     navigate("/login");
     MySwal.fire({
       title: "See Ya",
@@ -209,7 +209,7 @@ const NavMain = () => {
               </li>
               <li>
                 <a
-                  className="text-white font-bold font-poppins"
+                  className="text-black font-bold font-poppins"
                   onClick={handleLogout}
                 >
                   Logout
@@ -238,6 +238,14 @@ const NavMain = () => {
             </li>
             <li>
               <a className="text-white font-bold font-poppins">Testimonial</a>
+            </li>
+            <li>
+              <a
+                className="text-white font-bold font-poppins"
+                onClick={handleLogout}
+              >
+                Logout
+              </a>
             </li>
           </ul>
           {checkToken && checkRole === "Student" ? (

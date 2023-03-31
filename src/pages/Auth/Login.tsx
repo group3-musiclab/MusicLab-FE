@@ -11,7 +11,7 @@ import Swal from "../../utils/Swal";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [, setCookie] = useCookies(["token", "role"]);
+  const [, setCookie] = useCookies(["token", "role", "id"]);
   const MySwal = withReactContent(Swal);
   const [loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(false);
@@ -50,8 +50,9 @@ const Login = () => {
         console.log(data.token);
 
         setCookie("token", data.token, { path: "/" });
-        localStorage.setItem("role", data.role);
-        localStorage.setItem("id", data.id);
+        setCookie("role", data.role, { path: "/" });
+        setCookie("id", data.id, { path: "/" });
+
         MySwal.fire({
           title: "Welcome to MusicLab",
           text: message,
@@ -135,6 +136,12 @@ const Login = () => {
                   label="Login"
                   className="bg-button w-10/12 lg:w-6/12 rounded-lg py-2 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
                   loading={loading || disabled}
+                />
+                <Button
+                  id="btn-login"
+                  label="Login With Google Account"
+                  className="bg-button w-10/12 lg:w-6/12 rounded-lg py-2 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
+                  onClick={() => navigate("/oauthLogin")}
                 />
               </div>
             </form>

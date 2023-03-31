@@ -74,7 +74,7 @@ export default function EditStudent() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profile");
+        navigate("/ProfilStudent");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -112,7 +112,7 @@ export default function EditStudent() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profile");
+        navigate("/ProfilStudent");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -317,7 +317,7 @@ export default function EditStudent() {
                         id="btn-back"
                         label="Kembali"
                         className="bg-button w-[8rem] lg:w-[15rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
-                        onClick={() => navigate("/profile")}
+                        onClick={() => navigate("/ProfilStudent")}
                       />
                       <Button
                         id="btn-Update"

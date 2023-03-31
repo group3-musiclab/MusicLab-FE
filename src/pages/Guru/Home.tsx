@@ -11,28 +11,46 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<MentorClass[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(20);
   const id = localStorage.getItem("id");
 
   useEffect(() => {
-    const fetchDataCourse = () => {
-      setLoading(false);
+    fetchDataCourse(1);
 
-      axios
-        .get(`mentors/${id}/class`)
-        .then((res) => {
-          const { data } = res.data;
-          setCourse(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => setLoading(false));
+    return () => {
+      fetchDataCourse(1);
     };
-
-    fetchDataCourse();
   }, []);
+
+  const fetchDataCourse = async (page: number) => {
+    setIsLoading(false);
+
+    await axios
+      .get(`mentors/${id}/class?limit=4&page=${page}`)
+      .then((res) => {
+        const { data } = res.data;
+        setCourse(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  function nextPage() {
+    const newPage = page + 1;
+    setPage(newPage);
+    fetchDataCourse(newPage);
+  }
+
+  function prevPage() {
+    const newPage = page - 1;
+    setPage(newPage);
+    fetchDataCourse(newPage);
+  }
 
   const handleDeleteClass = (id: any) => {
     axios
@@ -42,8 +60,7 @@ const Home = () => {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => setLoading(false));
+      });
   };
   return (
     <Layout>

@@ -11,11 +11,15 @@ import Swal from "../../utils/Swal";
 import { useNavigate, useParams } from "react-router";
 import { EditKursus, MentorDetail } from "../../utils/types/Datatypes";
 import { ClassDetail } from "../../utils/types/Datatypes";
+import { useCookies } from "react-cookie";
 
 function DetailCourse() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<ClassDetail>({});
   const [mentor, setMentor] = useState<MentorDetail>({});
+  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const checkRole = cookie.role;
+
   const idUser = localStorage.getItem("id");
   const { id } = useParams();
   const tax = 200000;
@@ -25,7 +29,7 @@ function DetailCourse() {
   const navigate = useNavigate();
 
   const fetchDataClassDetail = () => {
-    setLoading(true);
+    setIsLoading(true);
     axios
       .get(`/class/${id}`)
       .then((res) => {
@@ -35,11 +39,11 @@ function DetailCourse() {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   const fetchMentorDetail = () => {
-    setLoading(true);
+    setIsLoading(true);
     axios
       .get(`/mentors/${idUser}`)
       .then((res) => {
@@ -49,12 +53,16 @@ function DetailCourse() {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
     fetchDataClassDetail();
     fetchMentorDetail();
+
+    return () => {
+      fetchDataClassDetail();
+    };
   }, []);
   const header = {
     width: "80%",
@@ -170,12 +178,19 @@ function DetailCourse() {
                   </div>
                 </div>
                 <div className="flex justify-start w-[85%]">
-                  <Button
-                    id="btn-belikursus"
-                    label="Beli Kursus"
-                    className="btn bg-button px-16 py-2 text-white border-none mt-5"
-                    onClick={() => navigate(`/payment/${idClassGet}`)}
-                  />
+                  {checkRole === "Mentor" ? (
+                    <></>
+                  ) : (
+                    <>
+                      {" "}
+                      <Button
+                        id="btn-belikursus"
+                        label="Beli Kursus"
+                        className="btn bg-button px-16 py-2 text-white border-none mt-5"
+                        onClick={() => navigate(`/payment/${idClassGet}`)}
+                      />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -388,6 +403,12 @@ const UploadCourse = () => {
                   label="Upload Kursus"
                   className="btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
                   disabled={disabled || loading}
+                />
+                <Button
+                  id="btn-kembali"
+                  label="Kembali"
+                  className=" ml-10 btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
+                  onClick={() => navigate("/daftarKursus")}
                 />
               </div>
             </div>

@@ -146,8 +146,6 @@ const Profile = () => {
       });
   };
 
-  // https://virtserver.swaggerhub.com/KHARISMAJANUAR/MusicLab-API/1.0.0
-
   const fethcDataMentor = () => {
     SetIsLoading(true);
     axios
