@@ -29,7 +29,7 @@ const Profile = () => {
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
   const [inbox, setInbox] = useState<InboxType[]>([]);
-  const [Isloading, SetIsLoading] = useState<boolean>(false);
+  const [Isloading, SetIsLoading] = useState<boolean>(true);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
 
   const [genre, setGenre] = useState<GenreType[]>([]);
@@ -55,13 +55,6 @@ const Profile = () => {
     Instrument();
     fethcDataMentor();
     fetchCourseMentor(1);
-
-    return () => {
-      Profile();
-      Instrument();
-      fethcDataMentor();
-      fetchCourseMentor(1);
-    };
   }, []);
 
   function Profile() {
@@ -80,6 +73,7 @@ const Profile = () => {
     axios
       .get(`mentors/${idUsers}/instrument`)
       .then((response) => {
+        const { data, message } = response.data;
         SetInstrument(response.data.data);
       })
       .catch((error) => {
@@ -119,6 +113,8 @@ const Profile = () => {
   };
 
   const handlePostJadwal = async (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    SetIsLoading(true);
     const body = {
       day,
       start_time,
@@ -156,6 +152,8 @@ const Profile = () => {
       .get(`mentors/${idUsers}/schedules`)
       .then((res) => {
         setSchedules(res.data.data);
+        console.log(res.data.data);
+
       })
       .catch((err) => {
         console.log(err);
@@ -225,13 +223,11 @@ const Profile = () => {
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
             <div className="font-semibold space-x-2">
-              {instrument.map((item, index) => {
-                return (
-                  <a key={index} className="text-black">
-                    {item.name}
-                  </a>
-                );
-              })}
+              {instrument.map((item, index) => (
+                <a key={index} className="text-black">
+                  {item.name}
+                </a>
+              ))}
             </div>
             <div className="mt-2">
               <p className="font-semibold opacity-75">Ulasan</p>
@@ -282,13 +278,7 @@ const Profile = () => {
               <p>
                 Gmail : <span>{user?.email}</span>
               </p>
-              <div className="flex space-x-3 ml-4">
-                {/* <img src={facebook} alt="facebook" width={25} />
-                <img src={instagram} alt="instagram" width={25} />
-                <img src={twitter} alt="twitter" width={25} />
-                <img src={youtube} alt="youtube" width={25} /> */}
-              </div>
-              {idUsers == user.id ? (
+              {idUsers == user.id && (
                 <>
                   <Link to={user?.instagram}>
                     <Button
@@ -318,116 +308,81 @@ const Profile = () => {
                     className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                     onClick={() => navigate("/historyTeacher")}
                   />
-
-                  <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
-                    <summary>Tambah Jadwal</summary>
-                    <form className="w-[11rem] p-3">
-                      <label className="label">
-                        <span className="label-text text-black font-semibold text-lg font-poppins  w-full lg:max-w-xs flex  bg-white mx-auto  "></span>
-                      </label>
-                      <select
-                        id="select-role"
-                        className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                        onChange={(e: any) => setDay(e.target.value)}
-                      >
-                        <option defaultValue={"DEFAULT"}>Pilih hari</option>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                        <option value="Saturday">Saturday</option>
-                        <option value="Sunday">Sunday</option>
-                      </select>
-                    </form>
-                    <div className="flex flex-row gap-2">
-                      <Input
-                        id="input-startTime"
-                        type="time"
-                        className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
-                        onChange={(e: any) => setStartTime(e.target.value)}
-                        defaultValue={start_time}
-                      />
-                      <Input
-                        id="input-endTime"
-                        type="time"
-                        className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
-                        onChange={(e: any) => setEndTime(e.target.value)}
-                        defaultValue={end_time}
-                      />
-                    </div>
-                    <Button
-                      id="btn-jadwal"
-                      type="submit"
-                      className="btn bg-[#3A2BE8] text-white border-none mt-2 w-full"
-                      label="Upload Jadwal"
-                      onClick={(e: any) => handlePostJadwal(e)}
-                    />
-                  </details>
-
-                  <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
-                    <summary>Lihat Jadwal</summary>
-                    <div className="w-[14rem] p-3">
-                      {schedules?.map((item, index) => {
-                        return (
-                          <>
-                            <div className="flex flex-row">
-                              <div key={index} className="w-[50%] text-sm">
-                                {item?.day}
-                              </div>
-                              <div className="w-[50%] flex justify-end">
-                                <p className="text-sm">{item?.start_time}</p>
-                                <p> - </p>
-                                <p className="text-sm">{item?.end_time}</p>
-                                <Button
-                                  id="btn-delete"
-                                  className="ml-2 -mt-1"
-                                  label="x"
-                                  onClick={() => handleDeleteSchedule(item?.id)}
-                                />
-                              </div>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </div>
-                  </details>
-                </>
-              ) : (
-                <>
-                  {" "}
-                  <label
-                    htmlFor="my-modal-5"
-                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
-                  >
-                    Lihat Chat
-                  </label>
-                  <input
-                    type="checkbox"
-                    id="my-modal-5"
-                    className="modal-toggle"
-                  />
-                  <details className="border-2 border-black p-4 rounded-2xl mt-5">
-                    <summary>Lihat Jadwal</summary>
-                    <div className="w-[11rem] p-2">
-                      {schedules?.map((item, index) => {
-                        return (
-                          <>
-                            <div key={index} className="flex flex-row">
-                              <div className="w-[50%] text-sm">{item?.day}</div>
-                              <div className="w-[50%] flex justify-end">
-                                <p className="text-sm">{item?.start_time}</p>
-                                <p> - </p>
-                                <p className="text-sm">{item?.end_time}</p>
-                              </div>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </div>
-                  </details>
                 </>
               )}
+              <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
+                <summary>Tambah Jadwal</summary>
+                <form className="w-[11rem] p-3">
+                  <label className="label">
+                    <span className="label-text text-black font-semibold text-lg font-poppins  w-full lg:max-w-xs flex  bg-white mx-auto  "></span>
+                  </label>
+                  <select
+                    id="select-role"
+                    className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
+                    onChange={(e: any) => setDay(e.target.value)}
+                  >
+                    <option defaultValue={"DEFAULT"}>Pilih hari</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                  </select>
+                </form>
+                <div className="flex flex-row gap-2">
+                  <Input
+                    id="input-startTime"
+                    type="time"
+                    className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
+                    onChange={(e: any) => setStartTime(e.target.value)}
+                    defaultValue={start_time}
+                  />
+                  <Input
+                    id="input-endTime"
+                    type="time"
+                    className="w-[50%] bg-slate-100 text-black border-1 border-black rounded-lg p-2"
+                    onChange={(e: any) => setEndTime(e.target.value)}
+                    defaultValue={end_time}
+                  />
+                </div>
+                <Button
+                  id="btn-jadwal"
+                  type="submit"
+                  className="btn bg-[#3A2BE8] text-white border-none mt-2 w-full"
+                  label="Upload Jadwal"
+                  onClick={(e: any) => handlePostJadwal(e)}
+                />
+              </details>
+
+              <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
+                <summary>Lihat Jadwal</summary>
+                <div className="w-[14rem] p-3">
+                  {schedules.length > 0 ? (
+                    schedules.map((item, index) => (
+                      <div className="flex flex-row" key={index}>
+                        <div className="w-[50%] text-sm text-black">
+                          {item?.day}
+                        </div>
+                        <div className="w-[50%] flex justify-end">
+                          <p className="text-sm">{item?.start_time}</p>
+                          <p> - </p>
+                          <p className="text-sm">{item?.end_time}</p>
+                          <Button
+                            id="btn-delete"
+                            className="ml-2 -mt-1"
+                            label="x"
+                            onClick={() => handleDeleteSchedule(item?.id)}
+                          />
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No schedules available</p>
+                  )}
+                </div>
+              </details>
             </div>
           </div>
         </div>

@@ -71,7 +71,7 @@ const Chat = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                   </div>
                     <input
                       type="checkbox"
                       id="my-modal-5"
