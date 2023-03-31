@@ -104,6 +104,11 @@ const ReusableNav = () => {
             <li>
               <a className="text-black font-bold font-poppins">Testimonial</a>
             </li>
+            {checkToken && checkRole === "Mentor" && (
+              <li>
+              <a href="/chat" className="text-black font-bold font-poppins">Chat</a>
+            </li>
+            )}
             <li>
               <a
                 className="text-black font-bold font-poppins"

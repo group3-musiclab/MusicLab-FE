@@ -1,5 +1,5 @@
 export interface InboxType {
-    id?: number;
+    id?: any;
     student_id?: any;
     mentor_id?: any;
     avatar?: any;
