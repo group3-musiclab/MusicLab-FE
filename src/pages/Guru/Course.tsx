@@ -13,7 +13,7 @@ import { EditKursus, MentorDetail } from "../../utils/types/Datatypes";
 import { ClassDetail } from "../../utils/types/Datatypes";
 
 function DetailCourse() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<ClassDetail>({});
   const [mentor, setMentor] = useState<MentorDetail>({});
   const idUser = localStorage.getItem("id");
@@ -25,7 +25,7 @@ function DetailCourse() {
   const navigate = useNavigate();
 
   const fetchDataClassDetail = () => {
-    setLoading(true);
+    setIsLoading(true);
     axios
       .get(`/class/${id}`)
       .then((res) => {
@@ -35,11 +35,11 @@ function DetailCourse() {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   const fetchMentorDetail = () => {
-    setLoading(true);
+    setIsLoading(true);
     axios
       .get(`/mentors/${idUser}`)
       .then((res) => {
@@ -49,12 +49,16 @@ function DetailCourse() {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
     fetchDataClassDetail();
     fetchMentorDetail();
+
+    return () => {
+      fetchDataClassDetail();
+    };
   }, []);
   const header = {
     width: "80%",

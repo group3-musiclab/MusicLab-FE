@@ -74,7 +74,7 @@ export default function EditStudent() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profile");
+        navigate("/ProfilStudent");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -112,7 +112,7 @@ export default function EditStudent() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profile");
+        navigate("/ProfilStudent");
       })
       .catch((err) => {
         const { message } = err.response.data;
