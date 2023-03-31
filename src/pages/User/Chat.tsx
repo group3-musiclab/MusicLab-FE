@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router";
 import axios from "axios";
 
 import { LayoutSec } from "../../components/Layout";
@@ -10,7 +11,9 @@ import { InboxType } from "../../utils/types/Chat";
 import { IoIosArrowBack } from "react-icons/io";
 
 const Chat = () => {
+  const navigate = useNavigate();
   const [inbox, setInbox] = useState<InboxType[]>([]);
+  const [selectedChat, setSelectedChat] = useState<InboxType | null>(null);
   const [cookie, setCookie] = useCookies(["token", "id"]);
   const checkToken = cookie.token;
 
@@ -34,11 +37,18 @@ const Chat = () => {
       });
   };
 
+  const handleChatItemClick = (chat: InboxType) => {
+    setSelectedChat(chat);
+  };
+
   return (
     <LayoutSec>
       <div className="container bg-white mx-auto p-7">
         <div className="flex flex-row">
-          <div className="flex text-black font-semibold">
+          <div
+            onClick={() => navigate("/profileTeacher")}
+            className="flex text-black font-semibold"
+          >
             <IoIosArrowBack size={35} />
             <p className="text-xl font-poppins mt-1">Back</p>
           </div>
@@ -46,48 +56,49 @@ const Chat = () => {
             <p className="text-black text-4xl font-poppins">Chat</p>
             <div className="card w-96 shadow-lg border-black border mt-4 ml-20">
               <div className="card-body">
-                {inbox?.map((items, index) => (
-                  <>
-                    <div
-                      key={index}
-                      className="flex flex-col justify-start space-y-6"
-                    >
-                      <div>
-                        <div id={items.student_id} className="flex space-x-8">
-                          <img
-                            src={items.avatar}
-                            className="w-14 mt-2 rounded-full object-contain"
-                          />
-                          <div className="mt-2 text-black font-poppins">
-                            <p className="font-semibold">
-                              {items.student_name}
-                            </p>
-                            <label
-                              htmlFor="my-modal-5"
-                              className="btn font-semibold"
-                            >
-                              See Message
-                            </label>
-                          </div>
+                {inbox?.map((chat, index) => (
+                  <div
+                    key={index}
+                    id={chat.id}
+                    className="flex flex-col justify-start space-y-6 cursor-pointer"
+                    onClick={() => handleChatItemClick(chat)}
+                  >
+                    <div>
+                      <div id={chat.student_id} className="flex space-x-8">
+                        <img
+                          src={chat.avatar}
+                          className="w-14 mt-2 rounded-full object-contain"
+                        />
+                        <div className="mt-2 text-black font-poppins">
+                          <p className="font-semibold">{chat.student_name}</p>
+                          <label
+                            htmlFor={`my-modal-${index}`}
+                            className="btn font-semibold"
+                          >
+                            See Message
+                          </label>
                         </div>
                       </div>
-                   </div>
+                    </div>
                     <input
                       type="checkbox"
-                      id="my-modal-5"
+                      id={`my-modal-${index}`}
                       className="modal-toggle"
                     />
                     <div className="modal">
                       <div className="modal-box w-11/12 max-w-5xl bg-white">
-                        <ModalChat mentor_id={items.mentor_id} student_id={items.student_id} />
+                        <ModalChat
+                          mentor_id={chat.mentor_id}
+                          student_id={chat.student_id}
+                        />
                         <div className="modal-action">
-                          <label htmlFor="my-modal-5" className="btn">
+                          <label htmlFor={`my-modal-${index}`} className="btn">
                             Close
                           </label>
                         </div>
                       </div>
                     </div>
-                  </>
+                  </div>
                 ))}
               </div>
             </div>
