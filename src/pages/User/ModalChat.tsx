@@ -70,19 +70,19 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
   return (
     <div className="rounded-lg bg-white p-10">
       <div className="flex flex-col justify-center">
-          <div className="card-body">
-            {chats.map((item: ChatsType, index) => (
-                <div key={index} className="w-7/12">
-                  <p className="text-black font-poppins font-semibold">
-                    {item?.sender_name}
-                  </p>
-                  <div className="bg-white border border-black w-full h-14 flex justify-start items-center p-6 rounded-xl">
-                    <div className="text-black font-poppins">
-                      <span>{item?.chat}</span>
-                    </div>
-                  </div>
+        <div className="card-body">
+          {chats?.map((item: ChatsType, index) => (
+            <div key={index} className="w-7/12">
+              <p className="text-black font-poppins font-semibold">
+                {item?.sender_name}
+              </p>
+              <div className="bg-white border border-black w-full h-14 flex justify-start items-center p-6 rounded-xl">
+                <div className="text-black font-poppins">
+                  <span>{item?.chat}</span>
                 </div>
-              ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <div className="sticky">

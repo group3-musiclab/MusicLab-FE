@@ -31,7 +31,7 @@ const Profile = () => {
   const [inbox, setInbox] = useState<InboxType[]>([]);
 
   const [Isloading, SetIsLoading] = useState<boolean>(true);
-   const [cookie, removeCookie] = useCookies(["token", "role", "id"]);
+  const [cookie, removeCookie] = useCookies(["token", "role", "id"]);
   const idUser = cookie.id;
   const [genre, setGenre] = useState<GenreType[]>([]);
 
@@ -153,7 +153,6 @@ const Profile = () => {
       .then((res) => {
         setSchedules(res.data.data);
         console.log(res.data.data);
-
       })
       .catch((err) => {
         console.log(err);
@@ -279,39 +278,35 @@ const Profile = () => {
                 Gmail : <span>{user?.email}</span>
               </p>
 
-              {idUser == user.id ? (
+              <Link to={user?.instagram}>
+                <Button
+                  id="btn-socialmedia"
+                  label="Social Media"
+                  className="border-2 font-poppins font-semibold border-[#3A2BE8] text-[#3A2BE8] py-2 px-12 rounded-xl mt-5 hover:bg-[#3A2BE8] hover:text-white"
+                />
+              </Link>
 
-                <>
-                  <Link to={user?.instagram}>
-                    <Button
-                      id="btn-socialmedia"
-                      label="Social Media"
-                      className="border-2 font-poppins font-semibold border-[#3A2BE8] text-[#3A2BE8] py-2 px-12 rounded-xl mt-5 hover:bg-[#3A2BE8] hover:text-white"
-                    />
-                  </Link>
+              <Button
+                id="btn-editTeacher"
+                label="Edit Profile"
+                className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                onClick={() => navigate(`/editTeacher/${user?.id}`)}
+              />
 
-                  <Button
-                    id="btn-editTeacher"
-                    label="Edit Profile"
-                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
-                    onClick={() => navigate(`/editTeacher/${user?.id}`)}
-                  />
+              <Button
+                id="btn-kursussaya"
+                label="Kursus Saya"
+                className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                onClick={() => navigate("/daftarKursus")}
+              />
 
-                  <Button
-                    id="btn-kursussaya"
-                    label="Kursus Saya"
-                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
-                    onClick={() => navigate("/daftarKursus")}
-                  />
+              <Button
+                id="btn-jadwalsaya"
+                label="Jadwal Saya"
+                className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                onClick={() => navigate("/historyTeacher")}
+              />
 
-                  <Button
-                    id="btn-jadwalsaya"
-                    label="Jadwal Saya"
-                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
-                    onClick={() => navigate("/historyTeacher")}
-                  />
-                </>
-              )}
               <details className="border-2 w-[17rem] border-black p-4 rounded-2xl mt-5">
                 <summary>Tambah Jadwal</summary>
                 <form className="w-[11rem] p-3">
