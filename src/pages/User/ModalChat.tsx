@@ -10,7 +10,7 @@ import Button from "../../components/Button";
 
 interface Props {
   mentor_id?: number | string;
-  student_id?: number;
+  student_id?: number | string;
 }
 
 const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
