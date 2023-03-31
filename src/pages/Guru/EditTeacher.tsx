@@ -68,7 +68,7 @@ export default function EditTeacher() {
         console.log(err);
       })
       .finally(() => setLoading(false));
-  };
+  }
 
   function Instrument() {
     axios
@@ -81,7 +81,7 @@ export default function EditTeacher() {
         console.log(err);
       })
       .finally(() => setLoading(false));
-  };
+  }
 
   const handlePostGenre = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -91,8 +91,8 @@ export default function EditTeacher() {
     axios
       .post("mentors/genres", body, {
         headers: {
-          Authorization: `Bearer ${checkToken}`
-        }
+          Authorization: `Bearer ${checkToken}`,
+        },
       })
       .then((res) => {
         const { message } = res.data;
@@ -123,7 +123,7 @@ export default function EditTeacher() {
     axios
       .post("/mentors/instruments", body, {
         headers: {
-          Authorization: `Bearer ${checkToken}`
+          Authorization: `Bearer ${checkToken}`,
         },
       })
       .then((res) => {
@@ -181,7 +181,7 @@ export default function EditTeacher() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profileTeacher/:id");
+        navigate("/profileTeacher");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -219,7 +219,7 @@ export default function EditTeacher() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profileTeacher/:id");
+        navigate("/profileTeacher");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -260,7 +260,7 @@ export default function EditTeacher() {
           text: message,
           showCancelButton: false,
         });
-        navigate("/profileTeacher/:id");
+        navigate("/profileTeacher");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -645,7 +645,7 @@ export default function EditTeacher() {
                         label="Kembali"
                         defaultValue={user?.address}
                         className="bg-button w-[8rem] lg:w-[15rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
-                        onClick={() => navigate("/profileTeacher/:id")}
+                        onClick={() => navigate("/profileTeacher")}
                       />
                       <Button
                         id="btn-Update"
