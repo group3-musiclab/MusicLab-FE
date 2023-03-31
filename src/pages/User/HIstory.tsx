@@ -94,6 +94,7 @@ export default function HIstory() {
               id="btn-kembali"
               label="Kembali"
               className="btn bg-button px-32 lg:px-20 py-2 text-white border-none mt-5"
+              onClick={() => navigate("/ProfilStudent")}
             />
           </div>
         </div>
