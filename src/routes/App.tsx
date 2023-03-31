@@ -24,6 +24,7 @@ import ModalChat from "../pages/User/ModalChat";
 import Ulasan from "../pages/User/Ulasan";
 import OauthLogin, { Success } from "../pages/Auth/OauthLogin";
 import Create_events from "pages/Guru/Create_events";
+import GoogleCalendar from "pages/GoogleCalendar/GoogleCalendar";
 
 function App() {
   const [cookie, setCookie] = useCookies(["token", "role"]);
@@ -130,6 +131,10 @@ function App() {
     {
       path: "/createEvents/:id",
       element: <Create_events />,
+    },
+    {
+      path: "/calendar",
+      element: <GoogleCalendar />,
     },
   ]);
 
