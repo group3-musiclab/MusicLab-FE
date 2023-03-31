@@ -37,7 +37,6 @@ const DetailTeacher = () => {
   const [inbox, setInbox] = useState<InboxType>({});
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
-  const chekRole = cookie.role;
 
   const [genre, setGenre] = useState<GenreType[]>([]);
   // console.log(`id=${idUsers} || userId=${user.id}`);
@@ -328,7 +327,6 @@ const DetailTeacher = () => {
                     className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
                     onClick={() => navigate("/daftarKursus")}
                   />
-
                   <label
                     htmlFor="my-modal-5"
                     className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
@@ -342,7 +340,7 @@ const DetailTeacher = () => {
                   />
                   <div className="modal">
                     <div className="modal-box w-11/12 max-w-5xl bg-white">
-                      <ModalChat student_id={user.id} mentor_id={id} />
+                      <ModalChat student_id={user.id} mentor_id={mentor_id} />
                       <div className="modal-action">
                         <label htmlFor="my-modal-5" className="btn">
                           Close
@@ -423,6 +421,17 @@ const DetailTeacher = () => {
               ) : (
                 <>
                   {" "}
+                  <label
+                    htmlFor="my-modal-5"
+                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
+                  >
+                    Lihat Chat
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="my-modal-5"
+                    className="modal-toggle"
+                  />
                   <details className="border-2 border-black p-4 rounded-2xl mt-5">
                     <summary>Lihat Jadwal</summary>
                     <div className="w-[11rem] p-2">
@@ -442,27 +451,6 @@ const DetailTeacher = () => {
                       })}
                     </div>
                   </details>
-                  <label
-                    htmlFor="my-modal-5"
-                    className="btn bg-[#3A2BE8] text-white mt-2 px-16 border-none"
-                  >
-                    See Message
-                  </label>
-                  <input
-                    type="checkbox"
-                    id="my-modal-5"
-                    className="modal-toggle"
-                  />
-                  <div className="modal">
-                    <div className="modal-box w-11/12 max-w-5xl bg-white">
-                      <ModalChat student_id={user.id} mentor_id={id} />
-                      <div className="modal-action">
-                        <label htmlFor="my-modal-5" className="btn">
-                          Close
-                        </label>
-                      </div>
-                    </div>
-                  </div>
                 </>
               )}
             </div>
