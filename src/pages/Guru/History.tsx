@@ -4,17 +4,27 @@ import Button from "../../components/Button";
 import axios from "axios";
 import { HistoryMentor } from "../../utils/types/Datatypes";
 import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "utils/Swal";
 
 export default function History() {
   const [loading, setLoading] = useState<boolean>(false);
   const [historyMentor, setHistoryMentor] = useState<HistoryMentor[]>([]);
   const [urlGoogle, setUrlGoogle] = useState<string>("");
+  const [cookie, removeCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
   const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     fetchDataHistoryMentor();
-    // fetchGoogleUrl();
   }, []);
+
+  // const transaction_id = new FormData();
+  // historyMentor.forEach((item: any) => {
+  //   transaction_id.append("HistoryMentor[]", item);
+  // });
 
   const fetchDataHistoryMentor = () => {
     setLoading(true);
@@ -29,24 +39,34 @@ export default function History() {
       .finally(() => setLoading(false));
   };
 
-  const fetchGoogleUrl = () => {
-    setLoading(true);
+  // const handleCreateEvents = (e: React.FormEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
 
-    axios
-      .get("/login/oauth")
-      .then((res) => {
-        const data = res.data;
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => setLoading(false));
-  };
+  //   axios
+  //     .post("oauth/create-event" {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       const { message } = res.data;
 
-  useEffect(() => {
-    fetchGoogleUrl();
-  }, []);
+  //       MySwal.fire({
+  //         title: "Succes Create Events",
+  //         text: message,
+  //         showCancelButton: false,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       const { message } = err.response.data;
+
+  //       MySwal.fire({
+  //         title: "Failed Created Events",
+  //         text: message,
+  //         showCancelButton: false,
+  //       });
+  //     });
+  // };
 
   return (
     <>
@@ -81,7 +101,20 @@ export default function History() {
                         <td>{item?.end_date}</td>
                         <td>{item?.status}</td>
                         <td>
-                          {item?.status === "settlement" ? "Create Event" : "-"}
+                          {item?.status === "settlement" ? (
+                            <>
+                              <Button
+                                id="btn-createEvents"
+                                label="Create Events"
+                                className="btn"
+                                onClick={() =>
+                                  navigate(`/createEvents/${item?.id}`)
+                                }
+                              />
+                            </>
+                          ) : (
+                            "-"
+                          )}
                         </td>
                       </tr>
                     </>
@@ -90,10 +123,17 @@ export default function History() {
               </tbody>
             </table>
           </div>
-          <h1 className="text-black text-md font-poppins font-semibold text-center">
-            * To Create Event Please Login With your Google Accounts ?{" "}
-            <span className="text-black font-bold text-lg">Click Here</span>
-          </h1>
+          {checkToken ? (
+            ""
+          ) : (
+            <>
+              <h1 className="text-black text-md font-poppins font-semibold text-center">
+                * To Create Event Please Login With your Google Accounts ?{" "}
+                <span className="text-black font-bold text-lg">Click Here</span>
+              </h1>
+            </>
+          )}
+
           <div className="flex w-[93%] justify-end">
             <Button
               id="btn-kembali"

@@ -14,11 +14,14 @@ import { useCookies } from "react-cookie";
 const ProfilStudent = () => {
   const MySwal = withReactContent(Swal);
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
+  console.log(checkToken);
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [student, setStudent] = useState<ProfileStudent>({});
 
   const fetchDataStudent = () => {
+    setLoading(true);
     axios
       .get("students/profile")
       .then((res) => {
@@ -27,11 +30,16 @@ const ProfilStudent = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
     fetchDataStudent();
+
+    return () => {
+      fetchDataStudent();
+    };
   }, []);
 
   const handleDeleteAccount = () => {

@@ -349,6 +349,14 @@ export default function EditTeacher() {
                       setSertificateFile(e.currentTarget.files[0]);
                     }}
                   />
+                  <div className="w-full flex justify-center mt-10">
+                    <Button
+                      id="btn-uploadsertifikat"
+                      label="Upload Sertifikat"
+                      className="bg-button w-[20rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
+                      onClick={(e: any) => handlePostCredentials(e)}
+                    />
+                  </div>
                   {/* Instrument */}
                   <h1 className="text-center text-xl font-poppins text-black font-bold mt-12">
                     instrument you want to teach

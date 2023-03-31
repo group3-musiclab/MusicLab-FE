@@ -8,7 +8,7 @@ import Swal from "utils/Swal";
 import { useCookies } from "react-cookie";
 
 export default function OauthLogin() {
-  const [, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies(["token", "role", "id"]);
   const [token_oauth, setTokenOauth] = useState<string>("");
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
@@ -32,7 +32,9 @@ export default function OauthLogin() {
       .then((res) => {
         const { data, message } = res.data;
         console.log(data.token);
+        setCookie("role", data.role, { path: "/" });
         setCookie("token", data.token, { path: "/" });
+        setCookie("id", data.id, { path: "/" });
 
         MySwal.fire({
           title: "Success Login Using Google Account",
