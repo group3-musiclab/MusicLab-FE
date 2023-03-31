@@ -342,7 +342,7 @@ const DetailTeacher = () => {
                   />
                   <div className="modal">
                     <div className="modal-box w-11/12 max-w-5xl bg-white">
-                      <ModalChat student_id={user.id} mentor_id={mentor_id} />
+                      <ModalChat student_id={user.id} mentor_id={id} />
                       <div className="modal-action">
                         <label htmlFor="my-modal-5" className="btn">
                           Close
