@@ -28,13 +28,13 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
   function ChatsList() {
     setLoading(true);
     axios
-      .get(`/chats?mentor=${mentor_id}&student=${student_id}`, {
+      .get(`/chats`, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
       })
       .then((response) => {
-        const data = response.data.data;
+        const data = response.data;
         setChats(data);
         console.log("test chat", data);
       })
@@ -74,7 +74,7 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
         <div className="card">
           <div className="card-body">
             {chats &&
-              chats?.map((item: any, index) => (
+              chats?.map((item: ChatsType, index) => (
                 <div key={index} className="w-7/12">
                   <p className="text-black font-poppins font-semibold">
                     {item?.sender_name}
