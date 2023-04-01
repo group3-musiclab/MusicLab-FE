@@ -80,33 +80,45 @@ export default function History() {
               {/* head */}
               <thead>
                 <tr>
-                  <th>No</th>
-                  <th>Student Name</th>
-                  <th>Course</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Status</th>
-                  <th>Create Events</th>
+                  <th className="bg-button text-white">No</th>
+                  <th className="bg-button text-white">Student Name</th>
+                  <th className="bg-button text-white">Course</th>
+                  <th className="bg-button text-white">Start Date</th>
+                  <th className="bg-button text-white">End Date</th>
+                  <th className="bg-button text-white">Status</th>
+                  <th className="bg-button text-white">Create Events</th>
                 </tr>
               </thead>
               <tbody>
                 {historyMentor?.map((item, index) => {
                   return (
                     <>
-                      <tr className="hover">
-                        <th>{index + 1}</th>
-                        <td>{item?.student_name}</td>
-                        <td>{item?.class_name}</td>
-                        <td>{item?.start_date}</td>
-                        <td>{item?.end_date}</td>
-                        <td>{item?.status}</td>
-                        <td>
+                      <tr className=" ">
+                        <th className="bg-slate-100 text-black border-none ">
+                          {index + 1}
+                        </th>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.student_name}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.class_name}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.start_date}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.end_date}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.status}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
                           {item?.status === "settlement" ? (
                             <>
                               <Button
                                 id="btn-createEvents"
                                 label="Create Events"
-                                className="btn"
+                                className="btn bg-button text-white"
                                 onClick={() =>
                                   navigate(`/createEvents/${item?.id}`)
                                 }
