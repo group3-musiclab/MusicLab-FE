@@ -12,6 +12,9 @@ import Swal from "../../utils/Swal";
 import { EditProfileStudent } from "../../utils/types/Datatypes";
 import { EditPassword } from "../../utils/types/Datatypes";
 
+export const blockInvalidChar = (e: any) =>
+  ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
+
 export default function EditStudent() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
@@ -279,6 +282,10 @@ export default function EditStudent() {
                       <Input
                         id="input-telepon"
                         type="number"
+                        min={0}
+                        step={1}
+                        onKeyDown={blockInvalidChar}
+                        maxLength={12}
                         defaultValue={student?.phone}
                         className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>

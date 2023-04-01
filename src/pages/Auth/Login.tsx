@@ -11,6 +11,7 @@ import Swal from "../../utils/Swal";
 import SignInGoogle from "../../assets/icon/sign in with google.webp";
 
 const Login = () => {
+  const [seePassword, setSeePassword] = useState<boolean>(false);
   const navigate = useNavigate();
   const [, setCookie] = useCookies(["token", "role", "id"]);
   const MySwal = withReactContent(Swal);
@@ -23,7 +24,7 @@ const Login = () => {
   const [role, setRole] = useState<string>("");
 
   useEffect(() => {
-    if (email && password && role) {
+    if (email && password.length && role) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -111,11 +112,26 @@ const Login = () => {
                 </label>
                 <Input
                   id="input-password"
-                  type="password"
+                  type={seePassword ? "text" : "password"}
                   placeholder="********"
                   className="input input-bordered  bg-bg-input border-slate-300  mx-auto w-10/12 lg:w-6/12 text-black font-semibold font-poppins bg-white"
                   onChange={(e: any) => setPassword(e.target.value)}
                 />
+                <span
+                  onClick={() => setSeePassword(!seePassword)}
+                  className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-2  text-slate-400 font-semibold "
+                >
+                  See Password
+                </span>
+                {/* {password.length < 8 ? (
+                  <p className="text-red-600 ml-44 mt-5 font-normal">
+                    Password yang anda masukan lemah
+                  </p>
+                ) : (
+                  <p className="text-green-600 ml-44 mt-5">
+                    Password yang anda masukan kuat
+                  </p>
+                )} */}
                 <label className="label">
                   <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12 mt-5">
                     Role

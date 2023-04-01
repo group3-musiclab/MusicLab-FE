@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, TextareaHTMLAttributes, FC } from "react";
+import { icons } from "react-icons/lib";
 
 interface Props extends InputHTMLAttributes<HTMLElement> {
   id: string;
