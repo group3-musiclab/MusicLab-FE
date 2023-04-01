@@ -59,7 +59,13 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
         },
       });
       const data = response.data.data;
-      setChats([...chats, data]);
+      const add = {
+        ...data,
+        mentor_id,
+        student_id,
+        chat: message,
+      };
+      setChats([...chats, add]);
       setMessage("");
     } catch (error) {
       console.error(error);

@@ -23,17 +23,19 @@ const Home = () => {
     fetchDataCourse(1);
   }, []);
 
-  const fetchDataCourse = (page: number) => {
-    axios
-      .get(`/mentors/${checkId}/class?limit=4&page=${page}`)
-      .then((res) => {
-        const data = res.data.data;
-        setCourse(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => setIsLoading(false));
+  const fetchDataCourse = async (page: number) => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(
+        `/mentors/${checkId}/class?limit=4&page=${page}`
+      );
+      const { data } = res.data;
+      setCourse(data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
   };
 
   function nextPage() {

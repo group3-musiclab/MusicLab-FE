@@ -20,9 +20,8 @@ const ProfilStudent = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [student, setStudent] = useState<ProfileStudent>({});
 
-  const fetchDataStudent = () => {
-    setLoading(true);
-    axios
+  const fetchDataStudent = async () => {
+    return await axios
       .get("students/profile")
       .then((res) => {
         const { data } = res.data;
