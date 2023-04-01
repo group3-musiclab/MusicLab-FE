@@ -43,12 +43,12 @@ export default function HIstory() {
               {/* head */}
               <thead>
                 <tr>
-                  <th>No</th>
-                  <th>Teacher Name</th>
-                  <th>Course</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Status</th>
+                  <th className="bg-button text-white">No</th>
+                  <th className="bg-button text-white">Teacher Name</th>
+                  <th className="bg-button text-white">Course</th>
+                  <th className="bg-button text-white">Start Date</th>
+                  <th className="bg-button text-white">End Date</th>
+                  <th className="bg-button text-white">Status</th>
 
                   <th>Action</th>
                 </tr>
@@ -59,20 +59,32 @@ export default function HIstory() {
                 {history?.map((item, index) => {
                   return (
                     <>
-                      <tr className="hover">
-                        <td>{index + 1}</td>
-                        <td>{item?.mentor_name}</td>
-                        <td>{item?.class_name}</td>
-                        <td>{item?.start_date}</td>
-                        <td>{item?.end_date}</td>
-                        <td>{item?.status}</td>
+                      <tr className="">
+                        <td className="bg-slate-100 text-black border-none ">
+                          {index + 1}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.mentor_name}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.class_name}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.start_date}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.end_date}
+                        </td>
+                        <td className="bg-slate-100 text-black border-none ">
+                          {item?.status}
+                        </td>
 
-                        <td>
+                        <td className="bg-slate-100 text-black border-none ">
                           {item?.status === "settlement" ? (
                             <>
                               <Button
                                 id="btn-linkulasan"
-                                className="btn"
+                                className="btn bg-button text-white"
                                 label="Beri Ulasan"
                                 onClick={() =>
                                   navigate(`/ulasan/${item.mentor_id}`)
