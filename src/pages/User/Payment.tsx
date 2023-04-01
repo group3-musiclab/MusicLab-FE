@@ -159,6 +159,10 @@ const Payment = () => {
     backgroundRepeat: "no-repeat",
   };
 
+  const openInNewTab = (url: string) => {
+    window.open(url, "_blank", "noreferrer");
+  };
+
   return (
     <Layout>
       <div className="w-full min-h-screen flex flex-col bg-white items-center mt-4">
@@ -262,11 +266,24 @@ const Payment = () => {
                 />
               )}
               {urlPayment && (
-                <Button
-                  label="Proceed to Payment"
-                  className="btn bg-[#3A2BE8] mt-4"
-                  onClick={() => (window.location.href = urlPayment)}
-                />
+                <>
+                  {" "}
+                  <a
+                    href={urlPayment}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn bg-[#3A2BE8] mt-4"
+                  >
+                    Proceed to Payment
+                  </a>
+                  {/* <Button
+                    label="Proceed to Payment"
+                    role="link"
+                    className="btn bg-[#3A2BE8] mt-4"
+                    // onClick={() => (window.location.href = urlPayment)}
+                    onClick={() => openInNewTab(urlPayment)}
+                  /> */}
+                </>
               )}
             </div>
           </div>
