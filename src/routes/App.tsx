@@ -13,6 +13,7 @@ import MainHomePage from "../pages/MainHomePage";
 import EditTeacher from "../pages/Guru/EditTeacher";
 import Chat from "../pages/User/Chat";
 import Profile from "../pages/Guru/Profile";
+import HIstory from "pages/User/HIstory";
 import ProfilStudent from "../pages/User/Profile";
 import { DetailCourse, EditCourse, UploadCourse } from "../pages/Guru/Course";
 import History from "../pages/Guru/History";
@@ -109,6 +110,10 @@ function App() {
       element: checkToken ? <History /> : <Navigate to="/" />,
     },
     {
+      path: "/historyStudent",
+      element: checkToken ? <HIstory /> : <Navigate to="/" />,
+    },
+    {
       path: "/editStudent",
       element: checkToken ? <EditStudent /> : <Navigate to="/" />,
     },
@@ -124,18 +129,15 @@ function App() {
       path: "/oauthLogin",
       element: <OauthLogin />,
     },
-    {
-      path: "/succesOauth",
-      element: <Success />,
-    },
+
     {
       path: "/createEvents/:id",
-      element: <Create_events />,
+      element: checkToken ? <Create_events /> : <Navigate to="/" />,
     },
-    {
-      path: "/calendar",
-      element: <GoogleCalendar />,
-    },
+    // {
+    //   path: "/calendar",
+    //   element: <GoogleCalendar />,
+    // },
   ]);
 
   return <RouterProvider router={router} />;
