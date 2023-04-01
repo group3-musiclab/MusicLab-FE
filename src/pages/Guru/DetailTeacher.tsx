@@ -193,18 +193,6 @@ const DetailTeacher = () => {
     fetchJadwalMentor();
   }, []);
 
-  const handleDeleteSchedule = (id: any) => {
-    axios
-      .delete(`schedules/${idUser}`)
-      .then(() => {
-        setSchedules((prevState) => prevState.filter((item) => item.id !== id));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => SetLoading(false));
-  };
-
   useEffect(() => {
     const fetchCourseMentor = () => {
       SetLoading(true);

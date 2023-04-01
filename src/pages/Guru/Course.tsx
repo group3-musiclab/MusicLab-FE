@@ -396,47 +396,47 @@ const UploadCourse = () => {
                 <Button
                   id="btn-uploadkursus"
                   label="Upload Kursus"
-                  className="btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
+                  className="btn bg-button px-20 lg:px-20 py-2 text-white border-none mt-5"
                   disabled={disabled || loading}
                 />
                 <Button
                   id="btn-kembali"
                   label="Kembali"
-                  className=" ml-10 btn bg-button px-32 lg:px-36 py-2 text-white border-none mt-5"
+                  className=" ml-10 btn bg-button px-20 lg:px-20 py-2 text-white border-none mt-5"
                   onClick={() => navigate("/daftarKursus")}
                 />
               </div>
             </div>
-          </div>
-          <div className="flex-1 lg:pl-16">
-            <label className="label mt-5">
-              <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
-                Harga Kursus
-              </span>
-            </label>
+            <div className="flex-1 lg:pl-16">
+              <label className="label mt-5">
+                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                  Harga Kursus
+                </span>
+              </label>
 
-            <Input
-              id="input-harga-kursus"
-              type="number"
-              placeholder="Harga Kursus..."
-              className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
-              onKeyDown={preventChar}
-              onChange={(e: any) => setPrice(parseInt(e.target.value))}
-              accept="image/jpg, image/png"
-            />
-            <label className="label mt-5">
-              <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
-                Duration
-              </span>
-            </label>
+              <Input
+                id="input-harga-kursus"
+                type="number"
+                placeholder="Harga Kursus..."
+                className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+                onKeyDown={preventChar}
+                onChange={(e: any) => setPrice(parseInt(e.target.value))}
+                accept="image/jpg, image/png"
+              />
+              <label className="label mt-5">
+                <span className="label-text text-black font-semibold text-lg font-poppins w-10/12">
+                  Duration
+                </span>
+              </label>
 
-            <Input
-              id="input-duratopn"
-              type="number"
-              placeholder="Durasi..."
-              className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
-              onChange={(e: any) => setDuration(e.target.value)}
-            />
+              <Input
+                id="input-duratopn"
+                type="number"
+                placeholder="Durasi..."
+                className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
+                onChange={(e: any) => setDuration(e.target.value)}
+              />
+            </div>
           </div>
         </form>
       </Layout>
