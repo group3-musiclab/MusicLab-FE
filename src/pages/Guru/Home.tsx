@@ -29,7 +29,7 @@ const Home = () => {
 
   const fetchDataCourse = async (page: number) => {
     await axios
-      .get(`mentors/${checkId}/class?limit=4&page=${page}`)
+      .get(`mentors/${checkId}/class?limit=8&page=${page}`)
       .then((res) => {
         const { data } = res.data;
         setCourse(data);
@@ -114,6 +114,23 @@ const Home = () => {
                   </>
                 );
               })}
+            </div>
+            <div className="btn-group mx-auto w-full flex justify-center mt-10">
+              <button
+                onClick={() => prevPage()}
+                disabled={page === 1}
+                className="btn"
+              >
+                «
+              </button>
+              <button className="btn">{page}</button>
+              <button
+                onClick={() => nextPage()}
+                // disabled={(page === totalPage)}
+                className="btn"
+              >
+                »
+              </button>
             </div>
           </div>
         </div>
