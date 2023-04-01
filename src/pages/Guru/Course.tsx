@@ -126,7 +126,7 @@ function DetailCourse() {
             </div>
             <div className="lg:w-[35%] w-full text-black flex justify-center sticky">
               <div className="card bg-card w-full h-[45rem] items-center">
-                <div className="flex flex-col w-full lg:w-[85%] lg:mt-7">
+                {/* <div className="flex flex-col w-full lg:w-[85%] lg:mt-7">
                   <div className="w-full  h-[10rem] rounded-xl">
                     <div className="flex lg:flex-row h-full bg-white rounded-xl shadow-lg">
                       <div className="flex-1 -mt-7">
@@ -139,16 +139,14 @@ function DetailCourse() {
                         <h1 className="font-bold font-poppins text-[19px] lg:text-lg">
                           {mentor?.name}
                         </h1>
-                        {/* <h2 className="font-semibold font-poppins text-[14px] lg:text-sm text-slate-400">
-                          {mentor?.} Teacher
-                        </h2> */}
+
                         <p className=" text-[12px] text-black lg:text-sm mt-2 ">
                           {mentor?.about}
                         </p>
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex flex-row w-[85%] h-auto mt-32 lg:mt-5">
                   <div className="flex-1">
@@ -204,9 +202,17 @@ function DetailCourse() {
 }
 
 const UploadCourse = () => {
+  const [image, setImages] = useState<string>("");
+  const headerImg = {
+    width: "80%",
+    height: "25rem",
+    backgroundImage: `url(${image === "" ? Header : image})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  };
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [images, setImages] = useState<any>();
+
   const [name, setName] = useState<string>("");
   const [level, setLevel] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -222,7 +228,7 @@ const UploadCourse = () => {
   useEffect(() => {
     if (
       name &&
-      images &&
+      image &&
       level &&
       description &&
       syllabus &&
@@ -249,21 +255,10 @@ const UploadCourse = () => {
     formData.append("form_who", for_whom);
     formData.append("price", JSON.stringify(price));
     formData.append("duration", duration);
-    for (let i = 0; i < images.lenght; i++) {
-      formData.append(`images`, images[i]);
-    }
-
-    // const body = {
-    //   name,
-    //   images,
-    //   level,
-    //   description,
-    //   syllabus,
-    //   requirement,
-    //   for_whom,
-    //   prices: +prices,
-    //   duration: +duration,
-    // };
+    formData.append("image", image);
+    // for (let i = 0; i < image.length; i++) {
+    //   formData.append(`images`, image[i]);
+    // }
 
     axios
       .post("mentors/classes", formData, {
@@ -306,16 +301,14 @@ const UploadCourse = () => {
           <h1 className="text-black font-bold w-9/12 flex justify-center text-2xl font-poppins lg:mt-0 -mt-8">
             Upload Kursus
           </h1>
+
           <div
             className=" rounded-2xl bg-no-repeat bg-auto bg-center mt-10"
-            style={{
-              width: "80%",
-              height: "25rem",
-              backgroundImage: `url(${images})`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
+            style={headerImg}
           ></div>
+          <h1 className="text-slate-500 text-center font-normal">
+            *Notes: Maksimal Size untuk gambar 500kb
+          </h1>
           <Input
             id="input-header-kursus"
             type="file"
@@ -696,5 +689,7 @@ const EditCourse = () => {
     </>
   );
 };
+
+const MyCourse = () => {};
 
 export { DetailCourse, UploadCourse, EditCourse };
