@@ -33,6 +33,7 @@ const Profile = () => {
   const [Isloading, SetIsLoading] = useState<boolean>(true);
   const [cookie, removeCookie] = useCookies(["token", "role", "id"]);
   const idUser = cookie.id;
+  console.log(idUser);
   const [genre, setGenre] = useState<GenreType[]>([]);
 
   const [day, setDay] = useState<string>("");

@@ -407,12 +407,6 @@ const DetailTeacher = () => {
                                 <p className="text-sm">{item?.start_time}</p>
                                 <p> - </p>
                                 <p className="text-sm">{item?.end_time}</p>
-                                <Button
-                                  id="btn-delete"
-                                  className="ml-2 -mt-1"
-                                  label="x"
-                                  onClick={() => handleDeleteSchedule(item.id)}
-                                />
                               </div>
                             </div>
                           </>
