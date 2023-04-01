@@ -101,7 +101,7 @@ const Ulasan = () => {
             <Button
               id="btn-submitulasan"
               label="Submit Ulasan"
-              className="btn"
+              className="btn bg-button text-white mt-5"
               onClick={(e: any) => handlePostReview(e)}
             />
           </div>
