@@ -50,6 +50,7 @@ const DetailTeacher = () => {
   const [course, setCourse] = useState<MentorClass[]>([]);
   const { id } = useParams();
   const idUsers = localStorage.getItem("id");
+  console.log(idUsers);
   const idMentor = localStorage.setItem("idMentor", JSON.stringify(id));
 
   const [comment, setComment] = useState<Review[]>([]);
@@ -153,14 +154,12 @@ const DetailTeacher = () => {
       .post("mentors/schedules", body)
       .then((res) => {
         const { data, message } = res.data;
-
+        setSchedules((prevState) => [...prevState, data]);
         MySwal.fire({
           title: "Succesfully Uploaded Schedule",
           text: message,
           showCancelButton: false,
         });
-        setSchedules((prevState) => [...prevState, data]);
-        // window.location.reload(false);
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -178,7 +177,7 @@ const DetailTeacher = () => {
     const fetchJadwalMentor = () => {
       SetLoading(true);
       axios
-        .get(`mentors/${idUser}/schedules`)
+        .get(`mentors/${id}/schedules`)
 
         .then((res) => {
           const { data, message } = res.data;
