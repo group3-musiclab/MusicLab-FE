@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router";
 import { EditKursus, MentorDetail } from "../../utils/types/Datatypes";
 import { ClassDetail } from "../../utils/types/Datatypes";
 import { useCookies } from "react-cookie";
+import { blockInvalidChar } from "pages/User/EditStudent";
 
 function DetailCourse() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -428,6 +429,8 @@ const UploadCourse = () => {
                 id="input-harga-kursus"
                 type="number"
                 placeholder="Harga Kursus..."
+                step={1}
+                min={1}
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
                 onKeyDown={preventChar}
                 onChange={(e: any) => setPrice(e.target.value)}
@@ -442,6 +445,9 @@ const UploadCourse = () => {
               <Input
                 id="input-duratopn"
                 type="number"
+                step={1}
+                min={1}
+                onKeyDown={preventChar}
                 placeholder="Durasi..."
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
                 onChange={(e: any) => setDuration(e.target.value)}
@@ -669,6 +675,9 @@ const EditCourse = () => {
               <Input
                 id="input-harga-kursus"
                 type="number"
+                step={1}
+                min={1}
+                onKeyDown={blockInvalidChar}
                 defaultValue={course.price}
                 onChange={(e: any) =>
                   handleChangeCourse(e.target.value, "price")
@@ -685,6 +694,9 @@ const EditCourse = () => {
               <Input
                 id="input-duration"
                 type="number"
+                min={1}
+                step={1}
+                onKeyDown={blockInvalidChar}
                 defaultValue={course.duration}
                 onChange={(e: any) =>
                   handleChangeCourse(e.target.value, "duration")

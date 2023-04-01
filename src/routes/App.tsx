@@ -26,6 +26,7 @@ import Ulasan from "../pages/User/Ulasan";
 import OauthLogin, { Success } from "../pages/Auth/OauthLogin";
 import Create_events from "pages/Guru/Create_events";
 import GoogleCalendar from "pages/GoogleCalendar/GoogleCalendar";
+import StarRating from "components/StarRating";
 
 function App() {
   const [cookie, setCookie] = useCookies(["token", "role"]);
@@ -133,6 +134,10 @@ function App() {
     {
       path: "/createEvents/:id",
       element: checkToken ? <Create_events /> : <Navigate to="/" />,
+    },
+    {
+      path: "/starRating",
+      element: <StarRating />,
     },
     // {
     //   path: "/calendar",

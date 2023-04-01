@@ -16,8 +16,6 @@ const Ulasan = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [message, setMessage] = useState<string>("");
-  localStorage.setItem("ratingStatus", message);
 
   const handlePostReview = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -36,7 +34,6 @@ const Ulasan = () => {
       })
       .then((res) => {
         const message = res.data;
-        setMessage(message.message);
 
         MySwal.fire({
           title: "Success Give Rating",

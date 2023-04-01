@@ -13,8 +13,11 @@ import { EditPassword } from "../../utils/types/Datatypes";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
+import { blockInvalidChar } from "pages/User/EditStudent";
 
 export default function EditTeacher() {
+  const [seePassword, setSeePassword] = useState<boolean>(false);
+  const [confirmSeePassword, setConfirmSeePassword] = useState<boolean>(false);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [cookie, setCookie] = useCookies(["token"]);
@@ -374,7 +377,7 @@ export default function EditTeacher() {
                   </select>
                   <div className="w-full flex justify-center mt-10">
                     <Button
-                      id="btn-updatepassword"
+                      id="btn-submitinstrument"
                       label="Update Instruments"
                       className="bg-button w-[20rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
                       onClick={(e: any) => handlePostInstrument(e)}
@@ -428,21 +431,28 @@ export default function EditTeacher() {
                   </label>
                   <Input
                     id="input-newpassword"
-                    type="password"
+                    type={seePassword ? "text" : "password"}
                     className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
                     onChange={(e: any) =>
                       handleChangePassword(e.target.value, "new_password")
                     }
                   />
+                  <span
+                    onClick={() => setSeePassword(!seePassword)}
+                    className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-2  text-slate-400 font-semibold"
+                  >
+                    See Password
+                  </span>
+
                   <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
+                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-3 ">
                       Confirm Password
                     </span>
                   </label>
 
                   <Input
                     id="input-confirmpassword"
-                    type="password"
+                    type={confirmSeePassword ? "text" : "password"}
                     className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
                     onChange={(e: any) =>
                       handleChangePassword(
@@ -451,6 +461,12 @@ export default function EditTeacher() {
                       )
                     }
                   />
+                  <span
+                    onClick={() => setConfirmSeePassword(!confirmSeePassword)}
+                    className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-2  text-slate-400 font-semibold"
+                  >
+                    See Password
+                  </span>
 
                   <div className="w-full flex justify-center mt-10">
                     <Button
@@ -524,6 +540,10 @@ export default function EditTeacher() {
                       <Input
                         id="input-telepon"
                         type="number"
+                        min={0}
+                        step={1}
+                        onKeyDown={blockInvalidChar}
+                        maxLength={12}
                         defaultValue={user?.phone}
                         className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>

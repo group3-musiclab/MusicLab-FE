@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "../../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
+import seePass from "../../assets/icon/see.webp";
 
 const background = {
   backgroundImage: `url(${Poster})`,
@@ -17,6 +18,7 @@ const background = {
 
 const Register = () => {
   const navigate = useNavigate();
+  const [seePassword, setSeePassword] = useState<boolean>(false);
   const MySwal = withReactContent(Swal);
   const [loading, setLoading] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -26,7 +28,7 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
-    if (name && email && role && password) {
+    if (name && email && role && password.length >= 8) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -127,13 +129,29 @@ const Register = () => {
                 Password
               </span>
             </label>
+
             <Input
               id="input-password"
-              type="password"
+              type={seePassword ? "text" : "password"}
               placeholder="Type here"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
               onChange={(e: any) => setPassword(e.target.value)}
             />
+            <span
+              onClick={() => setSeePassword(!seePassword)}
+              className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-6  text-slate-400 font-semibold"
+            >
+              See Password
+            </span>
+            {password.length < 8 ? (
+              <p className="text-red-600 ml-36 mt-5 font-normal">
+                Password yang anda masukan lemah
+              </p>
+            ) : (
+              <p className="text-green-600 ml-36 mt-5">
+                Password yang anda masukan kuat
+              </p>
+            )}
             <div className="text-center w-full  mt-10">
               <Button
                 id="btn-register"

@@ -17,7 +17,7 @@ const ProfilStudent = () => {
   const checkToken = cookie.token;
   console.log(checkToken);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [student, setStudent] = useState<ProfileStudent>({});
 
   const fetchDataStudent = () => {
@@ -80,7 +80,7 @@ const ProfilStudent = () => {
             <div className="card-body mx-auto">
               <div className="flex mx-auto">
                 <img
-                  src={student?.avatar}
+                  src={student.avatar}
                   className="w-36 rounded-full object-contain"
                 />
               </div>

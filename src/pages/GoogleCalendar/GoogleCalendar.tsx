@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import axios from "axios";
 import { gapi } from "gapi-script";
 
 interface EventProps {
@@ -19,48 +19,71 @@ function GoogleCalendar() {
   const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
   const accessToken = import.meta.env.VITE_GOOGLE_ACCESS_TOKEN;
 
-  const getEvents = ({ calendarID, apiKey }: EventProps) => {
-    function initiate() {
-      gapi.client
-        .init({ apiKey: apiKey })
-        .then(function () {
-          return gapi.client.request({
-            path: `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events`,
-          });
-        })
-        .then(
-          (response: any) => {
-            let events = response.result.items;
-            return events;
+  const fetchDataEvents = () => {
+    axios
+      .get(
+        `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events/?key=${apiKey}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
           },
-          function (err: any) {
-            return [false, err];
-          }
-        );
-    }
-
-    gapi.load("client", initiate);
+        }
+      )
+      .then((res) => {
+        const { data } = res.data;
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
-    const events: any = getEvents({ calendarID, apiKey });
-    setEvents(events);
+    fetchDataEvents();
   }, []);
 
-  return (
-    <>
-      <div className="App pt-4">
-        <h1 className="text-2xl font-bold mb-4">
-          React App with Google Calendar API!
-        </h1>
-        <ul>
-          {events?.map((item) => (
-            <li key={item.id}>{item.summary}</li>
-          ))}
-        </ul>
-      </div>
-    </>
-  );
-}
+  //   const getEvents = ({ calendarID, apiKey }: EventProps) => {
+  //     function initiate() {
+  //       gapi.client
+  //         .init({ apiKey: apiKey })
+  //         .then(function () {
+  //           return gapi.client.request({
+  //             path: `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events/?key=${apiKey}`
+  //           });
+  //         })
+  //         .then(
+  //           (response: any) => {
+  //             let events = response.result.items;
+  //             return events;
+  //           },
+  //           function (err: any) {
+  //             return [false, err];
+  //           }
+  //         );
+  //     }
 
+  //     gapi.load("client", initiate);
+  //   };
+
+  //   useEffect(() => {
+  //     const events: any = getEvents({ calendarID, apiKey });
+  //     setEvents(events);
+  //   }, []);
+
+  //   return (
+  //     <>
+  //       <div className="App pt-4">
+  //         <h1 className="text-2xl font-bold mb-4">
+  //           React App with Google Calendar API!
+  //         </h1>
+  //         <ul>
+  //           {events?.map((item) => (
+  //             <li key={item.id}>{item.summary}</li>
+  //           ))}
+  //         </ul>
+  //       </div>
+  //     </>
+  //   );
+  // }
+}
 export default GoogleCalendar;
