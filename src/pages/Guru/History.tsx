@@ -10,6 +10,8 @@ import Swal from "utils/Swal";
 
 export default function History() {
   const [loading, setLoading] = useState<boolean>(false);
+  const status = localStorage.getItem("status");
+  console.log(status);
   const [historyMentor, setHistoryMentor] = useState<HistoryMentor[]>([]);
   const [urlGoogle, setUrlGoogle] = useState<string>("");
   const [cookie, removeCookie] = useCookies(["token"]);
@@ -20,11 +22,6 @@ export default function History() {
   useEffect(() => {
     fetchDataHistoryMentor();
   }, []);
-
-  // const transaction_id = new FormData();
-  // historyMentor.forEach((item: any) => {
-  //   transaction_id.append("HistoryMentor[]", item);
-  // });
 
   const fetchDataHistoryMentor = () => {
     setLoading(true);
@@ -38,35 +35,6 @@ export default function History() {
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   };
-
-  // const handleCreateEvents = (e: React.FormEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-
-  //   axios
-  //     .post("oauth/create-event" {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       const { message } = res.data;
-
-  //       MySwal.fire({
-  //         title: "Succes Create Events",
-  //         text: message,
-  //         showCancelButton: false,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       const { message } = err.response.data;
-
-  //       MySwal.fire({
-  //         title: "Failed Created Events",
-  //         text: message,
-  //         showCancelButton: false,
-  //       });
-  //     });
-  // };
 
   return (
     <>
@@ -125,7 +93,7 @@ export default function History() {
                               />
                             </>
                           ) : (
-                            "-"
+                            "Selesaikan Pembayaran"
                           )}
                         </td>
                       </tr>

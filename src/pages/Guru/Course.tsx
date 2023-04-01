@@ -17,9 +17,9 @@ function DetailCourse() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<ClassDetail>({});
   const [mentor, setMentor] = useState<MentorDetail>({});
-  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const [cookie, setCookie] = useCookies(["token", "role", "id"]);
   const checkRole = cookie.role;
-
+  const checkId = cookie.id;
   const idUser = localStorage.getItem("id");
   const { id } = useParams();
   const tax = 200000;
@@ -31,7 +31,7 @@ function DetailCourse() {
   const fetchDataClassDetail = () => {
     setIsLoading(true);
     axios
-      .get(`/class/${id}`)
+      .get(`/class/${idClassGet}`)
       .then((res) => {
         const data = res.data.data;
         setCourse(data);
@@ -45,7 +45,7 @@ function DetailCourse() {
   const fetchMentorDetail = () => {
     setIsLoading(true);
     axios
-      .get(`/mentors/${idUser}`)
+      .get(`/mentors/${checkId}`)
       .then((res) => {
         const data = res.data.data;
         setMentor(data);

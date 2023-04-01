@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ const Home = () => {
   const [course, setCourse] = useState<MentorClass[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(20);
-  const id = localStorage.getItem("id");
+  const [cookie, setCookie] = useCookies(["id"]);
+  const checkId = cookie.id;
 
   useEffect(() => {
     fetchDataCourse(1);
@@ -26,18 +28,15 @@ const Home = () => {
   }, []);
 
   const fetchDataCourse = async (page: number) => {
-    setIsLoading(false);
-
     await axios
-      .get(`mentors/${id}/class?limit=4&page=${page}`)
+      .get(`mentors/${checkId}/class?limit=4&page=${page}`)
       .then((res) => {
         const { data } = res.data;
         setCourse(data);
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   function nextPage() {
@@ -92,10 +91,10 @@ const Home = () => {
                   <>
                     <div className="flex flex-col">
                       <Card
-                        name={item.name}
-                        image={item.image}
-                        price={item.price}
-                        onClick={() => navigate(`/detailCourse/${item.id}`)}
+                        name={item?.name}
+                        image={item?.image}
+                        price={item?.price}
+                        onClick={() => navigate(`/detailCourse/${item?.id}`)}
                       />
                       <div className="flex flex-row mt-5">
                         <Button

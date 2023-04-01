@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 
 export default function Create_events() {
   const navigate = useNavigate();
+  const [status, setStatus] = useState<string>("");
   const { id } = useParams();
 
   localStorage.setItem("idTransaction", JSON.stringify(id));
@@ -31,7 +32,8 @@ export default function Create_events() {
       })
       .then((res) => {
         const { message } = res.data;
-        console.log(message);
+        setStatus(message);
+        localStorage.setItem("status", JSON.stringify(message));
       })
       .catch((err) => {
         console.log(err);
@@ -55,15 +57,33 @@ export default function Create_events() {
               className="btn mt-5 bg-button text-white px-8"
               onClick={(e: any) => handleCreateEvents(e)}
             />
-            <Button
-              id="btn-proceedgooglecalendar"
-              label="See Events"
-              className="btn mt-5 bg-button text-white px-12"
-              onClick={() =>
-                (window.location.href =
-                  "https://calendar.google.com/calendar/u/5/r")
-              }
-            />
+            {status === "success create event" ? (
+              <>
+                <Button
+                  id="btn-proceedgooglecalendar"
+                  label="See Events"
+                  className="btn mt-5 bg-button text-white px-12"
+                  onClick={() =>
+                    (window.location.href =
+                      "https://calendar.google.com/calendar/u/5/r")
+                  }
+                />
+              </>
+            ) : (
+              <>
+                <Button
+                  id="btn-proceedgooglecalendar"
+                  label="See Events"
+                  className="btn mt-5 bg-button text-white px-12"
+                  onClick={() =>
+                    (window.location.href =
+                      "https://calendar.google.com/calendar/u/5/r")
+                  }
+                  disabled
+                />
+              </>
+            )}
+
             <div
               tabIndex={0}
               className=" w-[70%] collapse collapse-plus border text-slate-500 border-none bg-slate-200 rounded-box mt-5"
