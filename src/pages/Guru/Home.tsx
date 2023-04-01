@@ -21,22 +21,19 @@ const Home = () => {
 
   useEffect(() => {
     fetchDataCourse(1);
-
-    return () => {
-      fetchDataCourse(1);
-    };
   }, []);
 
-  const fetchDataCourse = async (page: number) => {
-    await axios
-      .get(`mentors/${checkId}/class?limit=8&page=${page}`)
+  const fetchDataCourse = (page: number) => {
+    axios
+      .get(`/mentors/${checkId}/class?limit=4&page=${page}`)
       .then((res) => {
-        const { data } = res.data;
+        const data = res.data.data;
         setCourse(data);
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   function nextPage() {

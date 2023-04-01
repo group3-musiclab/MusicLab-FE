@@ -281,9 +281,10 @@ const Profile = () => {
 
               <Link to={user?.instagram}>
                 <Button
-                  id="btn-socialmedia"
-                  label="Social Media"
-                  className="border-2 font-poppins font-semibold border-[#3A2BE8] text-[#3A2BE8] py-2 px-12 rounded-xl mt-5 hover:bg-[#3A2BE8] hover:text-white"
+                  id="btn-deactivateaccount"
+                  label="Deactivate Account"
+                  className="btn mt-5 px-8"
+                  onClick={handleDeleteAccount}
                 />
               </Link>
 

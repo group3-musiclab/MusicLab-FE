@@ -288,7 +288,7 @@ export default function EditTeacher() {
                     Edit Profile
                   </h1>
                   <img
-                    src={pictures}
+                    src={`${pictures === "" ? user?.avatar : pictures}`}
                     className="w-4/12 mx-auto mt-5 rounded-2xl "
                   />
                   <h1 className="flex justify-center">*Max File Size 500kb</h1>
@@ -319,9 +319,7 @@ export default function EditTeacher() {
                     className="input input-bordered  border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
                     onChange={(e: any) => setType(e.target.value)}
                   >
-                    <option disabled defaultValue={"DEFAULT"}>
-                      Pilih Salah Satu
-                    </option>
+                    <option defaultValue={"DEFAULT"}>Pilih Salah Satu</option>
                     <option value="International">Internasional</option>
                     <option value="National">Nasional</option>
                   </select>
