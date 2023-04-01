@@ -140,15 +140,11 @@ const Login = () => {
                 />
                 <div className="flex flex-row justify-center">
                   <Link to="/oauthLogin">
-                    <img src={SignInGoogle} className="w-3/12 mt-5 mx-auto" />
+                    <img
+                      src={SignInGoogle}
+                      className="w-3/12 h-4/6 mt-5 mx-auto"
+                    />
                   </Link>
-
-                  {/* <Button
-                    id="btn-login"
-                    label="Login "
-                    className="bg-button px-4 text-md py-2 mt-5 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer"
-                    onClick={() => navigate("/oauthLogin")}
-                  /> */}
                 </div>
               </div>
             </form>
@@ -165,7 +161,7 @@ const Login = () => {
           <h2 className="text-button font-poppins mb-10 hidden lg:flex">
             MusicLab
           </h2>
-          <img src={LogoMusicLab} className=" mt-10 lg:mt-0 w-4/12" />
+          <img src={LogoMusicLab} className=" mt-10 lg:mt-0 w-4/12 h-2/6" />
           <p className="text-slate-400 text-sm mt-2">Logo by Catalyststuff</p>
         </div>
       </div>
