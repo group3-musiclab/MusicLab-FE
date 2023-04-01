@@ -26,8 +26,8 @@ function DetailCourse() {
   const idClass = localStorage.setItem("idClass", JSON.stringify(id));
   const idClassGet = JSON.parse(localStorage.getItem("idClass") || "");
   console.log(idClassGet);
-  const idMentor = JSON.parse(localStorage.getItem("idMentor") || "");
-  console.log(idMentor);
+  // const idMentor = JSON.parse(localStorage.getItem("idMentor") || "");
+
   const navigate = useNavigate();
 
   const fetchDataClassDetail = () => {
@@ -44,23 +44,23 @@ function DetailCourse() {
       .finally(() => setIsLoading(false));
   };
 
-  const fetchMentorDetail = () => {
-    setIsLoading(true);
-    axios
-      .get(`/mentors/${idMentor}`)
-      .then((res) => {
-        const data = res.data.data;
-        setMentor(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => setIsLoading(false));
-  };
+  // const fetchMentorDetail = () => {
+  //   setIsLoading(true);
+  //   axios
+  //     .get(`/mentors/${idMentor}`)
+  //     .then((res) => {
+  //       const data = res.data.data;
+  //       setMentor(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+  //     .finally(() => setIsLoading(false));
+  // };
 
   useEffect(() => {
     fetchDataClassDetail();
-    fetchMentorDetail();
+    // fetchMentorDetail();
 
     return () => {
       fetchDataClassDetail();
