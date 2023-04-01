@@ -137,7 +137,8 @@ const Payment = () => {
       })
       .then((res) => {
         const paymentUrl = res.data.data.payment_url;
-        window.location.href = paymentUrl;
+        window.open(paymentUrl, "_blank");
+        window.location.href = "/historyStudent";
       })
       .catch((err) => {
         const { message } = err.response.data;
