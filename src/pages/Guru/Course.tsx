@@ -26,6 +26,8 @@ function DetailCourse() {
   const idClass = localStorage.setItem("idClass", JSON.stringify(id));
   const idClassGet = JSON.parse(localStorage.getItem("idClass") || "");
   console.log(idClassGet);
+  const idMentor = JSON.parse(localStorage.getItem("idMentor") || "");
+  console.log(idMentor);
   const navigate = useNavigate();
 
   const fetchDataClassDetail = () => {
@@ -45,7 +47,7 @@ function DetailCourse() {
   const fetchMentorDetail = () => {
     setIsLoading(true);
     axios
-      .get(`/mentors/${checkId}`)
+      .get(`/mentors/${idMentor}`)
       .then((res) => {
         const data = res.data.data;
         setMentor(data);
