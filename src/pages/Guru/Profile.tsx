@@ -56,10 +56,17 @@ const Profile = () => {
     Instrument();
     fethcDataMentor();
     fetchCourseMentor(1);
+
+    return () => {
+      Profile();
+      Instrument();
+      fethcDataMentor();
+      fetchCourseMentor(1);
+    };
   }, []);
 
-  function Profile() {
-    axios
+  async function Profile() {
+    return await axios
       .get(`/mentors/${idUser}`)
       .then((response) => {
         const data = response.data.data;
@@ -70,8 +77,8 @@ const Profile = () => {
       });
   }
 
-  function Instrument() {
-    axios
+  async function Instrument() {
+    return await axios
       .get(`mentors/${idUser}/instrument`)
       .then((response) => {
         const { data, message } = response.data;
@@ -191,10 +198,8 @@ const Profile = () => {
       });
   };
 
-  const fetchCourseMentor = (page: number) => {
-    SetIsLoading(true);
-
-    axios
+  const fetchCourseMentor = async (page: number) => {
+    return await axios
       .get(`/mentors/${idUser}/class?limit=4&page=${page}`)
       .then((res) => {
         const data = res.data.data;
