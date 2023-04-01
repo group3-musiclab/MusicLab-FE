@@ -151,9 +151,12 @@ export default function EditStudent() {
                     Edit Profile
                   </h1>
                   <img
-                    src={pictures}
+                    src={`${pictures === "" ? student?.avatar : pictures}`}
                     className="w-4/12 mx-auto mt-5 rounded-2xl "
                   />
+                  <h1 className="text-slate-500 text-center">
+                    * Max File Size Image 500kb
+                  </h1>
                   <Input
                     id="input-file"
                     type="file"

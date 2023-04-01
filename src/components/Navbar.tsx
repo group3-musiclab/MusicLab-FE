@@ -20,6 +20,18 @@ const ReusableNav = () => {
   const handleLogout = () => {
     removeCookie("token", { path: "/" });
     removeCookie("role", { path: "/" });
+    localStorage.removeItem("responAvai");
+    localStorage.removeItem("role");
+    localStorage.removeItem("idMentor");
+    localStorage.removeItem("credentials");
+    localStorage.removeItem("responsPayment");
+    localStorage.removeItem("status");
+    localStorage.removeItem("idTransaction");
+    localStorage.removeItem("idClass");
+    localStorage.removeItem("availCheck");
+    localStorage.removeItem("availData");
+    localStorage.removeItem("ratingStatus");
+    localStorage.removeItem("token");
     navigate("/login");
     MySwal.fire({
       title: "See Ya",
@@ -106,8 +118,10 @@ const ReusableNav = () => {
             </li>
             {checkToken && checkRole === "Mentor" && (
               <li>
-              <a href="/chat" className="text-black font-bold font-poppins">Chat</a>
-            </li>
+                <a href="/chat" className="text-black font-bold font-poppins">
+                  Chat
+                </a>
+              </li>
             )}
             <li>
               <a
