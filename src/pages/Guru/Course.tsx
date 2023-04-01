@@ -219,49 +219,60 @@ const UploadCourse = () => {
   const [syllabus, setSyllabus] = useState<string>("");
   const [requirement, setRequirement] = useState<string>("");
   const [for_whom, setForWhom] = useState<string>("");
-  const [price, setPrice] = useState<number | Blob>();
+  const [price, setPrice] = useState<string>("");
   const [prices, setPrices] = useState<string>("");
   const [duration, setDuration] = useState<string>("");
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (
-      name &&
-      image &&
-      level &&
-      description &&
-      syllabus &&
-      requirement &&
-      for_whom &&
-      price &&
-      duration
-    ) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  });
+  // useEffect(() => {
+  //   if (
+  //     name &&
+  //     image &&
+  //     level &&
+  //     description &&
+  //     syllabus &&
+  //     requirement &&
+  //     for_whom &&
+  //     price &&
+  //     duration
+  //   ) {
+  //     setDisabled(false);
+  //   } else {
+  //     setDisabled(true);
+  //   }
+  // });
 
   const handlePostCourse = (e: React.FormEvent<HTMLFormElement>) => {
-    setLoading(true);
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("level", level);
-    formData.append("description", description);
-    formData.append("syllabus", syllabus);
-    formData.append("requirement", requirement);
-    formData.append("form_who", for_whom);
-    formData.append("price", JSON.stringify(price));
-    formData.append("duration", duration);
-    formData.append("image", image);
+    // const formData = new FormData();
+    // formData.append("name", name);
+    // formData.append("level", level);
+    // formData.append("description", description);
+    // formData.append("syllabus", syllabus);
+    // formData.append("requirement", requirement);
+    // formData.append("form_who", for_whom);
+    // formData.append("price", JSON.stringify(price));
+    // formData.append("duration", duration);
+    // formData.append("image", image);
     // for (let i = 0; i < image.length; i++) {
     //   formData.append(`images`, image[i]);
     // }
 
+    const body = {
+      name,
+      level,
+      description,
+      syllabus,
+      requirement,
+      for_whom,
+      price: +price,
+      duration: +duration,
+      image,
+    };
+
     axios
-      .post("mentors/classes", formData, {
+      .post("mentors/classes", body, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -397,7 +408,6 @@ const UploadCourse = () => {
                   id="btn-uploadkursus"
                   label="Upload Kursus"
                   className="btn bg-button px-20 lg:px-20 py-2 text-white border-none mt-5"
-                  disabled={disabled || loading}
                 />
                 <Button
                   id="btn-kembali"
@@ -420,7 +430,7 @@ const UploadCourse = () => {
                 placeholder="Harga Kursus..."
                 className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-10/12 text-black font-semibold font-poppins bg-white"
                 onKeyDown={preventChar}
-                onChange={(e: any) => setPrice(parseInt(e.target.value))}
+                onChange={(e: any) => setPrice(e.target.value)}
                 accept="image/jpg, image/png"
               />
               <label className="label mt-5">
@@ -689,7 +699,5 @@ const EditCourse = () => {
     </>
   );
 };
-
-const MyCourse = () => {};
 
 export { DetailCourse, UploadCourse, EditCourse };

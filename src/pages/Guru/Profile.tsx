@@ -35,7 +35,7 @@ const Profile = () => {
   const idUser = cookie.id;
   console.log(idUser);
   const [genre, setGenre] = useState<GenreType[]>([]);
-
+  const [id, setId] = useState<string>("1");
   const [day, setDay] = useState<string>("");
   const [start_time, setStartTime] = useState<string>("");
   const [end_time, setEndTime] = useState<string>("");
@@ -113,7 +113,7 @@ const Profile = () => {
       });
   };
 
-  const handlePostJadwal = async (e: React.FormEvent<HTMLInputElement>) => {
+  const handlePostJadwal = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     SetIsLoading(true);
     const body = {
@@ -121,19 +121,34 @@ const Profile = () => {
       start_time,
       end_time,
     };
+    // https://virtserver.swaggerhub.com/KHARISMAJANNUAR/MusicLab-API/1.0.0
 
-    await axios
+    // mentors/schedules
+    axios
       .post("mentors/schedules", body)
       .then((res) => {
         const { data, message } = res.data;
 
+        const updateData = {
+          ...data,
+          day,
+          start_time,
+          end_time,
+        };
+        console.log(updateData);
+
+        setSchedules((prevState) => [...prevState, updateData]);
+
+        console.log;
         MySwal.fire({
           title: "Succesfully Uploaded Schedule",
           text: message,
           showCancelButton: false,
         });
-
-        setSchedules((prevState) => [...prevState, data]);
+        setDay("");
+        setStartTime("");
+        setEndTime("");
+        console.log(schedules);
       })
 
       .catch((err) => {
@@ -146,6 +161,11 @@ const Profile = () => {
         });
       });
   };
+
+  // useEffect(() => {
+  //
+  //   }
+  // }, [day, start_time, end_time]);
 
   const fethcDataMentor = () => {
     SetIsLoading(true);
