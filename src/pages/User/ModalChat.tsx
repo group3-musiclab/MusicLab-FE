@@ -35,7 +35,6 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
       .then((response) => {
         const data = response.data.data;
         setChats(data);
-        console.log("test chat", data);
       })
       .catch((error) => {
         console.log(error);
