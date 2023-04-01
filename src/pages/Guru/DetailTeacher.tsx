@@ -29,6 +29,7 @@ interface MentorClass {
 
 const DetailTeacher = () => {
   const idUser = localStorage.getItem("id");
+  console.log(idUser);
   const { schedule_id } = useParams();
   const { mentor_id } = useParams();
   const { student_id } = useParams();
@@ -79,10 +80,8 @@ const DetailTeacher = () => {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   };
-
-  
 
   function Profile() {
     axios
@@ -438,10 +437,7 @@ const DetailTeacher = () => {
                   />
                   <div className="modal">
                     <div className="modal-box w-11/12 max-w-5xl bg-white">
-                      <ModalChat
-                        student_id={student.id}
-                        mentor_id={user.id}
-                      />
+                      <ModalChat student_id={student.id} mentor_id={user.id} />
                       <div className="modal-action">
                         <label htmlFor="my-modal-5" className="btn">
                           Close
