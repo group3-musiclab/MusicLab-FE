@@ -68,7 +68,7 @@ const SearchingMentor = () => {
 
   useEffect(() => {
     setFiltered(
-      mentor.filter((item) =>
+      mentor?.filter((item) =>
         item.name?.toLowerCase().includes(searchText.toLowerCase())
       )
     );

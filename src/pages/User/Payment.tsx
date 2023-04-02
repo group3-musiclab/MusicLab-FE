@@ -21,9 +21,10 @@ const Payment = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [course, setCourse] = useState<ClassDetail>({});
   const tax = 20000;
-  const [id, setId] = useState<number>(0);
+
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
   const checkToken = cookie.token;
+  const { id } = useParams();
   const class_id = JSON.parse(localStorage.getItem("idClass") || "");
   const idMentor = JSON.parse(localStorage.getItem("idMentor") || "");
   const [schedule_id, setIdSchedule] = useState<string>("");
@@ -40,7 +41,7 @@ const Payment = () => {
 
   const fetchDataCourseDetail = () => {
     axios
-      .get(`/class/${class_id}`)
+      .get(`/class/${id}`)
       .then((res) => {
         const data = res.data.data;
         setCourse(data);

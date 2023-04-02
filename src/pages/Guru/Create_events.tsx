@@ -5,6 +5,7 @@ import Button from "components/Button";
 import { useCookies } from "react-cookie";
 import calendar from "../../assets/icon/calendar.webp";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function Create_events() {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export default function Create_events() {
     localStorage.getItem("idTransaction") || ""
   );
   console.log(transaction_id);
+
+  const [response, setResponse] = useState<string>("");
 
   const handleCreateEvents = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -37,6 +40,8 @@ export default function Create_events() {
       })
       .catch((err) => {
         console.log(err);
+
+        setResponse(err.response.data.message);
       });
   };
   return (
@@ -57,6 +62,19 @@ export default function Create_events() {
               className="btn mt-5 bg-button text-white px-8"
               onClick={(e: any) => handleCreateEvents(e)}
             />
+            {response ===
+            "token oauth not generated yet, please login with google account first" ? (
+              <p className="text-red-500 font-normal text-sm w-[25rem] mt-5 font-poppins text-center">
+                *Please Login with your Google Account to Create Events, then
+                Click This{" "}
+                <span className="font-semibold text-black underline">
+                  <Link to="/oauthLogin">Link</Link>
+                </span>{" "}
+              </p>
+            ) : (
+              <p></p>
+            )}
+            <p></p>
             {status === "success create event" ? (
               <>
                 <Button

@@ -9,7 +9,6 @@ export default function HIstory() {
   const navigate = useNavigate();
   const [history, setHistory] = useState<HistoryStudent[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const getStatus = localStorage.getItem("ratingStatus");
 
   useEffect(() => {
     const fetchDataHistory = () => {
