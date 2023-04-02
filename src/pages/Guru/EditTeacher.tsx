@@ -459,6 +459,7 @@ export default function EditTeacher() {
                         className="input text-black font-poppins font-semibold"
                         placeholder="*******"
                         size={5}
+                        minLength={3}
                         name="text"
                         type={newPassword ? "text" : "password"}
                         onChange={(e: any) =>
@@ -487,6 +488,7 @@ export default function EditTeacher() {
                         className="input text-black font-poppins font-semibold"
                         placeholder="*******"
                         size={5}
+                        minLength={3}
                         name="text"
                         type={confirmPassword ? "text" : "password"}
                         onChange={(e: any) =>
@@ -518,7 +520,8 @@ export default function EditTeacher() {
                       </label>
                       <Input
                         id="input-namalengkap"
-                        type="email"
+                        type="text"
+                        maxLength={50}
                         placeholder="marlina1998"
                         defaultValue={user?.name}
                         className="input input-bordered w-10/12 lg:w-9/12 bg-bg-input border-slate-300 text-black font-semibold font-poppins bg-white"
@@ -546,7 +549,7 @@ export default function EditTeacher() {
                         </span>
                       </label>
                       <select
-                        id="select-role"
+                        id="select-jeniskelamin"
                         className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "sex")
@@ -588,6 +591,7 @@ export default function EditTeacher() {
                       <Input
                         id="input-email"
                         type="email"
+                        maxLength={50}
                         defaultValue={user?.email}
                         placeholder="@test@gmail.com"
                         className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"

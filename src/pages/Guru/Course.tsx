@@ -17,24 +17,19 @@ import { blockInvalidChar } from "pages/User/EditStudent";
 function DetailCourse() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<ClassDetail>({});
-  const [mentor, setMentor] = useState<MentorDetail>({});
+
   const [cookie, setCookie] = useCookies(["token", "role", "id"]);
   const checkRole = cookie.role;
-  const checkId = cookie.id;
-  const idUser = localStorage.getItem("id");
-  const { id } = useParams();
+
   const tax = 200000;
-  const idClass = localStorage.setItem("idClass", JSON.stringify(id));
-  const idClassGet = JSON.parse(localStorage.getItem("idClass") || "");
-  console.log(idClassGet);
-  // const idMentor = JSON.parse(localStorage.getItem("idMentor") || "");
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
   const fetchDataClassDetail = () => {
     setIsLoading(true);
     axios
-      .get(`/class/${idClassGet}`)
+      .get(`/class/${id}`)
       .then((res) => {
         const data = res.data.data;
         setCourse(data);
@@ -45,23 +40,8 @@ function DetailCourse() {
       .finally(() => setIsLoading(false));
   };
 
-  // const fetchMentorDetail = () => {
-  //   setIsLoading(true);
-  //   axios
-  //     .get(`/mentors/${idMentor}`)
-  //     .then((res) => {
-  //       const data = res.data.data;
-  //       setMentor(data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => setIsLoading(false));
-  // };
-
   useEffect(() => {
     fetchDataClassDetail();
-    // fetchMentorDetail();
 
     return () => {
       fetchDataClassDetail();
@@ -127,28 +107,6 @@ function DetailCourse() {
             </div>
             <div className="lg:w-[35%] w-full text-black flex justify-center sticky">
               <div className="card bg-card w-full h-[45rem] items-center">
-                {/* <div className="flex flex-col w-full lg:w-[85%] lg:mt-7">
-                  <div className="w-full  h-[10rem] rounded-xl">
-                    <div className="flex lg:flex-row h-full bg-white rounded-xl shadow-lg">
-                      <div className="flex-1 -mt-7">
-                        <img
-                          src={mentor?.avatar}
-                          className="w-full rounded-xl mt-7"
-                        />
-                      </div>
-                      <div className="flex-1 mt-5 ml-4">
-                        <h1 className="font-bold font-poppins text-[19px] lg:text-lg">
-                          {mentor?.name}
-                        </h1>
-
-                        <p className=" text-[12px] text-black lg:text-sm mt-2 ">
-                          {mentor?.about}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-
                 <div className="flex flex-row w-[85%] h-auto mt-32 lg:mt-5">
                   <div className="flex-1">
                     <p className="font-bold font-poppins text-sm">
@@ -173,9 +131,7 @@ function DetailCourse() {
                     </p>
                   </div>
                   <div className="flex-1 flex items-end flex-col">
-                    <p className="font-bold font-poppins text-sm mt-2">
-                      {/* Rp. {course?.price + tax},- */}
-                    </p>
+                    <p className="font-bold font-poppins text-sm mt-2"></p>
                   </div>
                 </div>
                 <div className="flex justify-start w-[85%]">
@@ -188,7 +144,7 @@ function DetailCourse() {
                         id="btn-belikursus"
                         label="Beli Kursus"
                         className="btn bg-button px-16 py-2 text-white border-none mt-5"
-                        onClick={() => navigate(`/payment/${idClassGet}`)}
+                        onClick={() => navigate(`/payment/${id}`)}
                       />
                     </>
                   )}
@@ -226,39 +182,8 @@ const UploadCourse = () => {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (
-  //     name &&
-  //     image &&
-  //     level &&
-  //     description &&
-  //     syllabus &&
-  //     requirement &&
-  //     for_whom &&
-  //     price &&
-  //     duration
-  //   ) {
-  //     setDisabled(false);
-  //   } else {
-  //     setDisabled(true);
-  //   }
-  // });
-
   const handlePostCourse = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("name", name);
-    // formData.append("level", level);
-    // formData.append("description", description);
-    // formData.append("syllabus", syllabus);
-    // formData.append("requirement", requirement);
-    // formData.append("form_who", for_whom);
-    // formData.append("price", JSON.stringify(price));
-    // formData.append("duration", duration);
-    // formData.append("image", image);
-    // for (let i = 0; i < image.length; i++) {
-    //   formData.append(`images`, image[i]);
-    // }
 
     const body = {
       name,

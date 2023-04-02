@@ -20,21 +20,20 @@ export default function History() {
   const MySwal = withReactContent(Swal);
 
   useEffect(() => {
+    const fetchDataHistoryMentor = () => {
+      setLoading(true);
+
+      axios
+        .get("/mentors/transactions ")
+        .then((res) => {
+          const data = res.data.data;
+          setHistoryMentor(data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+    };
     fetchDataHistoryMentor();
   }, []);
-
-  const fetchDataHistoryMentor = () => {
-    setLoading(true);
-
-    axios
-      .get("/mentors/transactions ")
-      .then((res) => {
-        const data = res.data.data;
-        setHistoryMentor(data);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  };
 
   return (
     <>

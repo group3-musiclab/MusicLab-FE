@@ -34,8 +34,8 @@ export default function HIstory() {
   return (
     <>
       <Layout>
-        <div className="w-full min-h-screen">
-          <div className="w-[85%] mx-auto mt-10 mb-5 pl-5">
+        <div className="overflow-auto w-full min-h-screen">
+          <div className="flex items-center sm:justify-center w-[85%] mx-auto mt-10 mb-5 pl-5">
             <h1 className="text-button font-bold text-2xl">Histori Belajar</h1>
           </div>
           <div className="overflow-x-auto ">

@@ -187,7 +187,7 @@ export default function EditStudent() {
                       Old Password
                     </span>
                   </label>
-                  <div className="center">
+                  <div className="center-login">
                     <div className="image">
                       <span
                         onClick={() => setOldPassword(!oldPassword)}
@@ -198,8 +198,9 @@ export default function EditStudent() {
 
                       <Input
                         id="input-oldpassword"
-                        className="input text-black font-poppins font-semibold"
+                        className="input-custom text-black font-poppins font-semibold"
                         placeholder="*******"
+                        minLength={3}
                         size={5}
                         name="text"
                         type={oldPassword ? "text" : "password"}
@@ -215,7 +216,7 @@ export default function EditStudent() {
                       New Password
                     </span>
                   </label>
-                  <div className="center">
+                  <div className="center-login">
                     <div className="image">
                       <span
                         onClick={() => setsetNewPassword(!newPassword)}
@@ -226,9 +227,10 @@ export default function EditStudent() {
 
                       <Input
                         id="input-newpasword"
-                        className="input text-black font-poppins font-semibold"
+                        className="input-custom text-black font-poppins font-semibold"
                         placeholder="*******"
                         size={5}
+                        minLength={3}
                         name="text"
                         type={newPassword ? "text" : "password"}
                         onChange={(e: any) =>
@@ -243,7 +245,7 @@ export default function EditStudent() {
                       Confirmation Password
                     </span>
                   </label>
-                  <div className="center">
+                  <div className="center-login">
                     <div className="image">
                       <span
                         onClick={() => setConfirmPassword(!confirmPassword)}
@@ -254,7 +256,7 @@ export default function EditStudent() {
 
                       <Input
                         id="input-confirmpassword"
-                        className="input text-black font-poppins font-semibold"
+                        className="input-custom text-black font-poppins font-semibold"
                         placeholder="*******"
                         size={5}
                         name="text"
@@ -289,10 +291,11 @@ export default function EditStudent() {
                       </label>
                       <Input
                         id="input-namalengkap"
-                        type="email"
+                        type="text"
+                        maxLength={50}
                         placeholder="marlina1998"
                         defaultValue={student?.name}
-                        className="input input-bordered w-10/12 lg:w-9/12 bg-bg-input border-slate-300 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered w-11/12 lg:w-9/12 bg-bg-input border-slate-300 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "name")
                         }
@@ -305,7 +308,7 @@ export default function EditStudent() {
                       </label>
                       <select
                         id="select-role"
-                        className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "sex")
                         }
@@ -331,9 +334,9 @@ export default function EditStudent() {
                         min={0}
                         step={1}
                         onKeyDown={blockInvalidChar}
-                        maxLength={12}
+                        max={12}
                         defaultValue={student?.phone}
-                        className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "phone")
                         }
@@ -346,9 +349,10 @@ export default function EditStudent() {
                       <Input
                         id="input-email"
                         type="email"
+                        maxLength={50}
                         defaultValue={student?.email}
                         placeholder="@test@gmail.com"
-                        className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "email")
                         }
@@ -362,7 +366,7 @@ export default function EditStudent() {
                       <textarea
                         id="input-address"
                         defaultValue={student?.address}
-                        className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-popins bg-white"
+                        className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-popins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "address")
                         }
@@ -372,7 +376,7 @@ export default function EditStudent() {
                       <Button
                         id="btn-back"
                         label="Kembali"
-                        className="bg-button w-[8rem] lg:w-[15rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
+                        className="bg-button w-[10rem] lg:w-[15rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
                         onClick={() => navigate("/ProfilStudent")}
                       />
                       <Button

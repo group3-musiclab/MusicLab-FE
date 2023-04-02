@@ -2,7 +2,6 @@ import React, { FC, useContext } from "react";
 import { ApiContext } from "../utils/context/contextApi";
 import { useNavigate, useParams } from "react-router";
 
-import image from "../assets/Drum.jpg";
 import ana from "../assets/Ana.webp";
 
 import facebook from "../assets/icon/Facebook 2.webp";
@@ -22,7 +21,12 @@ const Card = ({ image, name, price, onClick }: CardCourseProps) => {
   return (
     <div className="card-compact w-full card bg-white shadow-xl">
       <figure>
-        <img src={image} alt="Album" onClick={onClick} />
+        <img
+          src={image}
+          className="rounded-xl w-full lg:w-[12rem] h-[11em] max-w-xl object-fit object-fill"
+          alt="Album"
+          onClick={onClick}
+        />
       </figure>
       <div className="card-body text-black">
         <h2 className="card-title">{name}</h2>

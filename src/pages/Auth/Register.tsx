@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "../../utils/Swal";
 import withReactContent from "sweetalert2-react-content";
-import seePass from "../../assets/icon/see.webp";
 
 const background = {
   backgroundImage: `url(${Poster})`,
@@ -94,6 +93,7 @@ const Register = () => {
             <Input
               id="input-namalengkap"
               type="text"
+              maxLength={50}
               placeholder="Type here"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
               onChange={(e: any) => setNama(e.target.value)}
@@ -120,18 +120,19 @@ const Register = () => {
             <Input
               id="input-email"
               type="email"
+              maxLength={50}
               placeholder="Type here"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
               onChange={(e: any) => setEmail(e.target.value)}
             />
 
-            <div className="container">
+            <div className="container-form">
               <label className="label">
                 <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
                   Password
                 </span>
               </label>
-              <div className="center">
+              <div className="center-login">
                 <div className="image">
                   <span
                     onClick={() => setSeePassword(!seePassword)}
@@ -142,7 +143,7 @@ const Register = () => {
 
                   <Input
                     id="input-password"
-                    className="input"
+                    className="input-custom text-black font-poppins font-semibold"
                     placeholder="*******"
                     size={5}
                     name="text"
@@ -152,32 +153,9 @@ const Register = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
-                  Password
-                </span>
-              </label>
-              <div className="">
-                <Input
-                  id="input-password"
-                  type="text"
-                  placeholder="Search…"
-                  className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
-                />
-              </div>
-            </div>
-
-            <Input
-              id="input-password"
-              type={seePassword ? "text" : "password"}
-              placeholder="Type here"
-              className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
-              onChange={(e: any) => setPassword(e.target.value)}
-            /> */}
 
             {password.length < 8 ? (
-              <p className="text-red-600 ml-36 mt-5 font-normal">
+              <p className="text-red-600 ml-20 lg:ml-36 mt-5 font-normal">
                 Password yang anda masukan lemah
               </p>
             ) : (
@@ -185,6 +163,7 @@ const Register = () => {
                 Password yang anda masukan kuat
               </p>
             )}
+
             <div className="text-center w-full  mt-10">
               <Button
                 id="btn-register"
