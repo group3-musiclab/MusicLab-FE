@@ -69,6 +69,7 @@ const Ulasan = () => {
             </label>
             <textarea
               id="input-deskripsi"
+              maxLength={300}
               className="textarea textarea-bordered h-40 bg-bg-input border-slate-300 w-11/12 text-black font-semibold font-popins bg-white"
               onChange={(e: any) => setComment(e.target.value)}
               //
