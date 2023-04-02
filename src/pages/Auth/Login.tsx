@@ -49,7 +49,6 @@ const Login = () => {
       .post("/login", body)
       .then((res) => {
         const { data, message } = res.data;
-        console.log(data.token);
 
         setCookie("token", data.token, { path: "/" });
         setCookie("role", data.role, { path: "/" });
@@ -64,7 +63,6 @@ const Login = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
         const { message } = err.response.data;
 
         MySwal.fire({
@@ -94,7 +92,7 @@ const Login = () => {
             <form onSubmit={handleLogin}>
               <div className="form-control w-full mx-auto">
                 <label className="label mt-3">
-                  <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-8/12 lg:w-6/12">
+                  <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12">
                     Email
                   </span>
                 </label>
@@ -102,10 +100,10 @@ const Login = () => {
                   id="input-username"
                   type="email"
                   placeholder="marlina1998"
-                  className="input input-bordered w-8/12 lg:w-6/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
+                  className="input input-bordered w-10/12 lg:w-6/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
                   onChange={(e: any) => setEmail(e.target.value)}
                 />
-                <div className="container">
+                <div className="container-form">
                   <label className="label">
                     <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12 mt-5">
                       Password
@@ -122,7 +120,7 @@ const Login = () => {
 
                       <Input
                         id="input-password"
-                        className="input"
+                        className="input-custom text-black font-poppins font-semibold"
                         placeholder="*******"
                         size={5}
                         name="text"
@@ -132,15 +130,7 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
-                {/* {password.length < 8 ? (
-                  <p className="text-red-600 ml-44 mt-5 font-normal">
-                    Password yang anda masukan lemah
-                  </p>
-                ) : (
-                  <p className="text-green-600 ml-44 mt-5">
-                    Password yang anda masukan kuat
-                  </p>
-                )} */}
+
                 <label className="label">
                   <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12 mt-5">
                     Role
@@ -167,7 +157,8 @@ const Login = () => {
                   <Link to="/oauthLogin">
                     <img
                       src={SignInGoogle}
-                      className="w-3/12 h-4/6 mt-5 mx-auto"
+                      className=" w-6/12 lg:w-3/12 lg:h-4/6 mt-5 mx-auto"
+                      alt="oauthLogin"
                     />
                   </Link>
                 </div>

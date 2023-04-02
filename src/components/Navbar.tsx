@@ -10,8 +10,7 @@ import MainHomePage from "../pages/MainHomePage";
 const ReusableNav = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [color, setColor] = useState();
+
   const [cookie, setCookie, removeCookie] = useCookies(["token", "role", "id"]);
   const checkToken = cookie.token;
 
@@ -150,17 +149,14 @@ const ReusableNav = () => {
             </>
           ) : checkToken && checkRole === "Mentor" ? (
             <>
-              {" "}
-              <a
-                href={`profileTeacher`}
-                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
-              >
-                Profile
-              </a>
+              <Link to="/profileTeacher">
+                <p className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white">
+                  Profile
+                </p>
+              </Link>
             </>
           ) : (
             <>
-              {" "}
               <Link
                 to="/login"
                 className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
@@ -176,10 +172,9 @@ const ReusableNav = () => {
 };
 
 const NavMain = () => {
-  const user = useContext(ApiContext);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
+
   const [cookie, removeCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
 
@@ -234,7 +229,7 @@ const NavMain = () => {
               </li>
               <li>
                 <a
-                  className="text-black font-bold font-poppins"
+                  className="text-white font-bold font-poppins"
                   onClick={handleLogout}
                 >
                   Logout

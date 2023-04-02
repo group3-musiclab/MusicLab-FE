@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import ulasanImg from "../../assets/ulasan.webp";
 import Button from "../../components/Button";
@@ -11,6 +11,7 @@ const Ulasan = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const { id } = useParams();
+  const [countWord, setCountWord] = useState<number>();
 
   const [comment, setComment] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -74,6 +75,7 @@ const Ulasan = () => {
               onChange={(e: any) => setComment(e.target.value)}
               //
             ></textarea>
+
             <div>
               <h1 className="text-black font-poppins font-semibold text-2xl mt-10">
                 Rating

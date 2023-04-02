@@ -59,13 +59,11 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
         },
       });
       const data = response.data.data;
-      const add = {
+      const newChat = {
         ...data,
-        mentor_id,
-        student_id,
         chat: message,
       };
-      setChats([...chats, add]);
+      setChats([...chats, newChat]);
       setMessage("");
     } catch (error) {
       console.error(error);
@@ -95,6 +93,7 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
           <Input
             id="send"
             type="text"
+            maxLength={500}
             placeholder="Say something..."
             onChange={handleNewChat}
             value={message}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router";
+
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -14,7 +14,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "../../utils/Swal";
 import { InstrumenType } from "../../utils/types/Instrument";
 import { GenreType, Review, Shcedules } from "../../utils/types/Datatypes";
-import ModalChat from "../User/ModalChat";
+
 import Input from "../../components/Input";
 
 interface MentorClass {
@@ -28,26 +28,23 @@ const Profile = () => {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [user, SetUser] = useState<ProfileType>({});
-  const [inbox, setInbox] = useState<InboxType[]>([]);
 
   const [Isloading, SetIsLoading] = useState<boolean>(true);
   const [cookie, removeCookie] = useCookies(["token", "role", "id"]);
   const idUser = cookie.id;
-  console.log(idUser);
+
   const [genre, setGenre] = useState<GenreType[]>([]);
   const [id, setId] = useState<string>("1");
   const [day, setDay] = useState<string>("");
   const [start_time, setStartTime] = useState<string>("");
   const [end_time, setEndTime] = useState<string>("");
   const [schedules, setSchedules] = useState<Shcedules[]>([]);
-  // const { id } = useParams();
 
   const [course, setCourse] = useState<MentorClass[]>([]);
   const [comment, setComment] = useState<Review[]>([]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
-  const checkToken = cookie.token;
-  const [schduleId, setScheduleId] = useState<number>();
+
   const [totalPage, setTotalPage] = useState<number>(20);
   const [page, setPage] = useState<number>(1);
 
@@ -65,28 +62,34 @@ const Profile = () => {
     };
   }, []);
 
-  async function Profile() {
-    return await axios
+  function Profile() {
+    setIsLoading(true);
+    axios
       .get(`/mentors/${idUser}`)
       .then((response) => {
         const data = response.data.data;
         SetUser(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }
 
-  async function Instrument() {
-    return await axios
+  function Instrument() {
+    setIsLoading(true);
+    axios
       .get(`mentors/${idUser}/instrument`)
       .then((response) => {
-        const { data, message } = response.data;
-        SetInstrument(response.data.data);
+        const { data } = response.data;
+        SetInstrument(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }
 
   const handleDeleteAccount = () => {
@@ -107,7 +110,20 @@ const Profile = () => {
       })
       .then(() => {
         removeCookie("token", { path: "/" });
-        navigate("/");
+        removeCookie("role", { path: "/" });
+        removeCookie("id", { path: "/" });
+        localStorage.removeItem("responAvai");
+        localStorage.removeItem("role");
+        localStorage.removeItem("idMentor");
+        localStorage.removeItem("credentials");
+        localStorage.removeItem("responsPayment");
+        localStorage.removeItem("status");
+        localStorage.removeItem("idTransaction");
+        localStorage.removeItem("idClass");
+        localStorage.removeItem("availCheck");
+        localStorage.removeItem("availData");
+        localStorage.removeItem("ratingStatus");
+        localStorage.removeItem("token");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -128,9 +144,7 @@ const Profile = () => {
       start_time,
       end_time,
     };
-    // https://virtserver.swaggerhub.com/KHARISMAJANNUAR/MusicLab-API/1.0.0
 
-    // mentors/schedules
     axios
       .post("mentors/schedules", body)
       .then((res) => {
@@ -142,11 +156,9 @@ const Profile = () => {
           start_time,
           end_time,
         };
-        console.log(updateData);
 
         setSchedules((prevState) => [...prevState, updateData]);
 
-        console.log;
         MySwal.fire({
           title: "Succesfully Uploaded Schedule",
           text: message,
@@ -155,7 +167,6 @@ const Profile = () => {
         setDay("");
         setStartTime("");
         setEndTime("");
-        console.log(schedules);
       })
 
       .catch((err) => {
@@ -169,22 +180,18 @@ const Profile = () => {
       });
   };
 
-  // useEffect(() => {
-  //
-  //   }
-  // }, [day, start_time, end_time]);
-
   const fethcDataMentor = () => {
     SetIsLoading(true);
     axios
       .get(`mentors/${idUser}/schedules`)
       .then((res) => {
         setSchedules(res.data.data);
-        console.log(res.data.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleDeleteSchedule = (id: any) => {
@@ -198,12 +205,14 @@ const Profile = () => {
       });
   };
 
-  const fetchCourseMentor = async (page: number) => {
-    return await axios
+  const fetchCourseMentor = (page: number) => {
+    setIsLoading(true);
+    axios
       .get(`/mentors/${idUser}/class?limit=4&page=${page}`)
       .then((res) => {
         const data = res.data.data;
         setCourse(data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -225,16 +234,13 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchCommentMentor = () => {
-      SetIsLoading(true);
-
       axios
         .get(`/mentors/${idUser}/reviews`)
         .then((res) => {
           const data = res.data.data;
           setComment(data);
         })
-        .catch((err) => console.log(err))
-        .finally(() => SetIsLoading(false));
+        .catch((err) => console.log(err));
     };
 
     fetchCommentMentor();
@@ -244,7 +250,7 @@ const Profile = () => {
     <Layout>
       <div className="container mx-auto w-[80%] p-10">
         <div className="flex flex-row p-4">
-          <div className="text-black font-poppins">
+          <div className="w-[50%] text-black font-poppins ">
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
             <div className="font-semibold space-x-2">
@@ -264,7 +270,7 @@ const Profile = () => {
             </div>
             <div className="mt-7">
               <p className="font-semibold text-xl">my Course</p>
-              <div className="m-2 mt-7 grid grid-cols-2 space-x-5 gap-14">
+              <div className="m-2 mt-7 grid grid-cols-2 space-x-5 gap-7">
                 {course?.map((item, index) => {
                   return (
                     <Card
@@ -294,7 +300,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-10/12 flex items-end flex-col  ml-40">
+          <div className="flex-1 md:w-10/12 flex items-center flex-col  ml-40 ">
             <img src={user?.avatar} alt="photo" width={250} />
             <div className="text-black text-md font-semibold ml-16 sm:ml-10 mt-2">
               <p>
