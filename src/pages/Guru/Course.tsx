@@ -20,9 +20,10 @@ function DetailCourse() {
 
   const [cookie, setCookie] = useCookies(["token", "role", "id"]);
   const checkRole = cookie.role;
-
   const tax = 200000;
   const { id } = useParams();
+
+  localStorage.setItem("idClass", JSON.stringify(id));
 
   const navigate = useNavigate();
 
