@@ -124,11 +124,49 @@ const Register = () => {
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
               onChange={(e: any) => setEmail(e.target.value)}
             />
-            <label className="label">
-              <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
-                Password
-              </span>
-            </label>
+
+            <div className="container">
+              <label className="label">
+                <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
+                  Password
+                </span>
+              </label>
+              <div className="center">
+                <div className="image">
+                  <span
+                    onClick={() => setSeePassword(!seePassword)}
+                    className="ab"
+                  >
+                    <i className="fa fa-eye"></i>
+                  </span>
+
+                  <Input
+                    id="input-password"
+                    className="input"
+                    placeholder="*******"
+                    size={5}
+                    name="text"
+                    type={seePassword ? "text" : "password"}
+                    onChange={(e: any) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* <div className="form-control">
+              <label className="label">
+                <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
+                  Password
+                </span>
+              </label>
+              <div className="">
+                <Input
+                  id="input-password"
+                  type="text"
+                  placeholder="Search…"
+                  className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
+                />
+              </div>
+            </div>
 
             <Input
               id="input-password"
@@ -136,13 +174,8 @@ const Register = () => {
               placeholder="Type here"
               className="input input-bordered w-10/12 lg:w-7/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
               onChange={(e: any) => setPassword(e.target.value)}
-            />
-            <span
-              onClick={() => setSeePassword(!seePassword)}
-              className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-6  text-slate-400 font-semibold"
-            >
-              See Password
-            </span>
+            /> */}
+
             {password.length < 8 ? (
               <p className="text-red-600 ml-36 mt-5 font-normal">
                 Password yang anda masukan lemah

@@ -17,8 +17,10 @@ const ProfilStudent = () => {
   const checkToken = cookie.token;
   console.log(checkToken);
   const navigate = useNavigate();
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [student, setStudent] = useState<ProfileStudent>({});
+  const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
+
 
   const fetchDataStudent = async () => {
     return await axios
@@ -30,12 +32,11 @@ const ProfilStudent = () => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
     fetchDataStudent();
-
     return () => {
       fetchDataStudent();
     };

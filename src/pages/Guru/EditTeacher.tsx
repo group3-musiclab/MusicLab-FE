@@ -16,8 +16,9 @@ import Swal from "../../utils/Swal";
 import { blockInvalidChar } from "pages/User/EditStudent";
 
 export default function EditTeacher() {
-  const [seePassword, setSeePassword] = useState<boolean>(false);
-  const [confirmSeePassword, setConfirmSeePassword] = useState<boolean>(false);
+  const [oldPassword, setOldPassword] = useState<boolean>(false);
+  const [newPassword, setsetNewPassword] = useState<boolean>(false);
+  const [confirmPassword, setConfirmPassword] = useState<boolean>(false);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [cookie, setCookie] = useCookies(["token"]);
@@ -412,62 +413,91 @@ export default function EditTeacher() {
                   </h1>
 
                   <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
+                    <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
                       Old Password
                     </span>
                   </label>
-                  <Input
-                    id="input-oldpassword"
-                    type="text"
-                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                    onChange={(e: any) =>
-                      handleChangePassword(e.target.value, "old_password")
-                    }
-                  />
+                  <div className="center">
+                    <div className="image">
+                      <span
+                        onClick={() => setOldPassword(!oldPassword)}
+                        className="ab"
+                      >
+                        <i className="fa fa-eye"></i>
+                      </span>
+
+                      <Input
+                        id="input-oldpassword"
+                        className="input text-black font-poppins font-semibold"
+                        placeholder="*******"
+                        size={5}
+                        name="text"
+                        type={oldPassword ? "text" : "password"}
+                        onChange={(e: any) =>
+                          handleChangePassword(e.target.value, "old_password")
+                        }
+                      />
+                    </div>
+                  </div>
+
                   <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
+                    <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
                       New Password
                     </span>
                   </label>
-                  <Input
-                    id="input-newpassword"
-                    type={seePassword ? "text" : "password"}
-                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                    onChange={(e: any) =>
-                      handleChangePassword(e.target.value, "new_password")
-                    }
-                  />
-                  <span
-                    onClick={() => setSeePassword(!seePassword)}
-                    className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-2  text-slate-400 font-semibold"
-                  >
-                    See Password
-                  </span>
+                  <div className="center">
+                    <div className="image">
+                      <span
+                        onClick={() => setsetNewPassword(!newPassword)}
+                        className="ab"
+                      >
+                        <i className="fa fa-eye"></i>
+                      </span>
+
+                      <Input
+                        id="input-newpassword"
+                        className="input text-black font-poppins font-semibold"
+                        placeholder="*******"
+                        size={5}
+                        name="text"
+                        type={newPassword ? "text" : "password"}
+                        onChange={(e: any) =>
+                          handleChangePassword(e.target.value, "new_password")
+                        }
+                      />
+                    </div>
+                  </div>
 
                   <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-3 ">
-                      Confirm Password
+                    <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
+                      Confirmation Password
                     </span>
                   </label>
+                  <div className="center">
+                    <div className="image">
+                      <span
+                        onClick={() => setConfirmPassword(!confirmPassword)}
+                        className="ab"
+                      >
+                        <i className="fa fa-eye"></i>
+                      </span>
 
-                  <Input
-                    id="input-confirmpassword"
-                    type={confirmSeePassword ? "text" : "password"}
-                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                    onChange={(e: any) =>
-                      handleChangePassword(
-                        e.target.value,
-                        "confirmation_password"
-                      )
-                    }
-                  />
-                  <span
-                    onClick={() => setConfirmSeePassword(!confirmSeePassword)}
-                    className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-2  text-slate-400 font-semibold"
-                  >
-                    See Password
-                  </span>
-
+                      <Input
+                        id="input-confirmpassword"
+                        className="input text-black font-poppins font-semibold"
+                        placeholder="*******"
+                        size={5}
+                        name="text"
+                        type={confirmPassword ? "text" : "password"}
+                        onChange={(e: any) =>
+                          handleChangePassword(
+                            e.target.value,
+                            "confirmation_password"
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
                   <div className="w-full flex justify-center mt-10">
                     <Button
                       id="btn-updatepassword"
