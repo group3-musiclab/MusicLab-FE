@@ -45,6 +45,9 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
     setMessage(e.target.value);
   };
 
+  const isMessageValid = message.trim().length > 0 && message.trim().length <= 500;
+
+
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -59,30 +62,33 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
         },
       });
       const data = response.data.data;
-      const add = {
-        ...data,
-        mentor_id,
-        student_id,
-        chat: message,
-      };
-      setChats([...chats, add]);
+      // const add = {
+      //   ...data,
+      //   mentor_id,
+      //   student_id,
+      //   chat: message,
+      // };
+      setChats([...chats, data]);
       setMessage("");
+      ChatsList();
     } catch (error) {
       console.error(error);
     }
   };
+
+  
 
   return (
     <div className="rounded-lg bg-white p-10">
       <div className="flex flex-col justify-center">
         <div className="card-body">
           {chats?.map((item: ChatsType, index) => (
-            <div key={index} className="w-7/12">
+            <div key={index} className="w-full">
               <p className="text-black font-poppins font-semibold">
                 {item?.sender_name}
               </p>
-              <div className="bg-white border border-black w-full h-14 flex justify-start items-center p-6 rounded-xl">
-                <div className="text-black font-poppins">
+              <div className="bg-white border border-black  p-3 rounded-xl ml-3 break-words">
+                <div className="text-black font-poppins ">
                   <span>{item?.chat}</span>
                 </div>
               </div>
@@ -90,7 +96,8 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
           ))}
         </div>
       </div>
-      <div className="sticky">
+      <div className="sticky space-y-4">
+      {message.length > 500 && <p className="text-red-500 flex justify-end">max 500 characters</p>}
         <form onSubmit={handleSendMessage} className="flex flex-row space-x-3">
           <Input
             id="send"
@@ -99,14 +106,15 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
             onChange={handleNewChat}
             value={message}
             className="w-full h-14 text-black font-poppins bg-white border border-black rounded-xl p-3"
-          />
+            />
           <Button
             type="submit"
             label="Send"
             className="btn w-28 rounded-xl text-white"
-            disabled={!message.trim()}
-          />
+            disabled={!isMessageValid}
+            />
         </form>
+           
       </div>
     </div>
   );
