@@ -49,7 +49,6 @@ const Login = () => {
       .post("/login", body)
       .then((res) => {
         const { data, message } = res.data;
-        console.log(data.token);
 
         setCookie("token", data.token, { path: "/" });
         setCookie("role", data.role, { path: "/" });
@@ -64,7 +63,6 @@ const Login = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
         const { message } = err.response.data;
 
         MySwal.fire({
@@ -105,33 +103,34 @@ const Login = () => {
                   className="input input-bordered w-10/12 lg:w-6/12 border-slate-300  mx-auto text-black font-semibold font-poppins bg-white"
                   onChange={(e: any) => setEmail(e.target.value)}
                 />
-                <label className="label mt-5">
-                  <span className="label-text text-black  font-semibold text-lg font-poppins  mx-auto w-10/12 lg:w-6/12">
-                    Password
-                  </span>
-                </label>
-                <Input
-                  id="input-password"
-                  type={seePassword ? "text" : "password"}
-                  placeholder="********"
-                  className="input input-bordered  bg-bg-input border-slate-300  mx-auto w-10/12 lg:w-6/12 text-black font-semibold font-poppins bg-white"
-                  onChange={(e: any) => setPassword(e.target.value)}
-                />
-                <span
-                  onClick={() => setSeePassword(!seePassword)}
-                  className="-mt-9 lg:-mt-9 lg:w-[20%] ml-80 lg:ml-96 lg:pl-2  text-slate-400 font-semibold "
-                >
-                  See Password
-                </span>
-                {/* {password.length < 8 ? (
-                  <p className="text-red-600 ml-44 mt-5 font-normal">
-                    Password yang anda masukan lemah
-                  </p>
-                ) : (
-                  <p className="text-green-600 ml-44 mt-5">
-                    Password yang anda masukan kuat
-                  </p>
-                )} */}
+                <div className="container-form">
+                  <label className="label">
+                    <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12 mt-5">
+                      Password
+                    </span>
+                  </label>
+                  <div className="center-login">
+                    <div className="image">
+                      <span
+                        onClick={() => setSeePassword(!seePassword)}
+                        className="ab"
+                      >
+                        <i className="fa fa-eye"></i>
+                      </span>
+
+                      <Input
+                        id="input-password"
+                        className="input-custom text-black font-poppins font-semibold"
+                        placeholder="*******"
+                        size={5}
+                        name="text"
+                        type={seePassword ? "text" : "password"}
+                        onChange={(e: any) => setPassword(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <label className="label">
                   <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-6/12 mt-5">
                     Role
@@ -158,7 +157,8 @@ const Login = () => {
                   <Link to="/oauthLogin">
                     <img
                       src={SignInGoogle}
-                      className="w-3/12 h-4/6 mt-5 mx-auto"
+                      className=" w-6/12 lg:w-3/12 lg:h-4/6 mt-5 mx-auto"
+                      alt="oauthLogin"
                     />
                   </Link>
                 </div>

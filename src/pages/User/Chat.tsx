@@ -18,24 +18,23 @@ const Chat = () => {
   const checkToken = cookie.token;
 
   useEffect(() => {
+    const Chats = () => {
+      axios
+        .get(`/inbox`, {
+          headers: {
+            Authorization: `Bearer ${checkToken}`,
+          },
+        })
+        .then((res) => {
+          const data = res.data.data;
+          setInbox(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     Chats();
   }, []);
-
-  const Chats = () => {
-    axios
-      .get(`/inbox`, {
-        headers: {
-          Authorization: `Bearer ${checkToken}`,
-        },
-      })
-      .then((res) => {
-        const data = res.data.data;
-        setInbox(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const handleChatItemClick = (chat: InboxType) => {
     setSelectedChat(chat);

@@ -16,6 +16,9 @@ export const blockInvalidChar = (e: any) =>
   ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
 
 export default function EditStudent() {
+  const [oldPassword, setOldPassword] = useState<boolean>(false);
+  const [newPassword, setsetNewPassword] = useState<boolean>(false);
+  const [confirmPassword, setConfirmPassword] = useState<boolean>(false);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const [editStudent, setEditStudent] = useState<EditProfileStudent>({});
@@ -180,48 +183,93 @@ export default function EditStudent() {
                   </h1>
 
                   <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
+                    <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
                       Old Password
                     </span>
                   </label>
-                  <Input
-                    id="input-oldpassword"
-                    type="text"
-                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                    onChange={(e: any) =>
-                      handleChangePassword(e.target.value, "old_password")
-                    }
-                  />
+                  <div className="center-login">
+                    <div className="image">
+                      <span
+                        onClick={() => setOldPassword(!oldPassword)}
+                        className="ab"
+                      >
+                        <i className="fa fa-eye"></i>
+                      </span>
+
+                      <Input
+                        id="input-oldpassword"
+                        className="input-custom text-black font-poppins font-semibold"
+                        placeholder="*******"
+                        minLength={3}
+                        size={5}
+                        name="text"
+                        type={oldPassword ? "text" : "password"}
+                        onChange={(e: any) =>
+                          handleChangePassword(e.target.value, "old_password")
+                        }
+                      />
+                    </div>
+                  </div>
+
                   <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
+                    <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
                       New Password
                     </span>
                   </label>
-                  <Input
-                    id="input-newpassword"
-                    type="password"
-                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                    onChange={(e: any) =>
-                      handleChangePassword(e.target.value, "new_password")
-                    }
-                  />
+                  <div className="center-login">
+                    <div className="image">
+                      <span
+                        onClick={() => setsetNewPassword(!newPassword)}
+                        className="ab"
+                      >
+                        <i className="fa fa-eye"></i>
+                      </span>
+
+                      <Input
+                        id="input-newpasword"
+                        className="input-custom text-black font-poppins font-semibold"
+                        placeholder="*******"
+                        size={5}
+                        minLength={3}
+                        name="text"
+                        type={newPassword ? "text" : "password"}
+                        onChange={(e: any) =>
+                          handleChangePassword(e.target.value, "new_password")
+                        }
+                      />
+                    </div>
+                  </div>
+
                   <label className="label">
-                    <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-full lg:max-w-xs flex  bg-white mx-auto mt-8 ">
-                      Confirm Password
+                    <span className="label-text text-black font-semibold text-lg font-poppins mx-auto w-10/12 lg:w-7/12 mt-5">
+                      Confirmation Password
                     </span>
                   </label>
+                  <div className="center-login">
+                    <div className="image">
+                      <span
+                        onClick={() => setConfirmPassword(!confirmPassword)}
+                        className="ab"
+                      >
+                        <i className="fa fa-eye"></i>
+                      </span>
 
-                  <Input
-                    id="input-confirmpassword"
-                    type="password"
-                    className="input input-bordered   border-slate-300  w-10/12 lg:w-full lg:max-w-xs flex justify-center bg-white mx-auto  text-black font-semibold font-poppins"
-                    onChange={(e: any) =>
-                      handleChangePassword(
-                        e.target.value,
-                        "confirmation_password"
-                      )
-                    }
-                  />
+                      <Input
+                        id="input-confirmpassword"
+                        className="input-custom text-black font-poppins font-semibold"
+                        placeholder="*******"
+                        size={5}
+                        name="text"
+                        type={confirmPassword ? "text" : "password"}
+                        onChange={(e: any) =>
+                          handleChangePassword(
+                            e.target.value,
+                            "confirmation_password"
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
 
                   <div className="w-full flex justify-center mt-10">
                     <Button
@@ -243,10 +291,11 @@ export default function EditStudent() {
                       </label>
                       <Input
                         id="input-namalengkap"
-                        type="email"
+                        type="text"
+                        maxLength={50}
                         placeholder="marlina1998"
                         defaultValue={student?.name}
-                        className="input input-bordered w-10/12 lg:w-9/12 bg-bg-input border-slate-300 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered w-11/12 lg:w-9/12 bg-bg-input border-slate-300 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "name")
                         }
@@ -259,7 +308,7 @@ export default function EditStudent() {
                       </label>
                       <select
                         id="select-role"
-                        className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "sex")
                         }
@@ -285,9 +334,9 @@ export default function EditStudent() {
                         min={0}
                         step={1}
                         onKeyDown={blockInvalidChar}
-                        maxLength={12}
+                        max={12}
                         defaultValue={student?.phone}
-                        className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "phone")
                         }
@@ -300,9 +349,10 @@ export default function EditStudent() {
                       <Input
                         id="input-email"
                         type="email"
+                        maxLength={50}
                         defaultValue={student?.email}
                         placeholder="@test@gmail.com"
-                        className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
+                        className="input input-bordered  bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "email")
                         }
@@ -316,7 +366,7 @@ export default function EditStudent() {
                       <textarea
                         id="input-address"
                         defaultValue={student?.address}
-                        className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-popins bg-white"
+                        className="textarea textarea-bordered h-32 bg-bg-input border-slate-300 w-11/12 lg:w-9/12 text-black font-semibold font-popins bg-white"
                         onChange={(e: any) =>
                           handleChange(e.target.value, "address")
                         }
@@ -326,7 +376,7 @@ export default function EditStudent() {
                       <Button
                         id="btn-back"
                         label="Kembali"
-                        className="bg-button w-[8rem] lg:w-[15rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
+                        className="bg-button w-[10rem] lg:w-[15rem]  rounded-lg py-3 text-white font-poppins font-semibold disabled:bg-slate-400 disabled:cursor-not-allowed hover:cursor-pointer hover:bg-blue-900"
                         onClick={() => navigate("/ProfilStudent")}
                       />
                       <Button

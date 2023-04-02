@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
 
-import images from "../../assets/Ana.webp";
 import { ProfileStudent } from "../../utils/types/Datatypes";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -14,31 +13,28 @@ import { useCookies } from "react-cookie";
 const ProfilStudent = () => {
   const MySwal = withReactContent(Swal);
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
-  const checkToken = cookie.token;
-  console.log(checkToken);
+
   const navigate = useNavigate();
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [student, setStudent] = useState<ProfileStudent>({});
 
-  const fetchDataStudent = async () => {
-    return await axios
-      .get("students/profile")
-      .then((res) => {
-        const { data } = res.data;
-        setStudent(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => setLoading(false));
-  };
-
   useEffect(() => {
-    fetchDataStudent();
-
-    return () => {
-      fetchDataStudent();
+    const fetchDataStudent = () => {
+      setIsLoading(true);
+      axios
+        .get("students/profile")
+        .then((res) => {
+          const { data } = res.data;
+          setStudent(data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setIsLoading(false));
     };
+
+    fetchDataStudent();
   }, []);
 
   const handleDeleteAccount = () => {
@@ -74,8 +70,8 @@ const ProfilStudent = () => {
   return (
     <Layout>
       <div className="container mx-auto p-10">
-        <div className="flex flex-row justify-center space-x-8 p-6">
-          <div className="card w-96 sm:h-full shadow-black shadow-sm mt-7">
+        <div className="flex flex-col lg:flex-row justify-center space-x-8 p-6">
+          <div className="card w-[18rem] mx-auto lg:w-96 sm:h-full shadow-black shadow-sm lg:mt-7">
             <div className="card-body mx-auto">
               <div className="flex mx-auto">
                 <img
@@ -105,13 +101,13 @@ const ProfilStudent = () => {
               </div>
             </div>
           </div>
-          <div className="flex p-7 m-2">
+          <div className="flex p-6 lg:p-7 lg:m-2">
             <div className="flex flex-col">
-              <p className="text-5xl font-poppins text-black">
+              <p className=" text-4xl lg:text-5xl font-poppins text-black">
                 Hi, {student.name}
               </p>
-              <div className="mt-7 p-3 space-y-3 ">
-                <p className="text-3xl font-poppins text-black font-bold">
+              <div className="mt-7 lg:p-3 space-y-3 ">
+                <p className="text-2xl lg:ml-0 lg:text-3xl font-poppins text-black font-bold">
                   Contact me
                 </p>
                 <div className="ml-5 text-lg">
@@ -127,7 +123,7 @@ const ProfilStudent = () => {
                 </div>
                 <Button
                   label="Jadwal"
-                  className="btn border-none rounded-xl w-3/6 bg-[#3A2BE8] text-white font-semibold mt-5"
+                  className="btn border-none rounded-xl w-5/6 lg:w-3/6 bg-[#3A2BE8] text-white font-semibold mt-5"
                   onClick={() => navigate("/historyStudent")}
                 />
               </div>

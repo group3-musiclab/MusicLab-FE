@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import withReactContent from "sweetalert2-react-content";
@@ -10,16 +10,16 @@ import MainHomePage from "../pages/MainHomePage";
 const ReusableNav = () => {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [color, setColor] = useState();
-  const [cookie, setCookie, removeCookie] = useCookies(["token", "role"]);
+
+  const [cookie, setCookie, removeCookie] = useCookies(["token", "role", "id"]);
   const checkToken = cookie.token;
 
   const checkRole = cookie.role;
 
-  const handleLogout = () => {
+  const clearData = () => {
     removeCookie("token", { path: "/" });
     removeCookie("role", { path: "/" });
+    removeCookie("id", { path: "/" });
     localStorage.removeItem("responAvai");
     localStorage.removeItem("role");
     localStorage.removeItem("idMentor");
@@ -32,13 +32,18 @@ const ReusableNav = () => {
     localStorage.removeItem("availData");
     localStorage.removeItem("ratingStatus");
     localStorage.removeItem("token");
+  };
+
+  const handleLogout = () => {
     navigate("/login");
     MySwal.fire({
       title: "See Ya",
       text: "You have been Logged out",
       showCancelButton: false,
     });
+    clearData();
   };
+
   return (
     <>
       <div className="navbar mx-auto p-8">
@@ -144,17 +149,14 @@ const ReusableNav = () => {
             </>
           ) : checkToken && checkRole === "Mentor" ? (
             <>
-              {" "}
-              <a
-                href={`profileTeacher`}
-                className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
-              >
-                Profile
-              </a>
+              <Link to="/profileTeacher">
+                <p className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white">
+                  Profile
+                </p>
+              </Link>
             </>
           ) : (
             <>
-              {" "}
               <Link
                 to="/login"
                 className="btn bg-white text-black font-poppins font-bold hover:bg-black hover:text-white"
@@ -170,10 +172,9 @@ const ReusableNav = () => {
 };
 
 const NavMain = () => {
-  const user = useContext(ApiContext);
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
+
   const [cookie, removeCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
 
@@ -228,7 +229,7 @@ const NavMain = () => {
               </li>
               <li>
                 <a
-                  className="text-black font-bold font-poppins"
+                  className="text-white font-bold font-poppins"
                   onClick={handleLogout}
                 >
                   Logout

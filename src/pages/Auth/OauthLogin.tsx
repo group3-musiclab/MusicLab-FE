@@ -26,7 +26,6 @@ export default function OauthLogin() {
   const login = useGoogleLogin({
     onSuccess: (tokenResponse: any) => {
       setTokenOauth(tokenResponse.access_token);
-      console.log(tokenResponse.access_token);
     },
   });
 
@@ -41,7 +40,7 @@ export default function OauthLogin() {
       .post("/login/oauth", body)
       .then((res) => {
         const { data, message } = res.data;
-        console.log(data.token);
+
         setCookie("role", data.role, { path: "/" });
         setCookie("token", data.token, { path: "/" });
         setCookie("id", data.id, { path: "/" });
@@ -55,7 +54,6 @@ export default function OauthLogin() {
       })
       .catch((err) => {
         const { message } = err.response.data;
-        console.log(message);
 
         MySwal.fire({
           title: "Please Using Valid Email Account",

@@ -102,6 +102,7 @@ const ModalChat: React.FC<Props> = ({ mentor_id, student_id }) => {
           <Input
             id="send"
             type="text"
+            maxLength={500}
             placeholder="Say something..."
             onChange={handleNewChat}
             value={message}

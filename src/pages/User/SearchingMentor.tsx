@@ -7,13 +7,17 @@ import Pic1 from "../../assets/Anade.webp";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { AllMentor } from "../../utils/types/Datatypes";
+import { AllMentor, GenreType, Instrument } from "../../utils/types/Datatypes";
 import axios from "axios";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router";
 
 const SearchingMentor = () => {
   const [mentor, setMentor] = useState<AllMentor[]>([]);
+  const [genre, setGenre] = useState<string>("");
+  const [instrument, setInstrument] = useState<string>("");
+  const [rating, setRating] = useState<number>();
+  const [qualification, setQualification] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
@@ -26,7 +30,7 @@ const SearchingMentor = () => {
   const fetchDataMentors = (page: number) => {
     setLoading(true);
     axios
-      .get(`mentors?limit=6&page=${page}`)
+      .get(`mentors?limit=12&page=${page}`)
       .then((res) => {
         const { data } = res.data;
         setMentor(data);
@@ -54,50 +58,50 @@ const SearchingMentor = () => {
   }, []);
 
   const handleFilterInstruments = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterInstrument(e.target.value);
+    // setFilterInstrument(e.target.value);
+    setFilterInstrument;
   };
 
   const handleFilterGenres = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterGenres(e.target.value);
-  }
+  };
 
-  const filterMentors = mentor.filter(
-    (item) => 
-    item.name?.toLowerCase().includes(searchText.toLowerCase()) &&
-    (filterGenres === "" || item.name === filterGenres) &&
-    (filterInstrument === "" || item.name === filterInstrument)
-  )
+  useEffect(() => {
+    setFiltered(
+      mentor.filter((item) =>
+        item.name?.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+  }, [filtered]);
 
   return (
     <Layout>
       <div className="container mx-auto p-9">
-        <div className="flex flex-row space-x-32 p-7">
+        <div className="flex flex-col lg:flex-row space-x-32 p-7">
           <div className="mt-10">
             <div className="flex text-black">
               <p className="font-bold text-black text-2xl">Filter</p>
               <MdKeyboardArrowRight size={25} className="mt-1" />
             </div>
             <div className="flex flex-col space-y-7 mt-7">
-              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
-              value={filterGenres}
-              onChange={handleFilterGenres}
+              <select
+                className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
+                value={filterGenres}
+                onChange={handleFilterGenres}
               >
-                <option defaultValue={""}>
-                  FIlter Genre
-                </option>
+                <option defaultValue={""}>FIlter Genre</option>
                 <option value="Jazz">Jazz</option>
                 <option value="Pop">Pop</option>
                 <option value="Rock">Rock</option>
                 <option value="Blues">Blues</option>
                 <option value="Classic">Classic</option>
               </select>
-              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
-              value={filterInstrument}
-              onChange={handleFilterInstruments}
+              <select
+                className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
+                value={filterInstrument}
+                onChange={handleFilterInstruments}
               >
-                <option defaultValue={""}>
-                  FIlter Instrument
-                </option>
+                <option defaultValue={""}>FIlter Instrument</option>
                 <option value="Vocal">Vocal</option>
                 <option value="Piano">Piano</option>
                 <option value="Guitar">Guitar</option>
@@ -108,23 +112,17 @@ const SearchingMentor = () => {
                 <option value="Violin">Violin</option>
               </select>
               <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                <option defaultValue={""}>
-                  FIlter Price
-                </option>
+                <option defaultValue={""}>FIlter Price</option>
                 <option value="">Han Solo</option>
                 <option value="">Greedo</option>
               </select>
               <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                <option defaultValue={""}>
-                  FIlter Rating
-                </option>
+                <option defaultValue={""}>FIlter Rating</option>
                 <option value="">Han Solo</option>
                 <option value="">Greedo</option>
               </select>
               <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                <option defaultValue={""}>
-                  FIlter Kualifikasi
-                </option>
+                <option defaultValue={""}>FIlter Kualifikasi</option>
                 <option>Han Solo</option>
                 <option>Greedo</option>
               </select>
@@ -146,7 +144,7 @@ const SearchingMentor = () => {
             <div className="card mt-6">
               <div className="m-5 grid grid-cols-2 gap-3">
                 {searchText !== ""
-                  ? filterMentors?.map((data, index) => (
+                  ? filtered?.map((data, index) => (
                       <>
                         <CardMentor
                           key={index}
