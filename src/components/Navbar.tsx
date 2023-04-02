@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import withReactContent from "sweetalert2-react-content";
@@ -12,14 +12,15 @@ const ReusableNav = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [color, setColor] = useState();
-  const [cookie, setCookie, removeCookie] = useCookies(["token", "role"]);
+  const [cookie, setCookie, removeCookie] = useCookies(["token", "role", "id"]);
   const checkToken = cookie.token;
 
   const checkRole = cookie.role;
 
-  const handleLogout = () => {
+  const clearData = () => {
     removeCookie("token", { path: "/" });
     removeCookie("role", { path: "/" });
+    removeCookie("id", { path: "/" });
     localStorage.removeItem("responAvai");
     localStorage.removeItem("role");
     localStorage.removeItem("idMentor");
@@ -32,13 +33,18 @@ const ReusableNav = () => {
     localStorage.removeItem("availData");
     localStorage.removeItem("ratingStatus");
     localStorage.removeItem("token");
+  };
+
+  const handleLogout = () => {
     navigate("/login");
     MySwal.fire({
       title: "See Ya",
       text: "You have been Logged out",
       showCancelButton: false,
     });
+    clearData();
   };
+
   return (
     <>
       <div className="navbar mx-auto p-8">
