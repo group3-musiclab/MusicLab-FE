@@ -7,6 +7,7 @@ export interface InboxType {
 }
 
 export interface ChatsType {
+    sender_id: any;
     id: any;
     sender_name: string;
     chat: string;
