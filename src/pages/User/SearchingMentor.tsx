@@ -150,6 +150,7 @@ const SearchingMentor = () => {
                             name={data?.name}
                             desc={data?.about}
                             instagram={data?.instagram}
+                            instrument_name={data?.instrument_name}
                             rating={data?.rating}
                             onClick={() =>
                               navigate(`/ProfileDetail/${data.id}`)
@@ -167,6 +168,7 @@ const SearchingMentor = () => {
                             name={item?.name}
                             desc={item?.about}
                             instagram={item?.instagram}
+                            instrument_name={item?.instrument_name}
                             rating={item?.rating}
                             onClick={() =>
                               navigate(`/ProfileDetail/${item.id}`)
