@@ -147,16 +147,15 @@ const Profile = () => {
       .post("mentors/schedules", body)
       .then((res) => {
         const { data, message } = res.data;
-        setSchedules([...schedules, data]);
 
-        // const updateData = {
-        //   ...data,
-        //   day,
-        //   start_time,
-        //   end_time,
-        // };
+        const updateData = {
+          ...data,
+          day,
+          start_time,
+          end_time,
+        };
 
-        // setSchedules((prevState) => [...prevState, updateData]);
+        setSchedules((prevState) => [...prevState, updateData]);
 
         MySwal.fire({
           title: "Succesfully Uploaded Schedule",
