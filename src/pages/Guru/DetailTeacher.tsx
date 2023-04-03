@@ -40,8 +40,6 @@ const DetailTeacher = () => {
   const [student, setStudent] = useState<ProfileStudent>({});
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
-
-  const [genre, setGenre] = useState<GenreType[]>([]);
   // console.log(`id=${idUsers} || userId=${user.id}`);
   const [day, setDay] = useState<string>("");
   const [start_time, setStartTime] = useState<string>("");
@@ -56,11 +54,13 @@ const DetailTeacher = () => {
   const [comment, setComment] = useState<Review[]>([]);
 
   const [instrument, SetInstrument] = useState<InstrumenType[]>([]);
+  const [genres, setGenres] = useState<GenreType[]>([]);
   const checkToken = cookie.token;
   const [schduleId, setScheduleId] = useState<number>();
   useEffect(() => {
     Profile();
     Instrument();
+    Genres();
     fetchDataStudent();
 
     return () => {
@@ -102,7 +102,7 @@ const DetailTeacher = () => {
 
   function Instrument() {
     axios
-      .get(`mentors/instrument`)
+      .get(`/mentors/${id}/instruments`)
       .then((response) => {
         const datas = response.data.data;
         SetInstrument(datas);
@@ -110,7 +110,19 @@ const DetailTeacher = () => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
+
+  function Genres() {
+    axios
+    .get(`/mentors/${id}/genres`)
+    .then((response) => {
+      const datas = response.data.data;
+      setGenres(datas);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  };
 
   const handleDeleteAccount = () => {
     MySwal.fire({
@@ -237,8 +249,17 @@ const DetailTeacher = () => {
             <p className="text-3xl font-semibold opacity-80">Teacher</p>
             <p className="text-5xl font-bold">{user?.name}</p>
             <div className="font-semibold space-x-2">
-              {instrument.map((item, index) => (
-                <a key={index} className="text-black">
+              <p>Instrument :</p>
+              {instrument?.map((item, index) => (
+                <a key={index} className="text-black opacity-80">
+                  {item.name}
+                </a>
+              ))}
+            </div>
+            <div className="font-semibold space-x-2">
+            <p>Genres :</p>
+              {genres?.map((item, index) => (
+                <a key={index} className="text-black opacity-80">
                   {item.name}
                 </a>
               ))}
