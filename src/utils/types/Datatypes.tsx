@@ -21,6 +21,7 @@ export interface AllMentor {
   email?: string;
   instagram?: string;
   rating?: any;
+  instrument_name?: string;
 }
 
 export interface EditPassword {
