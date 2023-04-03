@@ -58,12 +58,10 @@ const Profile = () => {
       Profile();
       Instrument();
       fethcDataMentor();
-      fetchCourseMentor(1);
     };
   }, []);
 
   function Profile() {
-    setIsLoading(true);
     axios
       .get(`/mentors/${idUser}`)
       .then((response) => {

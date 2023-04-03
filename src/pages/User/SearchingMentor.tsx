@@ -73,19 +73,6 @@ const SearchingMentor = () => {
     console.log(searchText);
   }, [searchText]);
 
-  /*
-  
-  "id": 5,
-            "avatar": "https://alif-s3.s3.ap-southeast-1.amazonaws.com/B456sCzMAGf2pBh3vD1nX.png",
-            "name": "fikri",
-            "instrument_name": "",
-            "about": "hi my name fikri",
-            "instagram": "",
-            "rating": 5
-  
-  
-  */
-
   return (
     <Layout>
       <div className="container mx-auto p-9">

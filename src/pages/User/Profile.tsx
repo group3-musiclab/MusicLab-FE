@@ -13,27 +13,29 @@ import { useCookies } from "react-cookie";
 const ProfilStudent = () => {
   const MySwal = withReactContent(Swal);
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+  const token = localStorage.getItem("token");
+  const checkToken = cookie.token;
 
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [student, setStudent] = useState<ProfileStudent>({});
 
   useEffect(() => {
-    const fetchDataStudent = () => {
-      setIsLoading(true);
-      axios
-        .get("students/profile")
+    const fetchDataStudent = async () => {
+      await axios
+        .get("students/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           const { data } = res.data;
           setStudent(data);
-          setIsLoading(false);
         })
         .catch((err) => {
           console.log(err);
-        })
-        .finally(() => setIsLoading(false));
+        });
     };
-
     fetchDataStudent();
   }, []);
 

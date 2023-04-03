@@ -32,6 +32,7 @@ const ReusableNav = () => {
     localStorage.removeItem("availData");
     localStorage.removeItem("ratingStatus");
     localStorage.removeItem("token");
+    localStorage.removeItem("create_event_response");
   };
 
   const handleLogout = () => {
