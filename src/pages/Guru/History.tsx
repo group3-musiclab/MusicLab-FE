@@ -18,22 +18,37 @@ export default function History() {
   const checkToken = cookie.token;
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(20);
 
   useEffect(() => {
-    const fetchDataHistoryMentor = () => {
-      setLoading(true);
-
-      axios
-        .get("/mentors/transactions ")
-        .then((res) => {
-          const data = res.data.data;
-          setHistoryMentor(data);
-        })
-        .catch((err) => console.log(err))
-        .finally(() => setLoading(false));
-    };
-    fetchDataHistoryMentor();
+    fetchDataHistoryMentor(1);
   }, []);
+
+  const fetchDataHistoryMentor = (page: number) => {
+    setLoading(true);
+
+    axios
+      .get(`/mentors/transactions?limit=15&page=${page}`)
+      .then((res) => {
+        const data = res.data.data;
+        setHistoryMentor(data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  };
+
+  function nextPage() {
+    const newPage = page + 1;
+    setPage(newPage);
+    fetchDataHistoryMentor(newPage);
+  }
+
+  function prevPage() {
+    const newPage = page - 1;
+    setPage(newPage);
+    fetchDataHistoryMentor(newPage);
+  }
 
   return (
     <>
@@ -113,6 +128,20 @@ export default function History() {
             </>
           )}
 
+          <div className="flex flex-row justify-end mr-28 space-x-8">
+            <Button
+              label="Prev"
+              className="btn border-none w-full bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+              onClick={() => prevPage()}
+              disabled={page === 1}
+            />
+            <p className="text-xl text-[#3A2BE8] mt-2">{page}</p>
+            <Button
+              label="Next"
+              className="btn border-none w-full bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+              onClick={() => nextPage()}
+            />
+          </div>
           <div className="flex w-[93%] justify-end">
             <Button
               id="btn-kembali"
