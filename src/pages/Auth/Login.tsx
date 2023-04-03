@@ -49,7 +49,6 @@ const Login = () => {
       .post("/login", body)
       .then((res) => {
         const { data, message } = res.data;
-
         setCookie("token", data.token, { path: "/" });
         setCookie("role", data.role, { path: "/" });
         setCookie("id", data.id, { path: "/" });
