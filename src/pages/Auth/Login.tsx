@@ -51,6 +51,7 @@ const Login = () => {
         const { data, message } = res.data;
 
         setCookie("token", data.token, { path: "/" });
+        localStorage.setItem("token", JSON.stringify(data.token));
         setCookie("role", data.role, { path: "/" });
         setCookie("id", data.id, { path: "/" });
 
