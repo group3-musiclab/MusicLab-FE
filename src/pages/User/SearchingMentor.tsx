@@ -24,8 +24,8 @@ const SearchingMentor = () => {
   const [totalPage, setTotalPage] = useState<number>(20);
   const [searchText, setSearchText] = useState<string>("");
   const [filtered, setFiltered] = useState<AllMentor[]>([]);
-  const [filterGenres, setFilterGenres] = useState("");
-  const [filterInstrument, setFilterInstrument] = useState("");
+  const [filterRating, setFilterRating] = useState<AllMentor[]>([]);
+  const [filterInstrument, setFilterInstrument] = useState<AllMentor[]>([]);
 
   const fetchDataMentors = (page: number) => {
     setLoading(true);
@@ -57,22 +57,34 @@ const SearchingMentor = () => {
     fetchDataMentors(1);
   }, []);
 
-  const handleFilterInstruments = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // setFilterInstrument(e.target.value);
-    setFilterInstrument;
-  };
-
-  const handleFilterGenres = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterGenres(e.target.value);
-  };
-
   useEffect(() => {
     setFiltered(
       mentor?.filter((item) =>
         item.name?.toLowerCase().includes(searchText.toLowerCase())
       )
     );
-  }, [filtered]);
+
+    setFilterInstrument(
+      mentor?.filter((item) =>
+        item.instrument_name?.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+
+    console.log(searchText);
+  }, [searchText]);
+
+  /*
+  
+  "id": 5,
+            "avatar": "https://alif-s3.s3.ap-southeast-1.amazonaws.com/B456sCzMAGf2pBh3vD1nX.png",
+            "name": "fikri",
+            "instrument_name": "",
+            "about": "hi my name fikri",
+            "instagram": "",
+            "rating": 5
+  
+  
+  */
 
   return (
     <Layout>
@@ -86,20 +98,7 @@ const SearchingMentor = () => {
             <div className="flex flex-col space-y-7 mt-7">
               <select
                 className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
-                value={filterGenres}
-                onChange={handleFilterGenres}
-              >
-                <option defaultValue={""}>FIlter Genre</option>
-                <option value="Jazz">Jazz</option>
-                <option value="Pop">Pop</option>
-                <option value="Rock">Rock</option>
-                <option value="Blues">Blues</option>
-                <option value="Classic">Classic</option>
-              </select>
-              <select
-                className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
-                value={filterInstrument}
-                onChange={handleFilterInstruments}
+                onChange={(e: any) => setSearchText(e.target.value)}
               >
                 <option defaultValue={""}>FIlter Instrument</option>
                 <option value="Vocal">Vocal</option>
@@ -111,20 +110,17 @@ const SearchingMentor = () => {
                 <option value="Trombon">Trombon</option>
                 <option value="Violin">Violin</option>
               </select>
-              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                <option defaultValue={""}>FIlter Price</option>
-                <option value="">Han Solo</option>
-                <option value="">Greedo</option>
-              </select>
-              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
+
+              <select
+                className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
+                onChange={(e: any) => setSearchText(e.target.value)}
+              >
                 <option defaultValue={""}>FIlter Rating</option>
-                <option value="">Han Solo</option>
-                <option value="">Greedo</option>
-              </select>
-              <select className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins">
-                <option defaultValue={""}>FIlter Kualifikasi</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
               </select>
             </div>
           </div>
@@ -147,7 +143,7 @@ const SearchingMentor = () => {
                   ? filtered?.map((data, index) => (
                       <>
                         <CardMentor
-                          key={index}
+                          key={index + 1}
                           image={data?.avatar}
                           name={data?.name}
                           desc={data?.about}
@@ -157,11 +153,29 @@ const SearchingMentor = () => {
                         />
                       </>
                     ))
+                  : searchText !== ""
+                  ? filterInstrument?.map((data, index) => {
+                      return (
+                        <>
+                          <CardMentor
+                            key={index + 1}
+                            image={data?.avatar}
+                            name={data?.name}
+                            desc={data?.about}
+                            instagram={data?.instagram}
+                            rating={data?.rating}
+                            onClick={() =>
+                              navigate(`/ProfileDetail/${data.id}`)
+                            }
+                          />
+                        </>
+                      );
+                    })
                   : mentor?.map((item, index) => {
                       return (
                         <>
                           <CardMentor
-                            key={index}
+                            key={index + 1}
                             image={item?.avatar}
                             name={item?.name}
                             desc={item?.about}

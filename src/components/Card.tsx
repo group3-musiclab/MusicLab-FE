@@ -85,7 +85,6 @@ const CardMentor: FC<CardMentorProps> = ({
   rating,
   onClick,
 }) => {
-  const navigate = useNavigate();
   const user = useContext(ApiContext);
   const { id } = useParams();
   return (
@@ -109,11 +108,6 @@ const CardMentor: FC<CardMentorProps> = ({
             {desc}
           </p>
           <div className="flex flex-row">
-            <div className="flex-1">
-              <a href={instagram} target="_blank" rel="noreferrer">
-                <Button label="Instagram" />
-              </a>
-            </div>
             <div className="flex-1">{rating}</div>
           </div>
         </div>
