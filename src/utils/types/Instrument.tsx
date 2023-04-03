@@ -1,4 +1,4 @@
 export interface InstrumenType {
-    id: any;
-    name: string;
+    id?: any;
+    name?: string;
 }
