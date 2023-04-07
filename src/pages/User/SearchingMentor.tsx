@@ -69,8 +69,6 @@ const SearchingMentor = () => {
         item.instrument_name?.toLowerCase().includes(searchText.toLowerCase())
       )
     );
-
-    console.log(searchText);
   }, [searchText]);
 
   return (

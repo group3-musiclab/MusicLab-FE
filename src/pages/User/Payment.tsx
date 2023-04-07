@@ -34,7 +34,6 @@ const Payment = () => {
   const availData = localStorage.getItem("responAvai");
 
   const [urlPayment, setUrlPayment] = useState<any>("");
-  console.log(urlPayment);
 
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
@@ -110,8 +109,6 @@ const Payment = () => {
         const { message } = err.response.data;
         setAvailCheck(message);
 
-        console.log(availCheck);
-        console.log(message);
         MySwal.fire({
           title: "Your Choosen Date is Unavailable, Pick Another Date",
           text: message,
@@ -278,13 +275,6 @@ const Payment = () => {
                   >
                     Proceed to Payment
                   </a>
-                  {/* <Button
-                    label="Proceed to Payment"
-                    role="link"
-                    className="btn bg-[#3A2BE8] mt-4"
-                    // onClick={() => (window.location.href = urlPayment)}
-                    onClick={() => openInNewTab(urlPayment)}
-                  /> */}
                 </>
               )}
             </div>

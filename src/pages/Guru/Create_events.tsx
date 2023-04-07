@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Button from "components/Button";
-import { useCookies } from "react-cookie";
+
 import calendar from "../../assets/icon/calendar.webp";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "utils/Swal";
 
 export default function Create_events() {
   const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
   const [status, setStatus] = useState<string>("");
   const { id } = useParams();
 
@@ -16,7 +19,6 @@ export default function Create_events() {
   const transaction_id = JSON.parse(
     localStorage.getItem("idTransaction") || ""
   );
-  console.log(transaction_id);
 
   const [response, setResponse] = useState<string>("");
 
@@ -39,9 +41,15 @@ export default function Create_events() {
         localStorage.setItem("status", JSON.stringify(message));
       })
       .catch((err) => {
-        console.log(err);
+        const { message } = err.response.data;
 
         setResponse(err.response.data.message);
+
+        MySwal.fire({
+          title: "Create Events Failed",
+          text: message,
+          showCancelButton: false,
+        });
       });
   };
   return (

@@ -29,7 +29,7 @@ interface MentorClass {
 
 const DetailTeacher = () => {
   const idUser = localStorage.getItem("id");
-  console.log(idUser);
+
   const { schedule_id } = useParams();
   const { mentor_id } = useParams();
   const { student_id } = useParams();
@@ -40,7 +40,7 @@ const DetailTeacher = () => {
   const [student, setStudent] = useState<ProfileStudent>({});
   const [loading, SetLoading] = useState<boolean>(false);
   const [cookie, removeCookie] = useCookies(["token", "role"]);
-  // console.log(`id=${idUsers} || userId=${user.id}`);
+
   const [day, setDay] = useState<string>("");
   const [start_time, setStartTime] = useState<string>("");
   const [end_time, setEndTime] = useState<string>("");
@@ -48,7 +48,7 @@ const DetailTeacher = () => {
   const [course, setCourse] = useState<MentorClass[]>([]);
   const { id } = useParams();
   const idUsers = localStorage.getItem("id");
-  console.log(idUsers);
+
   const idMentor = localStorage.setItem("idMentor", JSON.stringify(id));
 
   const [comment, setComment] = useState<Review[]>([]);
@@ -57,16 +57,6 @@ const DetailTeacher = () => {
   const [genres, setGenres] = useState<GenreType[]>([]);
   const checkToken = cookie.token;
   const [schduleId, setScheduleId] = useState<number>();
-  useEffect(() => {
-    Profile();
-    Instrument();
-    Genres();
-    fetchDataStudent();
-
-    return () => {
-      Profile();
-    };
-  }, []);
 
   const fetchDataStudent = () => {
     axios
@@ -108,21 +98,33 @@ const DetailTeacher = () => {
         SetInstrument(datas);
       })
       .catch((error) => {
-        console.log(error);
+        const { message } = error.response.data;
+
+        MySwal.fire({
+          title: "Failed To Get Instrument Data",
+          text: message,
+          showCancelButton: false,
+        });
       });
-  };
+  }
 
   function Genres() {
     axios
-    .get(`/mentors/${id}/genres`)
-    .then((response) => {
-      const datas = response.data.data;
-      setGenres(datas);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  };
+      .get(`/mentors/${id}/genres`)
+      .then((response) => {
+        const datas = response.data.data;
+        setGenres(datas);
+      })
+      .catch((error) => {
+        const { message } = error.response.data;
+
+        MySwal.fire({
+          title: "Failed To Get Genres Data",
+          text: message,
+          showCancelButton: false,
+        });
+      });
+  }
 
   const handleDeleteAccount = () => {
     MySwal.fire({
@@ -138,11 +140,9 @@ const DetailTeacher = () => {
       .then((result) => {
         if (result.isConfirmed) {
           axios.delete("mentors");
+          removeCookie("token", { path: "/" });
+          navigate("/");
         }
-      })
-      .then(() => {
-        removeCookie("token", { path: "/" });
-        navigate("/");
       })
       .catch((err) => {
         const { message } = err.response.data;
@@ -166,7 +166,7 @@ const DetailTeacher = () => {
       .post("mentors/schedules", body)
       .then((res) => {
         const { data, message } = res.data;
-        setSchedules((prevState) => [...prevState, data]);
+        setSchedules((prevState) => [...prevState, { ...data }]);
         MySwal.fire({
           title: "Succesfully Uploaded Schedule",
           text: message,
@@ -185,59 +185,56 @@ const DetailTeacher = () => {
       .finally(() => SetLoading(false));
   };
 
+  const fetchJadwalMentor = () => {
+    SetLoading(true);
+    axios
+      .get(`mentors/${id}/schedules`)
+
+      .then((res) => {
+        const { data, message } = res.data;
+        setSchedules(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => SetLoading(false));
+  };
+
+  const fetchCourseMentor = () => {
+    SetLoading(true);
+
+    axios
+      .get(`/mentors/${id}/class`)
+      .then((res) => {
+        const data = res.data.data;
+        setCourse(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => SetLoading(false));
+  };
+
+  const fetchCommentMentor = () => {
+    SetLoading(true);
+
+    axios
+      .get(`/mentors/${id}/reviews`)
+      .then((res) => {
+        const data = res.data.data;
+        setComment(data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => SetLoading(false));
+  };
+
   useEffect(() => {
-    const fetchJadwalMentor = () => {
-      SetLoading(true);
-      axios
-        .get(`mentors/${id}/schedules`)
-
-        .then((res) => {
-          const { data, message } = res.data;
-          setSchedules(data);
-
-          // console.log(schduleId);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => SetLoading(false));
-    };
+    Profile();
+    Instrument();
+    Genres();
+    fetchDataStudent();
     fetchJadwalMentor();
-  }, []);
-
-  useEffect(() => {
-    const fetchCourseMentor = () => {
-      SetLoading(true);
-
-      axios
-        .get(`/mentors/${id}/class`)
-        .then((res) => {
-          const data = res.data.data;
-          setCourse(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => SetLoading(false));
-    };
-
     fetchCourseMentor();
-  }, []);
-
-  useEffect(() => {
-    const fetchCommentMentor = () => {
-      SetLoading(true);
-
-      axios
-        .get(`/mentors/${id}/reviews`)
-        .then((res) => {
-          const data = res.data.data;
-          setComment(data);
-        })
-        .catch((err) => console.log(err))
-        .finally(() => SetLoading(false));
-    };
-
     fetchCommentMentor();
   }, []);
 
@@ -257,7 +254,7 @@ const DetailTeacher = () => {
               ))}
             </div>
             <div className="font-semibold space-x-2">
-            <p>Genres :</p>
+              <p>Genres :</p>
               {genres?.map((item, index) => (
                 <a key={index} className="text-black opacity-80">
                   {item.name}

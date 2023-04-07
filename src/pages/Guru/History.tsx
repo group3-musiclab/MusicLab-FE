@@ -11,7 +11,7 @@ import Swal from "utils/Swal";
 export default function History() {
   const [loading, setLoading] = useState<boolean>(false);
   const status = localStorage.getItem("status");
-  console.log(status);
+
   const [historyMentor, setHistoryMentor] = useState<HistoryMentor[]>([]);
   const [urlGoogle, setUrlGoogle] = useState<string>("");
   const [cookie, removeCookie] = useCookies(["token"]);

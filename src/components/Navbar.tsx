@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../utils/Swal";
 import { Link } from "react-router-dom";
-import { ApiContext } from "../utils/context/contextApi";
+
 import MainHomePage from "../pages/MainHomePage";
 
 const ReusableNav = () => {
@@ -82,14 +82,21 @@ const ReusableNav = () => {
               <li>
                 <a className="text-white font-bold font-poppins">Testimonial</a>
               </li>
-              <li>
-                <a
-                  className="text-white font-bold font-poppins"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </a>
-              </li>
+              {checkToken ? (
+                <>
+                  {" "}
+                  <li>
+                    <a
+                      className="text-white font-bold font-poppins"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <></>
+              )}
             </ul>
           </div>
 
@@ -129,14 +136,21 @@ const ReusableNav = () => {
                 </a>
               </li>
             )}
-            <li>
-              <a
-                className="text-black font-bold font-poppins"
-                onClick={handleLogout}
-              >
-                Logout
-              </a>
-            </li>
+            {checkToken ? (
+              <>
+                {" "}
+                <li>
+                  <a
+                    className="text-white font-bold font-poppins"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </a>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
           </ul>
           {checkToken && checkRole === "Student" ? (
             <>
@@ -228,14 +242,21 @@ const NavMain = () => {
               <li>
                 <a className="text-white font-bold font-poppins">Testimonial</a>
               </li>
-              <li>
-                <a
-                  className="text-white font-bold font-poppins"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </a>
-              </li>
+              {checkToken ? (
+                <>
+                  {" "}
+                  <li>
+                    <a
+                      className="text-white font-bold font-poppins"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <></>
+              )}
             </ul>
           </div>
           <Link
@@ -260,14 +281,21 @@ const NavMain = () => {
             <li>
               <a className="text-white font-bold font-poppins">Testimonial</a>
             </li>
-            <li>
-              <a
-                className="text-white font-bold font-poppins"
-                onClick={handleLogout}
-              >
-                Logout
-              </a>
-            </li>
+            {checkToken ? (
+              <>
+                {" "}
+                <li>
+                  <a
+                    className="text-white font-bold font-poppins"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </a>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
           </ul>
           {checkToken && checkRole === "Student" ? (
             <>

@@ -26,6 +26,11 @@ export default function OauthLogin() {
   const login = useGoogleLogin({
     onSuccess: (tokenResponse: any) => {
       setTokenOauth(tokenResponse.access_token);
+      MySwal.fire({
+        title: "Klik Proceed To Login To Continue",
+
+        showCancelButton: false,
+      });
     },
   });
 
