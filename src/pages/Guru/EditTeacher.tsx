@@ -37,18 +37,12 @@ export default function EditTeacher() {
   const checkToken = cookie.token;
 
   useEffect(() => {
-    Profile();
-    Instrument();
-    Genres();
-
-    return () => {
-      Profile();
-      Instrument();
-      Genres();
-    };
+    profile();
+    instrument();
+    genres();
   }, []);
 
-  function Profile() {
+  function profile() {
     axios
       .get(`mentors/profile`)
       .then((response) => {
@@ -60,13 +54,12 @@ export default function EditTeacher() {
       });
   }
 
-  function Genres() {
+  function genres() {
     axios
       .get("/genres")
       .then((res) => {
         const data = res.data.data;
         setGenre(data);
-        console.log("Genres", res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -74,7 +67,7 @@ export default function EditTeacher() {
       .finally(() => setLoading(false));
   }
 
-  function Instrument() {
+  function instrument() {
     axios
       .get("/instruments")
       .then((res) => {
@@ -614,77 +607,7 @@ export default function EditTeacher() {
                           handleChange(e.target.value, "instagram")
                         }
                       />
-                      {/* 
-                      <label className="label">
-                        <span className="label-text text-black font-semibold text-lg font-poppins w-10/12 lg:w-9/12 mt-5">
-                          Instrumen apa yang anda ajarkan
-                        </span>
-                      </label>
-                      <div className="flex flex-row w-9/12 gap-5">
-                        <select
-                          id="select-role"
-                          className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
-                          defaultValue={"DEFAULT"}
-                        >
-                          <option disabled selected>
-                            Pilih Salah Satu
-                          </option>
-                          <option value="Student">Student</option>
-                          <option value="Mentor">Mentor</option>
-                        </select>
-                        <select
-                          id="select-role"
-                          className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
-                          defaultValue={"DEFAULT"}
-                        >
-                          <option disabled selected>
-                            Pilih Salah Satu
-                          </option>
-                          <option value="Student">Student</option>
-                          <option value="Mentor">Mentor</option>
-                        </select>
-                        <select
-                          id="select-role"
-                          className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
-                          defaultValue={"DEFAULT"}
-                        >
-                          <option disabled selected>
-                            Pilih Salah Satu
-                          </option>
-                          <option value="Student">Student</option>
-                          <option value="Mentor">Mentor</option>
-                        </select>
-                      </div>
 
-                      <label className="label">
-                        <span className="label-text text-black font-semibold text-lg font-poppins w-10/12 lg:w-9/12 mt-5">
-                          Genre musik yang diajarkan
-                        </span>
-                      </label>
-                      <div className="flex flex-row w-9/12 gap-5">
-                        <select
-                          id="select-role"
-                          className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
-                          defaultValue={"DEFAULT"}
-                        >
-                          <option disabled selected>
-                            Pilih Salah Satu
-                          </option>
-                          <option value="Student">Student</option>
-                          <option value="Mentor">Mentor</option>
-                        </select>
-                        <select
-                          id="select-role"
-                          className="input input-bordered  bg-bg-input border-slate-300 w-10/12 lg:w-9/12 text-black font-semibold font-poppins bg-white"
-                          defaultValue={"DEFAULT"}
-                        >
-                          <option disabled selected>
-                            Pilih Salah Satu
-                          </option>
-                          <option value="Student">Student</option>
-                          <option value="Mentor">Mentor</option>
-                        </select>
-                      </div> */}
                       <label className="label">
                         <span className="label-text text-black font-semibold text-lg font-poppins  w-10/12 lg:w-9/12 mt-5">
                           Alamat

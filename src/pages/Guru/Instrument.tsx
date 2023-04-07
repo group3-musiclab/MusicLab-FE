@@ -102,40 +102,6 @@ export default function Instrument() {
                   </select>
                 </div>
               </div>
-              {/* <div className="flex-1 lg:mt-0 mt-5">
-                <div className="form-control mx-auto w-11/12 lg:w-9/12 max-w-xs">
-                  <select
-                    className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
-                    onChange={(e: any) => setInstrument(e.target.value)}
-                  >
-                    <option>Pilih Salah Satu</option>
-                    {instrumentData?.map((item) => {
-                      return (
-                        <>
-                          <option value={item.name}>{item.name}</option>
-                        </>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div> */}
-              {/* <div className="flex-1 lg:mt-0 mt-5">
-                <div className="form-control mx-auto w-11/12 lg:w-9/12 max-w-xs">
-                  <select
-                    className="select select-bordered  text-slate-600 border-slate-400 bg-select font-semibold font-poppins"
-                    onChange={(e: any) => setInstrument(e.target.value)}
-                  >
-                    <option>Pilih Salah Satu</option>
-                    {instrumentData?.map((item) => {
-                      return (
-                        <>
-                          <option value={item.name}>{item.name}</option>
-                        </>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div> */}
             </div>
             <div className="w-full mx-auto text-center mt-10 pb-20">
               <Button

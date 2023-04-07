@@ -1,5 +1,5 @@
 import React, { FC, useContext } from "react";
-import { ApiContext } from "../utils/context/contextApi";
+
 import { useNavigate, useParams } from "react-router";
 
 import ana from "../assets/Ana.webp";
@@ -85,7 +85,6 @@ const CardMentor: FC<CardMentorProps> = ({
   rating,
   onClick,
 }) => {
-  const user = useContext(ApiContext);
   const { id } = useParams();
   return (
     <>

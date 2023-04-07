@@ -23,7 +23,6 @@ export default function HIstory() {
       .then((res) => {
         const data = res.data.data;
         setHistory(data);
-        console.log(data.ulasan);
       })
       .catch((err) => {
         console.log(err);
@@ -115,20 +114,20 @@ export default function HIstory() {
                 })}
               </tbody>
             </table>
-          <div className="flex flex-row justify-end mr-28 space-x-8">
-            <Button
-              label="Prev"
-              className="btn border-none w-full bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
-              onClick={() => prevPage()}
-              disabled={page === 1}
-            />
-            <p className="text-xl text-[#3A2BE8] mt-2">{page}</p>
-            <Button
-              label="Next"
-              className="btn border-none w-full bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
-              onClick={() => nextPage()}
-            />
-          </div>
+            <div className="flex flex-row justify-end mr-28 space-x-8">
+              <Button
+                label="Prev"
+                className="btn border-none w-full bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+                onClick={() => prevPage()}
+                disabled={page === 1}
+              />
+              <p className="text-xl text-[#3A2BE8] mt-2">{page}</p>
+              <Button
+                label="Next"
+                className="btn border-none w-full bg-transparent text-black hover:text-white font-semibold hover:bg-[#3A2BE8]"
+                onClick={() => nextPage()}
+              />
+            </div>
           </div>
           <div className="flex w-[93%] justify-end">
             <Button
