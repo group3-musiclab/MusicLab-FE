@@ -141,7 +141,7 @@ const ReusableNav = () => {
                 {" "}
                 <li>
                   <a
-                    className="text-white font-bold font-poppins"
+                    className="text-black font-bold font-poppins"
                     onClick={handleLogout}
                   >
                     Logout
